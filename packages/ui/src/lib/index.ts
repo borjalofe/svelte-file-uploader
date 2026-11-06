@@ -301,3 +301,14 @@ export {
 	searchFieldRootBaseClass
 } from '../components/molecules/search-field/index.js';
 export type { SearchFieldProps } from '../components/molecules/search-field/index.js';
+export {
+	SelectField,
+	resolveSelectFieldError,
+	resolveSelectFieldRoot,
+	selectFieldErrorBaseClass,
+	selectFieldRootBaseClass
+} from '../components/molecules/select-field/index.js';
+export type {
+	SelectFieldOption,
+	SelectFieldProps
+} from '../components/molecules/select-field/index.js';
