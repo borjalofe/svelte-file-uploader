@@ -23,12 +23,13 @@ This milestone only answers that foundation question — not the product yet.
 - Compose **`db`** (Postgres) + env contract; service names **`api`** / **`web`** reserved
 - Brand audit from Pack screenshots — [`docs/brand/AUDIT.md`](./docs/brand/AUDIT.md)
 - Token pipeline CI — validate `tokens/**` + emit CSS vars (`pnpm tokens:check`)
+- Primitive color ramps (`brand` / `neutral`) — [`tokens/COLOR_RAMPS.md`](./tokens/COLOR_RAMPS.md)
 
 **Out of scope**
 
 - Upload/list UI, Nest modules, Zod schemas, or deploy
 - Full Compose `api`/`web` images (M12), cloud DB
-- Full brand/neutral ramps and shadcn semantic map (later `[token]` issues; scaffold only today)
+- shadcn semantic map and non-color primitives (later `[token]` issues)
 - Product components; a11y / integration / Storybook CI gates; container image scans
 
 ## Architecture
@@ -57,7 +58,7 @@ flowchart LR
 | `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook |
 | `packages/domain` | `@pack-challenge/domain` | Shared domain placeholder |
 | `packages/tokens` | `@pack-challenge/tokens` | Validate `tokens/**` + emit theme CSS |
-| `tokens/` | — | DTCG sources (scaffold; ramps later) |
+| `tokens/` | — | DTCG sources (`primitive.color.brand` / `neutral` authored) |
 
 ## How to run
 
@@ -110,7 +111,9 @@ Job: `audit` → `pnpm audit` (fail at **high**/**critical**). Failures show in 
 
 ## Brand
 
-Visual contract audit (screenshots + findings): [`docs/brand/AUDIT.md`](./docs/brand/AUDIT.md). Includes color anchors, atomic classification, open questions, and the Resources filter rule (**All** always enabled; other type tabs disabled unless ≥1 resource of that type). Tokens and components come later — unknowns in that doc must not be invented.
+Visual contract audit (screenshots + findings): [`docs/brand/AUDIT.md`](./docs/brand/AUDIT.md). Includes color anchors, atomic classification, open questions, and the Resources filter rule (**All** always enabled; other type tabs disabled unless ≥1 resource of that type).
+
+Primitive ramps: [`tokens/COLOR_RAMPS.md`](./tokens/COLOR_RAMPS.md) — `brand.500` = `#FC8034`, `neutral.50` = `#F9FAFC`, `neutral.600` = `#5C5C5C`; other stops provisional via OKLCH. Components must not import `primitive.*`.
 
 ## Technical decisions
 
