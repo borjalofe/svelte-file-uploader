@@ -1,0 +1,46 @@
+# Local stack contract for M0+.
+# Services reserved for later milestones: api (Nest), web (SvelteKit).
+# Today only `db` runs. api/web join in M12 with the same service names.
+
+name: pack-challenge
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks:
+      - pack
+
+  # api:
+  #   # Reserved — Nest API (M12). Reach db at host `db` on this network.
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #   networks: [pack]
+
+  # web:
+  #   # Reserved — SvelteKit web (M12). Talks to api on this network.
+  #   networks: [pack]
+
+volumes:
+  postgres_data:
+
+networks:
+  pack:
+    driver: bridge
