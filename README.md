@@ -95,7 +95,7 @@ GitHub Actions workflow **PR gate** (`.github/workflows/pr-gate.yml`) on `pull_r
 | `tokens` | `pnpm tokens:check` (`tokens:validate` + `tokens:build`) |
 | `audit` | `pnpm audit` (`pnpm audit --audit-level=high`) |
 
-Audit fails the gate on **high** and **critical** advisories; moderate/low are reported in the job summary but do not fail. The **`tokens`** job fails on invalid/cyclic aliases, forbidden semantic paths (`color.text\|action\|surface.elevated\|focus`), and `radius.sm\|md\|lg`; it emits CSS vars to `packages/tokens/dist/` (gitignored). Mark `lint`, `unit`, `tokens`, and `audit` as required on `main` for an honest merge.
+Audit fails the gate on **high** and **critical** advisories; moderate/low are reported in the job summary but do not fail. The **`tokens`** job fails on invalid/cyclic aliases, forbidden semantic paths (`color.text.*`, `color.action.*`, `color.surface.elevated`, `color.focus`), and `radius.sm` / `md` / `lg`; it emits CSS vars to `packages/tokens/dist/` (gitignored). Mark `lint`, `unit`, `tokens`, and `audit` as required on `main` for an honest merge.
 
 ### Daily vulnerability scan
 
