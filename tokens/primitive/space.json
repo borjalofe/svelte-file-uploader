@@ -1,0 +1,19 @@
+{
+  "primitive": {
+    "space": {
+      "$type": "dimension",
+      "$description": "Spacing scale in rem (4px base). Provisional density until layout sign-off.",
+      "0": { "$value": "0rem" },
+      "1": { "$value": "0.25rem", "$description": "Provisional — 4px" },
+      "2": { "$value": "0.5rem", "$description": "Provisional — 8px" },
+      "3": { "$value": "0.75rem", "$description": "Provisional — 12px" },
+      "4": { "$value": "1rem", "$description": "Provisional — 16px" },
+      "5": { "$value": "1.25rem", "$description": "Provisional — 20px" },
+      "6": { "$value": "1.5rem", "$description": "Provisional — 24px" },
+      "8": { "$value": "2rem", "$description": "Provisional — 32px" },
+      "10": { "$value": "2.5rem", "$description": "Provisional — 40px" },
+      "12": { "$value": "3rem", "$description": "Provisional — 48px" },
+      "16": { "$value": "4rem", "$description": "Provisional — 64px" }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "primitive": {
+    "radius": {
+      "$type": "dimension",
+      "$description": "Single radius source for controls/cards (moderate rounding from Pack UI). No radius.sm|md|lg primitives — CI enforced.",
+      "default": {
+        "$value": "0.5rem",
+        "$description": "Provisional single radius — Pack controls look moderately rounded; exact px not measurable from PNGs"
+      }
+    }
+  }
+}
