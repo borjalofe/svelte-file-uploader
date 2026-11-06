@@ -9,7 +9,13 @@ import { sveltekit } from '@sveltejs/kit/vite';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export default defineConfig(async () => ({
+const storybookA11yPlugins = await storybookTest({
+	configDir: path.join(dirname, '.storybook'),
+	// Only stories tagged `a11y-gate` (atoms + CI smoke) — see packages/ui/A11Y.md.
+	tags: { include: ['a11y-gate'] }
+});
+
+export default defineConfig({
 	plugins: [
 		tailwindcss(),
 		sveltekit({
@@ -36,13 +42,7 @@ export default defineConfig(async () => ({
 			},
 			{
 				extends: true,
-				plugins: [
-					...(await storybookTest({
-						configDir: path.join(dirname, '.storybook'),
-						// Only stories tagged `a11y-gate` (atoms + CI smoke) — see packages/ui/A11Y.md.
-						tags: { include: ['a11y-gate'] }
-					}))
-				],
+				plugins: [...storybookA11yPlugins],
 				test: {
 					name: 'a11y',
 					// Those stories set parameters.a11y.test = 'error' so axe violations fail CI.
@@ -57,4 +57,4 @@ export default defineConfig(async () => ({
 			}
 		]
 	}
-}));
+});
