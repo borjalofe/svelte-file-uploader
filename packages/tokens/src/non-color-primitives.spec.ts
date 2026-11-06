@@ -9,9 +9,10 @@ describe('non-color primitives (#15)', () => {
   it('exposes a single radius primitive (no sm|md|lg)', () => {
     const { tree } = loadTokenFiles(tokensDir);
     const leaves = collectLeaves(tree).map((l) => l.path);
-    const radii = leaves.filter((p) => p.includes('radius'));
+    const primitiveRadii = leaves.filter((p) => p.startsWith('primitive.radius'));
 
-    expect(radii).toEqual(['primitive.radius.default']);
+    expect(primitiveRadii).toEqual(['primitive.radius.default']);
+    expect(leaves).toContain('semantic.radius');
     expect(validateTokensDir().ok).toBe(true);
   });
 

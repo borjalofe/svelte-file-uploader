@@ -2,12 +2,70 @@
   "semantic": {
     "color": {
       "$type": "color",
-      "$description": "Scaffold alias — full shadcn semantic map lands later. Forbidden: text|action|surface.elevated|focus.",
+      "$description": "shadcn-svelte new-york semantic colors (1:1 → --{name}). Forbidden paths: color.text|action|surface.elevated|focus. See tokens/SEMANTIC_SHADCN_MAP.md.",
       "background": {
-        "$value": "{primitive.color.white}"
+        "$value": "{primitive.color.neutral.50}",
+        "$description": "Page wash — audited #F9FAFC"
       },
       "foreground": {
         "$value": "{primitive.color.black}"
+      },
+      "card": {
+        "$value": "{primitive.color.white}"
+      },
+      "card-foreground": {
+        "$value": "{primitive.color.black}"
+      },
+      "popover": {
+        "$value": "{primitive.color.white}"
+      },
+      "popover-foreground": {
+        "$value": "{primitive.color.black}"
+      },
+      "primary": {
+        "$value": "{primitive.color.brand.500}",
+        "$description": "Pack CTA orange — audited #FC8034"
+      },
+      "primary-foreground": {
+        "$value": "{primitive.color.black}",
+        "$description": "AA on primary: black on #FC8034 ≈ 8.3:1 (white on primary fails AA ≈ 2.5:1)"
+      },
+      "secondary": {
+        "$value": "{primitive.color.neutral.100}"
+      },
+      "secondary-foreground": {
+        "$value": "{primitive.color.neutral.900}"
+      },
+      "muted": {
+        "$value": "{primitive.color.neutral.100}"
+      },
+      "muted-foreground": {
+        "$value": "{primitive.color.neutral.600}",
+        "$description": "Audited body/secondary text #5C5C5C"
+      },
+      "accent": {
+        "$value": "{primitive.color.brand.100}",
+        "$description": "Provisional light brand wash for accents"
+      },
+      "accent-foreground": {
+        "$value": "{primitive.color.neutral.900}"
+      },
+      "destructive": {
+        "$value": "#DC2626",
+        "$description": "Provisional (not in Pack screenshots). Chosen for AA with white foreground ≈ 4.8:1"
+      },
+      "destructive-foreground": {
+        "$value": "{primitive.color.white}",
+        "$description": "AA on destructive ≈ 4.8:1"
+      },
+      "border": {
+        "$value": "{primitive.color.neutral.200}"
+      },
+      "input": {
+        "$value": "{primitive.color.neutral.200}"
+      },
+      "ring": {
+        "$value": "{primitive.color.brand.500}"
       }
     }
   }
