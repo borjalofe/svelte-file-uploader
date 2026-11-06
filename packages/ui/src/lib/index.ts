@@ -44,3 +44,9 @@ export { Input, inputBaseClass, resolveInput } from '../components/atoms/input/i
 export type { InputProps } from '../components/atoms/input/index.js';
 export { Label, labelBaseClass, resolveLabel } from '../components/atoms/label/index.js';
 export type { LabelProps } from '../components/atoms/label/index.js';
+export {
+	Textarea,
+	resolveTextarea,
+	textareaBaseClass
+} from '../components/atoms/textarea/index.js';
+export type { TextareaProps } from '../components/atoms/textarea/index.js';
