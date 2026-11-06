@@ -1,0 +1,23 @@
+{
+  "primitive": {
+    "duration": {
+      "$type": "duration",
+      "$description": "Provisional motion durations — not specified in Pack screenshots.",
+      "fast": { "$value": "150ms", "$description": "Provisional" },
+      "normal": { "$value": "200ms", "$description": "Provisional" },
+      "slow": { "$value": "300ms", "$description": "Provisional" }
+    },
+    "easing": {
+      "$type": "cubicBezier",
+      "$description": "Provisional easing curves.",
+      "standard": {
+        "$value": [0.2, 0, 0, 1],
+        "$description": "Provisional"
+      },
+      "emphasized": {
+        "$value": [0.3, 0, 0, 1],
+        "$description": "Provisional"
+      }
+    }
+  }
+}

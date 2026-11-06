@@ -1,0 +1,18 @@
+{
+  "primitive": {
+    "shadow": {
+      "$type": "shadow",
+      "$description": "Optional elevation. Recipe (offset/blur/opacity) not measurable from Pack screenshots — provisional only.",
+      "soft": {
+        "$value": {
+          "offsetX": "0px",
+          "offsetY": "4px",
+          "blur": "16px",
+          "spread": "0px",
+          "color": "#00000026"
+        },
+        "$description": "Provisional soft elevation (modal/toast-like)"
+      }
+    }
+  }
+}

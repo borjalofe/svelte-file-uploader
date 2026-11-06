@@ -1,0 +1,41 @@
+{
+  "primitive": {
+    "fontFamily": {
+      "$type": "fontFamily",
+      "$description": "Provisional system/ui-sans stacks until font/logo review (see brand audit open questions).",
+      "sans": {
+        "$value": ["ui-sans-serif", "system-ui", "sans-serif"],
+        "$description": "Provisional — ui-sans / system until exact family is signed off"
+      },
+      "mono": {
+        "$value": ["ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
+        "$description": "Provisional"
+      }
+    },
+    "fontSize": {
+      "$type": "dimension",
+      "$description": "Provisional type sizes — weight/family scale unknown from screenshots.",
+      "xs": { "$value": "0.75rem", "$description": "Provisional" },
+      "sm": { "$value": "0.875rem", "$description": "Provisional" },
+      "md": { "$value": "1rem", "$description": "Provisional" },
+      "lg": { "$value": "1.125rem", "$description": "Provisional" },
+      "xl": { "$value": "1.25rem", "$description": "Provisional" },
+      "2xl": { "$value": "1.5rem", "$description": "Provisional" }
+    },
+    "fontWeight": {
+      "$type": "fontWeight",
+      "$description": "Provisional numeric weights until brand type cue is locked.",
+      "regular": { "$value": "400", "$description": "Provisional" },
+      "medium": { "$value": "500", "$description": "Provisional" },
+      "semibold": { "$value": "600", "$description": "Provisional" },
+      "bold": { "$value": "700", "$description": "Provisional" }
+    },
+    "lineHeight": {
+      "$type": "number",
+      "$description": "Provisional unitless line-heights.",
+      "tight": { "$value": 1.25, "$description": "Provisional" },
+      "normal": { "$value": 1.5, "$description": "Provisional" },
+      "relaxed": { "$value": 1.625, "$description": "Provisional" }
+    }
+  }
+}
