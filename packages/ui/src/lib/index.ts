@@ -21,3 +21,13 @@ export {
 	widthClass
 } from '../components/particles/spacer/index.js';
 export type { SpacerAxis, SpacerProps } from '../components/particles/spacer/index.js';
+export {
+	Divider,
+	dividerBorderClass,
+	resolveDivider
+} from '../components/particles/divider/index.js';
+export type {
+	DividerColor,
+	DividerOrientation,
+	DividerProps
+} from '../components/particles/divider/index.js';
