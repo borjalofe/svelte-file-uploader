@@ -301,7 +301,10 @@ export {
 	resolveInputFieldHint,
 	resolveInputFieldIds
 } from '../components/molecules/input-field/index.js';
-export type { InputFieldControl, InputFieldProps } from '../components/molecules/input-field/index.js';
+export type {
+	InputFieldControl,
+	InputFieldProps
+} from '../components/molecules/input-field/index.js';
 export {
 	SearchField,
 	resolveSearchFieldInput,
