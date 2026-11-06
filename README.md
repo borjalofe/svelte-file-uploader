@@ -29,12 +29,14 @@ This milestone only answers that foundation question — not the product yet.
 - Extension status colors (success/warning/info) — [`tokens/EXTENSION_STATUS.md`](./tokens/EXTENSION_STATUS.md)
 - Theme emit — `:root` / `.dark` / `@theme inline` + Storybook `bg-primary` — [`tokens/THEME_EMIT.md`](./tokens/THEME_EMIT.md)
 - Particles CI — `unit` covers `packages/ui/src/components/particles/**`; required `storybook` job (`pnpm storybook:build`)
+- Semantic spacing scale — [`tokens/SEMANTIC_SPACE.md`](./tokens/SEMANTIC_SPACE.md)
+- Particle **Stack** — `packages/ui/src/components/particles/stack/` (direction/gap/align/justify via semantic space)
 
 **Out of scope**
 
 - Upload/list UI, Nest modules, Zod schemas, or deploy
 - Full Compose `api`/`web` images (M12), cloud DB
-- Product components; a11y / integration CI gates; container image scans
+- Remaining particles (Spacer/Divider/VisuallyHidden); product components; a11y / integration CI gates; container image scans
 
 ## Architecture
 
@@ -59,7 +61,7 @@ flowchart LR
 | --- | --- | --- |
 | `apps/web` | `@pack-challenge/web` | SvelteKit host |
 | `apps/api` | `@pack-challenge/api` | Bootable API stub |
-| `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook |
+| `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (Stack particle) |
 | `packages/domain` | `@pack-challenge/domain` | Shared domain placeholder |
 | `packages/tokens` | `@pack-challenge/tokens` | Validate `tokens/**` + emit theme CSS |
 | `tokens/` | — | DTCG sources (primitives + semantic + extension) → emitted theme CSS |
@@ -127,6 +129,8 @@ Semantic map: [`tokens/SEMANTIC_SHADCN_MAP.md`](./tokens/SEMANTIC_SHADCN_MAP.md)
 Extension status: [`tokens/EXTENSION_STATUS.md`](./tokens/EXTENSION_STATUS.md) — `success` ≈ `#1C9C70` (audited); `warning`/`info` provisional; registered on `:root`, `.dark`, and `@theme inline`.
 
 Theme emit: [`tokens/THEME_EMIT.md`](./tokens/THEME_EMIT.md) — generate-on-build `theme.css`; UI/Storybook import; `bg-primary` via `@theme inline`. Components use semantic/extension utilities — no raw hex.
+
+Semantic space: [`tokens/SEMANTIC_SPACE.md`](./tokens/SEMANTIC_SPACE.md) — `semantic.space.*` → `--space-*` / `@theme --spacing-*` (Tailwind `gap-*`). **Stack** uses this scale for gap (no raw rem/px).
 
 ## Technical decisions
 

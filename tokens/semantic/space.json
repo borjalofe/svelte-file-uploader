@@ -1,0 +1,19 @@
+{
+  "semantic": {
+    "space": {
+      "$type": "dimension",
+      "$description": "Semantic spacing scale for layout particles (Stack gap, Spacer size). Aliases primitive.space.*; emit as --space-* and @theme --spacing-* (Tailwind gap/p/m).",
+      "0": { "$value": "{primitive.space.0}" },
+      "1": { "$value": "{primitive.space.1}", "$description": "4px" },
+      "2": { "$value": "{primitive.space.2}", "$description": "8px" },
+      "3": { "$value": "{primitive.space.3}", "$description": "12px" },
+      "4": { "$value": "{primitive.space.4}", "$description": "16px — default Stack gap" },
+      "5": { "$value": "{primitive.space.5}", "$description": "20px" },
+      "6": { "$value": "{primitive.space.6}", "$description": "24px" },
+      "8": { "$value": "{primitive.space.8}", "$description": "32px" },
+      "10": { "$value": "{primitive.space.10}", "$description": "40px" },
+      "12": { "$value": "{primitive.space.12}", "$description": "48px" },
+      "16": { "$value": "{primitive.space.16}", "$description": "64px" }
+    }
+  }
+}
