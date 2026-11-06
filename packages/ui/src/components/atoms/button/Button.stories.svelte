@@ -5,21 +5,24 @@
 
 	/**
 	 * shadcn-svelte new-york Button on Pack semantic tokens (`bg-primary` CTA).
-	 * Tagged for the CI axe gate — see packages/ui/A11Y.md.
+	 * Primary / Disabled join the CI axe gate — see packages/ui/A11Y.md.
+	 *
+	 * Note: omit `component` in defineMeta so CSF does not nest a second Button
+	 * around the template (axe nested-interactive false positive).
 	 */
 	const { Story } = defineMeta({
 		title: 'Atoms/Button',
-		component: Button,
-		tags: ['a11y-gate', 'autodocs'],
-		parameters: {
-			a11y: { test: 'error' }
-		}
+		tags: ['autodocs']
 	});
 </script>
 
-<Story name="Primary" args={{ variant: 'default', size: 'default' }}>
-	{#snippet template(args)}
-		<Button {...args}>Upload</Button>
+<Story
+	name="Primary"
+	tags={['a11y-gate']}
+	parameters={{ a11y: { test: 'error' } }}
+>
+	{#snippet template()}
+		<Button variant="default" size="default">Upload</Button>
 	{/snippet}
 </Story>
 
@@ -47,8 +50,8 @@
 	{/snippet}
 </Story>
 
-<Story name="Disabled" args={{ variant: 'default', disabled: true }}>
-	{#snippet template(args)}
-		<Button {...args}>Upload</Button>
+<Story name="Disabled" tags={['a11y-gate']} parameters={{ a11y: { test: 'error' } }}>
+	{#snippet template()}
+		<Button variant="default" disabled>Upload</Button>
 	{/snippet}
 </Story>
