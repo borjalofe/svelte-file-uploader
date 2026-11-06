@@ -2,12 +2,108 @@
   "primitive": {
     "color": {
       "$type": "color",
-      "$description": "Scaffold only — brand/neutral ramps land in later token issues.",
+      "$description": "Primitive color ramps. Components must consume semantic/extension tokens only — never primitive.*. Generation: OKLCH lightness steps from audited anchors; see tokens/COLOR_RAMPS.md.",
       "white": {
-        "$value": "#ffffff"
+        "$value": "#ffffff",
+        "$description": "Absolute white"
       },
       "black": {
-        "$value": "#000000"
+        "$value": "#000000",
+        "$description": "Absolute black"
+      },
+      "brand": {
+        "$description": "Pack brand orange ramp. Stop 500 is the audited CTA anchor #FC8034 (non-dimmed). Other stops are provisional OKLCH extrapolations (same hue/chroma family).",
+        "50": {
+          "$value": "#FFE4C2",
+          "$description": "Provisional"
+        },
+        "100": {
+          "$value": "#FFD5B0",
+          "$description": "Provisional"
+        },
+        "200": {
+          "$value": "#FFC093",
+          "$description": "Provisional"
+        },
+        "300": {
+          "$value": "#FFA873",
+          "$description": "Provisional"
+        },
+        "400": {
+          "$value": "#FF9355",
+          "$description": "Provisional"
+        },
+        "500": {
+          "$value": "#FC8034",
+          "$description": "Audited brand / CTA orange (Pack screenshots + brief). Do not replace with overlay-dimmed samples."
+        },
+        "600": {
+          "$value": "#CE641F",
+          "$description": "Provisional"
+        },
+        "700": {
+          "$value": "#A54B0D",
+          "$description": "Provisional"
+        },
+        "800": {
+          "$value": "#7D3400",
+          "$description": "Provisional"
+        },
+        "900": {
+          "$value": "#581F00",
+          "$description": "Provisional"
+        },
+        "950": {
+          "$value": "#3D0C00",
+          "$description": "Provisional"
+        }
+      },
+      "neutral": {
+        "$description": "Cool neutral ramp for chrome/text. Stop 50 = audited wash #F9FAFC; stop 600 = audited body/secondary text ~#5C5C5C. Other stops provisional.",
+        "50": {
+          "$value": "#F9FAFC",
+          "$description": "Audited page/chrome wash"
+        },
+        "100": {
+          "$value": "#E8EBEF",
+          "$description": "Provisional"
+        },
+        "200": {
+          "$value": "#D8DBDF",
+          "$description": "Provisional"
+        },
+        "300": {
+          "$value": "#C1C4C8",
+          "$description": "Provisional"
+        },
+        "400": {
+          "$value": "#A1A5A9",
+          "$description": "Provisional"
+        },
+        "500": {
+          "$value": "#7D8185",
+          "$description": "Provisional"
+        },
+        "600": {
+          "$value": "#5C5C5C",
+          "$description": "Audited body / secondary text"
+        },
+        "700": {
+          "$value": "#3F4347",
+          "$description": "Provisional"
+        },
+        "800": {
+          "$value": "#26292D",
+          "$description": "Provisional"
+        },
+        "900": {
+          "$value": "#13161A",
+          "$description": "Provisional"
+        },
+        "950": {
+          "$value": "#07090C",
+          "$description": "Provisional"
+        }
       }
     }
   }
