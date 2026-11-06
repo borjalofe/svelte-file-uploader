@@ -40,7 +40,8 @@
 		"svelte": "^5.0.0"
 	},
 	"dependencies": {
-		"@pack-challenge/tokens": "workspace:*"
+		"@pack-challenge/tokens": "workspace:*",
+		"bits-ui": "^2.20.6"
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "^5.0.0",

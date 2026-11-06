@@ -42,3 +42,5 @@ export { Button, buttonVariants, resolveButton } from '../components/atoms/butto
 export type { ButtonProps, ButtonSize, ButtonVariant } from '../components/atoms/button/index.js';
 export { Input, inputBaseClass, resolveInput } from '../components/atoms/input/index.js';
 export type { InputProps } from '../components/atoms/input/index.js';
+export { Label, labelBaseClass, resolveLabel } from '../components/atoms/label/index.js';
+export type { LabelProps } from '../components/atoms/label/index.js';
