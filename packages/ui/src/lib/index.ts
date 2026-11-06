@@ -14,3 +14,13 @@ export type {
 	StackJustify,
 	StackProps
 } from '../components/particles/stack/index.js';
+export {
+	Divider,
+	dividerBorderClass,
+	resolveDivider
+} from '../components/particles/divider/index.js';
+export type {
+	DividerColor,
+	DividerOrientation,
+	DividerProps
+} from '../components/particles/divider/index.js';
