@@ -26,6 +26,7 @@ export function cssVariableName(path: string[]): string {
   return path.join('-');
 }
 
+/** Semantic + extension colors register as Tailwind `--color-*` via `@theme inline`. */
 export function isThemeColorToken(path: string[]): boolean {
   return (
     (path[0] === 'semantic' && path[1] === 'color') ||

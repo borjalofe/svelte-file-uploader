@@ -3,7 +3,7 @@
 Issue: #16  
 Style: shadcn-svelte **new-york** / `baseColor` **neutral** (`packages/ui/components.json`)
 
-Emit: `pnpm tokens:build` writes `--{shadcn-name}` into `packages/tokens/dist/theme.css` (semantic tokens only use short names; primitives keep long names).
+Emit: `pnpm tokens:build` writes `packages/tokens/dist/theme.css` via `css/pack-theme` — `:root` (all tokens), `.dark` (short colors, light-aliased), `@theme inline` (`--color-primary` → `bg-primary`, …). Semantic tokens use short names; primitives keep long names. See [`THEME_EMIT.md`](./THEME_EMIT.md).
 
 ## Colors (`semantic.color.*` → `--*` → utilities)
 
