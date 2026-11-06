@@ -32,6 +32,7 @@
 		"format": "pnpm --filter @pack-challenge/tokens build && prettier --write .",
 		"test:unit": "vitest run --project server",
 		"test": "vitest run --project server",
+		"test:a11y": "pnpm --filter @pack-challenge/tokens build && vitest run --project a11y",
 		"storybook": "pnpm --filter @pack-challenge/tokens build && storybook dev -p 6006",
 		"build-storybook": "pnpm --filter @pack-challenge/tokens build && storybook build"
 	},

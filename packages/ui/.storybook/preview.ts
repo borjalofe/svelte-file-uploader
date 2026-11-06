@@ -16,9 +16,9 @@ const preview: Preview = {
 			disabled: true
 		},
 		a11y: {
-			// 'todo' - show a11y violations in the test UI only
-			// 'error' - fail CI on a11y violations
-			// 'off' - skip a11y checks entirely
+			// Default: warn in Storybook UI only (particles / scaffolding).
+			// Atom+ stories must set parameters.a11y.test = 'error' (see packages/ui/A11Y.md)
+			// so the CI job `a11y` (`pnpm a11y`) fails on axe violations.
 			test: 'todo'
 		}
 	}

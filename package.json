@@ -14,7 +14,8 @@
     "tokens:build": "pnpm --filter @pack-challenge/tokens build",
     "tokens:check": "pnpm --filter @pack-challenge/tokens check",
     "storybook": "pnpm --filter @pack-challenge/ui storybook",
-    "storybook:build": "pnpm --filter @pack-challenge/ui build-storybook"
+    "storybook:build": "pnpm --filter @pack-challenge/ui build-storybook",
+    "a11y": "pnpm --filter @pack-challenge/ui test:a11y"
   },
   "devDependencies": {
     "prettier": "^3.8.3",
