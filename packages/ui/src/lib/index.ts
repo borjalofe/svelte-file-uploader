@@ -38,6 +38,22 @@ export {
 	SR_ONLY_CLASS
 } from '../components/particles/visually-hidden/index.js';
 export type { VisuallyHiddenProps } from '../components/particles/visually-hidden/index.js';
+export {
+	Avatar,
+	AvatarFallback,
+	AvatarImage,
+	avatarFallbackBaseClass,
+	avatarImageBaseClass,
+	avatarRootBaseClass,
+	resolveAvatarFallback,
+	resolveAvatarImage,
+	resolveAvatarRoot
+} from '../components/atoms/avatar/index.js';
+export type {
+	AvatarFallbackProps,
+	AvatarImageProps,
+	AvatarRootProps
+} from '../components/atoms/avatar/index.js';
 export { Badge, badgeVariants, resolveBadge } from '../components/atoms/badge/index.js';
 export type { BadgeProps, BadgeVariant } from '../components/atoms/badge/index.js';
 export { Button, buttonVariants, resolveButton } from '../components/atoms/button/index.js';
