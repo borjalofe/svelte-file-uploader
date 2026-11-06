@@ -3,6 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "exports": {
+    "./theme.css": "./dist/theme.css"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsx src/build.ts",
     "validate": "tsx src/validate.ts",

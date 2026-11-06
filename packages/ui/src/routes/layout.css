@@ -1,10 +1,9 @@
 @import 'tailwindcss';
+@import '@pack-challenge/tokens/theme.css';
 
 /*
- * Placeholder for design tokens.
- * components.json → tailwind.cssVariables: true (shadcn-svelte new-york / neutral — later sign-off).
+ * Pack theme: CSS variables from @pack-challenge/tokens (generated).
+ * components.json → tailwind.cssVariables: true (shadcn-svelte new-york / neutral).
+ * Components must use semantic/extension utilities — no raw hex.
  */
-:root {
-	/* --background: ...; */
-	/* --foreground: ...; */
-}
+@custom-variant dark (&:is(.dark *));

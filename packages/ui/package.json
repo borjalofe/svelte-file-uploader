@@ -21,8 +21,8 @@
 		}
 	},
 	"scripts": {
-		"dev": "vite dev",
-		"build": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"dev": "pnpm --filter @pack-challenge/tokens build && vite dev",
+		"build": "pnpm --filter @pack-challenge/tokens build && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -32,11 +32,14 @@
 		"format": "prettier --write .",
 		"test:unit": "vitest run --project server",
 		"test": "vitest run --project server",
-		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build"
+		"storybook": "pnpm --filter @pack-challenge/tokens build && storybook dev -p 6006",
+		"build-storybook": "pnpm --filter @pack-challenge/tokens build && storybook build"
 	},
 	"peerDependencies": {
 		"svelte": "^5.0.0"
+	},
+	"dependencies": {
+		"@pack-challenge/tokens": "workspace:*"
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "^5.0.0",

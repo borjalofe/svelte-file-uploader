@@ -125,6 +125,10 @@ importers:
         version: 4.1.12(@types/node@22.20.5)(@vitest/browser-playwright@4.1.12)(@vitest/coverage-v8@4.1.12)(vite@8.3.6(@types/node@22.20.5)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15))
 
   packages/ui:
+    dependencies:
+      '@pack-challenge/tokens':
+        specifier: workspace:*
+        version: link:../tokens
     devDependencies:
       '@chromatic-com/storybook':
         specifier: ^5.0.0

@@ -1,12 +1,19 @@
 import type { Preview } from '@storybook/sveltekit';
 
+import '../src/routes/layout.css';
+import ThemeDecorator from './ThemeDecorator.svelte';
+
 const preview: Preview = {
+	decorators: [() => ThemeDecorator],
 	parameters: {
 		controls: {
 			matchers: {
 				color: /(background|color)$/i,
 				date: /Date$/i
 			}
+		},
+		backgrounds: {
+			disabled: true
 		},
 		a11y: {
 			// 'todo' - show a11y violations in the test UI only
