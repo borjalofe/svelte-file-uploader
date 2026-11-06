@@ -1,0 +1,14 @@
+{
+  "semantic": {
+    "color": {
+      "$type": "color",
+      "$description": "Scaffold alias — full shadcn semantic map lands later. Forbidden: text|action|surface.elevated|focus.",
+      "background": {
+        "$value": "{primitive.color.white}"
+      },
+      "foreground": {
+        "$value": "{primitive.color.black}"
+      }
+    }
+  }
+}

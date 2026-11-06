@@ -1,0 +1,14 @@
+{
+  "primitive": {
+    "color": {
+      "$type": "color",
+      "$description": "Scaffold only — brand/neutral ramps land in later token issues.",
+      "white": {
+        "$value": "#ffffff"
+      },
+      "black": {
+        "$value": "#000000"
+      }
+    }
+  }
+}
