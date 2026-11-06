@@ -1,3 +1,4 @@
+import type { ClassValue } from 'clsx';
 import { type VariantProps, tv } from 'tailwind-variants';
 import { cn } from '../../../lib/utils.js';
 
@@ -46,11 +47,11 @@ export type ResolvedButton = {
 export function resolveButton({
 	variant = 'default',
 	size = 'default',
-	class: className = ''
+	class: className
 }: {
 	variant?: ButtonVariant;
 	size?: ButtonSize;
-	class?: string;
+	class?: ClassValue;
 } = {}): ResolvedButton {
 	return {
 		className: cn(buttonVariants({ variant, size }), className),

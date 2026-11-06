@@ -35,12 +35,13 @@ This milestone only answers that foundation question — not the product yet.
 - Particle **Divider** — `packages/ui/src/components/particles/divider/` (orientation + semantic `border` / `foreground`)
 - Particle **VisuallyHidden** — `packages/ui/src/components/particles/visually-hidden/` (SR-only; unhides on focus)
 - Atoms a11y CI — required `a11y` job (`pnpm a11y`); axe via Storybook Vitest for stories tagged `a11y-gate` — [`packages/ui/A11Y.md`](./packages/ui/A11Y.md)
+- Atom **Button** — `packages/ui/src/components/atoms/button/` (shadcn-svelte new-york on semantic tokens; unit + `a11y-gate` stories)
 
 **Out of scope**
 
 - Upload/list UI, Nest modules, Zod schemas, or deploy
 - Full Compose `api`/`web` images (M12), cloud DB
-- Product components; integration CI gates; container image scans
+- Remaining atoms; product components; integration CI gates; container image scans
 
 ## Architecture
 
