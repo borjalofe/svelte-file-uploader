@@ -19,11 +19,13 @@ This milestone only answers that foundation question — not the product yet.
 - `apps/api` (`@pack-challenge/api`) — Nest-ready stub (no Nest features yet)
 - `packages/ui` (`@pack-challenge/ui`) — library layout, `/ds` stub, Tailwind (`cssVariables: true` placeholder), Storybook welcome, Vitest smoke
 - `packages/domain` (`@pack-challenge/domain`) — package entry + smoke test
-- Living ADR for the monorepo choice under [docs/decisions/](./docs/decisions/)
+- Living ADRs under [docs/decisions/](./docs/decisions/)
+- Compose **`db`** (Postgres) + env contract; service names **`api`** / **`web`** reserved
 
 **Out of scope**
 
-- Upload/list UI, Nest modules, Zod schemas, Postgres, Docker Compose, or deploy
+- Upload/list UI, Nest modules, Zod schemas, or deploy
+- Full Compose `api`/`web` images (M12), cloud DB
 - Design tokens or product components
 - Daily scheduled audit scan, a11y / integration / Storybook CI gates
 
@@ -35,10 +37,12 @@ flowchart LR
   api["apps/api<br/>@pack-challenge/api"]
   ui["packages/ui<br/>@pack-challenge/ui"]
   domain["packages/domain<br/>@pack-challenge/domain"]
+  db["compose db<br/>Postgres 16"]
 
   web --> ui
   web --> domain
   api -.->|later| domain
+  api -.->|later| db
   ui -->|Storybook /ds| ui
 ```
 
@@ -51,7 +55,7 @@ flowchart LR
 
 ## How to run
 
-**Prerequisites:** Node ≥ 22, [pnpm](https://pnpm.io) 11.
+**Prerequisites:** Node ≥ 22, [pnpm](https://pnpm.io) 11, Docker (for Postgres).
 
 ```bash
 pnpm install
@@ -62,6 +66,16 @@ pnpm storybook:build     # static Storybook build for @pack-challenge/ui
 ```
 
 Example: after `pnpm install`, `pnpm test` should report green smoke tests for web, api, ui, and domain. Open Storybook to see the **Welcome** story; the UI package also serves a `/ds` stub route under `pnpm --filter @pack-challenge/ui dev`.
+
+### How to run the database
+
+```bash
+cp .env.example .env
+docker compose up -d db
+docker compose ps   # db should be healthy
+```
+
+Compose services: **`db`** (now), **`api`** / **`web`** (reserved for M12). Host apps use `DATABASE_URL` from `.env`; in-compose services reach Postgres at hostname `db`.
 
 ## How we test
 
@@ -81,8 +95,9 @@ Audit fails the gate on **high** and **critical** advisories; moderate/low are r
 | --- | --- | --- |
 | **pnpm + Turborepo** monorepo | One lockfile, filtered scripts, cached tasks; matches Pack stack (SvelteKit UI + Nest API + shared domain) | Separate repos (cross-cutting PRs hurt); npm/yarn workspaces alone (weaker task caching); Nx (heavier than needed for this seed) |
 | Storybook + Vitest on `@pack-challenge/ui` | Design system is the long-lived surface; app can stay thin | Storybook-only app package (extra hop for a seed) |
+| Compose **`db`/`api`/`web`** + env credentials | Stable names for M10/M12; secrets stay in `.env` | Cloud DB for M0; baking passwords into `compose.yaml`; default `postgres`/`postgres` |
 
-Canonical write-up: [0001 — Turborepo + pnpm monorepo](./docs/decisions/0001-turborepo-pnpm-monorepo.md). The [Decisions index](./docs/decisions/) lists only ADRs that shipped with code.
+ADRs: [0001 — Turborepo + pnpm](./docs/decisions/0001-turborepo-pnpm-monorepo.md), [0002 — Compose Postgres + env](./docs/decisions/0002-compose-postgres-env-contract.md). The [Decisions index](./docs/decisions/) lists only ADRs that shipped with code.
 
 Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral` — see `packages/ui/components.json` (`cssVariables: true`).
 
@@ -103,6 +118,7 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 | PR audit | `pnpm audit` (CI job `audit`) | No high/critical advisories; summary in the job log |
 | UI typecheck/build | `pnpm --filter @pack-challenge/ui build` | `svelte-check` clean |
 | Storybook | `pnpm storybook:build` | `storybook-static` for UI |
+| Postgres | `docker compose up -d db` | `db` healthcheck **healthy** |
 
 ## Lessons learned
 
@@ -113,6 +129,6 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 ## Next steps
 
 1. Daily scheduled dependency audit (follow-up infra issue).
-2. Compose Postgres + wire Nest beyond the stub.
+2. Wire Nest beyond the stub against Compose `db`.
 3. Domain Zod schemas and the first UI atoms against `/ds`.
 4. Product upload/list flow once the stack boots as one path.
