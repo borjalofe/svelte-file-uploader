@@ -44,3 +44,37 @@ export { Input, inputBaseClass, resolveInput } from '../components/atoms/input/i
 export type { InputProps } from '../components/atoms/input/index.js';
 export { Label, labelBaseClass, resolveLabel } from '../components/atoms/label/index.js';
 export type { LabelProps } from '../components/atoms/label/index.js';
+export {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectGroupHeading,
+	SelectItem,
+	SelectLabel,
+	SelectPortal,
+	SelectScrollDownButton,
+	SelectScrollUpButton,
+	SelectSeparator,
+	SelectTrigger,
+	SelectValue,
+	resolveSelectContent,
+	resolveSelectItem,
+	resolveSelectTrigger,
+	selectContentBaseClass,
+	selectItemBaseClass,
+	selectTriggerBaseClass
+} from '../components/atoms/select/index.js';
+export type {
+	SelectContentProps,
+	SelectGroupHeadingProps,
+	SelectGroupProps,
+	SelectItemProps,
+	SelectLabelProps,
+	SelectPortalProps,
+	SelectRootProps,
+	SelectScrollDownButtonProps,
+	SelectScrollUpButtonProps,
+	SelectSeparatorProps,
+	SelectTriggerProps,
+	SelectValueProps
+} from '../components/atoms/select/index.js';
