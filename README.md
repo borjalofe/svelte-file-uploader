@@ -22,13 +22,14 @@ This milestone only answers that foundation question — not the product yet.
 - Living ADRs under [docs/decisions/](./docs/decisions/)
 - Compose **`db`** (Postgres) + env contract; service names **`api`** / **`web`** reserved
 - Brand audit from Pack screenshots — [`docs/brand/AUDIT.md`](./docs/brand/AUDIT.md)
+- Token pipeline CI — validate `tokens/**` + emit CSS vars (`pnpm tokens:check`)
 
 **Out of scope**
 
 - Upload/list UI, Nest modules, Zod schemas, or deploy
 - Full Compose `api`/`web` images (M12), cloud DB
-- Design tokens or product components (audit only — no invented scales)
-- a11y / integration / Storybook CI gates; container image scans (when images exist)
+- Full brand/neutral ramps and shadcn semantic map (later `[token]` issues; scaffold only today)
+- Product components; a11y / integration / Storybook CI gates; container image scans
 
 ## Architecture
 
@@ -38,12 +39,14 @@ flowchart LR
   api["apps/api<br/>@pack-challenge/api"]
   ui["packages/ui<br/>@pack-challenge/ui"]
   domain["packages/domain<br/>@pack-challenge/domain"]
+  tokensPkg["packages/tokens<br/>@pack-challenge/tokens"]
   db["compose db<br/>Postgres 16"]
 
   web --> ui
   web --> domain
   api -.->|later| domain
   api -.->|later| db
+  tokensPkg -->|emit CSS vars| ui
   ui -->|Storybook /ds| ui
 ```
 
@@ -53,6 +56,8 @@ flowchart LR
 | `apps/api` | `@pack-challenge/api` | Bootable API stub |
 | `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook |
 | `packages/domain` | `@pack-challenge/domain` | Shared domain placeholder |
+| `packages/tokens` | `@pack-challenge/tokens` | Validate `tokens/**` + emit theme CSS |
+| `tokens/` | — | DTCG sources (scaffold; ramps later) |
 
 ## How to run
 
@@ -62,6 +67,7 @@ flowchart LR
 pnpm install
 pnpm dev                 # Turbo: web, ui, api stub, domain
 pnpm test                # smoke unit tests across the workspace
+pnpm tokens:check        # validate tokens/** + emit CSS vars
 pnpm storybook           # UI package → http://localhost:6006
 pnpm storybook:build     # static Storybook build for @pack-challenge/ui
 ```
@@ -86,9 +92,10 @@ GitHub Actions workflow **PR gate** (`.github/workflows/pr-gate.yml`) on `pull_r
 | --- | --- |
 | `lint` | `pnpm lint` |
 | `unit` | `pnpm test` |
+| `tokens` | `pnpm tokens:check` (`tokens:validate` + `tokens:build`) |
 | `audit` | `pnpm audit` (`pnpm audit --audit-level=high`) |
 
-Audit fails the gate on **high** and **critical** advisories; moderate/low are reported in the job summary but do not fail. Mark these three checks as required on `main` for an honest merge.
+Audit fails the gate on **high** and **critical** advisories; moderate/low are reported in the job summary but do not fail. The **`tokens`** job fails on invalid/cyclic aliases, forbidden semantic paths (`color.text.*`, `color.action.*`, `color.surface.elevated`, `color.focus`), and `radius.sm` / `md` / `lg`; it emits CSS vars to `packages/tokens/dist/` (gitignored). Mark `lint`, `unit`, `tokens`, and `audit` as required on `main` for an honest merge.
 
 ### Daily vulnerability scan
 
@@ -112,8 +119,9 @@ Visual contract audit (screenshots + findings): [`docs/brand/AUDIT.md`](./docs/b
 | **pnpm + Turborepo** monorepo | One lockfile, filtered scripts, cached tasks; matches Pack stack (SvelteKit UI + Nest API + shared domain) | Separate repos (cross-cutting PRs hurt); npm/yarn workspaces alone (weaker task caching); Nx (heavier than needed for this seed) |
 | Storybook + Vitest on `@pack-challenge/ui` | Design system is the long-lived surface; app can stay thin | Storybook-only app package (extra hop for a seed) |
 | Compose **`db`/`api`/`web`** + env credentials | Stable names for M10/M12; secrets stay in `.env` | Cloud DB for M0; baking passwords into `compose.yaml`; default `postgres`/`postgres` |
+| Style Dictionary + custom token guards | Emit CSS vars; fail CI on bad aliases / forbidden paths | Schema-only CI (can’t resolve `{aliases}`); hand-maintained CSS vars |
 
-ADRs: [0001 — Turborepo + pnpm](./docs/decisions/0001-turborepo-pnpm-monorepo.md), [0002 — Compose Postgres + env](./docs/decisions/0002-compose-postgres-env-contract.md). The [Decisions index](./docs/decisions/) lists only ADRs that shipped with code.
+ADRs: [0001](./docs/decisions/0001-turborepo-pnpm-monorepo.md), [0002](./docs/decisions/0002-compose-postgres-env-contract.md), [0003 — token pipeline](./docs/decisions/0003-token-pipeline.md). The [Decisions index](./docs/decisions/) lists only ADRs that shipped with code.
 
 Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral` — see `packages/ui/components.json` (`cssVariables: true`) and color/filter notes in [`docs/brand/AUDIT.md`](./docs/brand/AUDIT.md).
 
@@ -121,7 +129,7 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 
 - **Scaffold over product** — empty Nest and domain keep the graph honest; nothing pretends to upload files yet.
 - **Library UI as SvelteKit app** — `/ds` and Storybook need a Kit surface; that adds demo-app weight versus a pure component folder.
-- **PR gate ≠ full quality matrix** — lint/unit/audit only; Storybook, a11y, and integration stay later.
+- **PR gate ≠ full quality matrix** — lint/unit/tokens/audit; Storybook, a11y, and integration stay later.
 - **Node 22+** — aligns with current toolchain; older LTS is out of scope.
 
 ## Quality evidence
@@ -132,6 +140,7 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 | PR lint | `pnpm lint` (CI job `lint`) | Workspace lint green |
 | PR unit | `pnpm test` (CI job `unit`) | Smoke tests green for web, api, ui, domain |
 | PR audit | `pnpm audit` (CI job `audit`) | No high/critical advisories; summary in the job log |
+| PR tokens | `pnpm tokens:check` (CI job `tokens`) | Alias/forbidden-path validation + theme CSS emit |
 | Daily audit | Actions → **Daily audit** → Run workflow | Same high threshold; visible failure if regressions land |
 | UI typecheck/build | `pnpm --filter @pack-challenge/ui build` | `svelte-check` clean |
 | Storybook | `pnpm storybook:build` | `storybook-static` for UI |
