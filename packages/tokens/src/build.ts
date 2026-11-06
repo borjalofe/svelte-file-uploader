@@ -1,9 +1,13 @@
 import fs from 'node:fs';
+import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import StyleDictionary from 'style-dictionary';
 import { formattedVariables } from 'style-dictionary/utils';
 import { distDir, themeCssPath, tokensDir } from './paths.js';
 import { validateTokensDir } from './validate.js';
+
+/** Serialize builds so parallel callers (e.g. Vitest) don't truncate the same theme.css mid-read. */
+let buildThemeChain: Promise<void> = Promise.resolve();
 
 /** Map token paths to CSS custom property names (short names for semantic/extension). */
 export function cssVariableName(path: string[]): string {
@@ -119,7 +123,7 @@ const cssTransforms = StyleDictionary.hooks.transformGroups.css.map((name) =>
   name === 'name/kebab' ? 'name/pack' : name
 );
 
-export async function buildTheme(): Promise<void> {
+async function buildThemeUnqueued(): Promise<void> {
   const validation = validateTokensDir();
   if (!validation.ok) {
     const detail = validation.errors.map((e) => ` - ${e}`).join('\n');
@@ -127,6 +131,9 @@ export async function buildTheme(): Promise<void> {
   }
 
   fs.mkdirSync(distDir, { recursive: true });
+
+  const tmpName = `theme.${process.pid}.${Date.now()}.css`;
+  const tmpPath = path.join(distDir, tmpName);
 
   const sd = new StyleDictionary({
     source: [`${tokensDir}/**/*.json`],
@@ -136,7 +143,7 @@ export async function buildTheme(): Promise<void> {
         buildPath: `${distDir}/`,
         files: [
           {
-            destination: 'theme.css',
+            destination: tmpName,
             format: 'css/pack-theme',
             options: {
               outputReferences: true
@@ -150,11 +157,19 @@ export async function buildTheme(): Promise<void> {
   await sd.hasInitialized;
   await sd.buildAllPlatforms();
 
-  if (!fs.existsSync(themeCssPath)) {
-    throw new Error(`Theme emit failed: missing ${themeCssPath}`);
+  if (!fs.existsSync(tmpPath)) {
+    throw new Error(`Theme emit failed: missing ${tmpPath}`);
   }
 
+  fs.renameSync(tmpPath, themeCssPath);
   console.log(`Theme emitted → ${themeCssPath}`);
+}
+
+export function buildTheme(): Promise<void> {
+  const run = buildThemeChain.then(() => buildThemeUnqueued());
+  // Keep the chain alive even if a build fails so later callers still run.
+  buildThemeChain = run.catch(() => undefined);
+  return run;
 }
 
 async function main(): Promise<void> {
