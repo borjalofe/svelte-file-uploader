@@ -278,3 +278,12 @@ export {
 	textareaBaseClass
 } from '../components/atoms/textarea/index.js';
 export type { TextareaProps } from '../components/atoms/textarea/index.js';
+export {
+	SearchField,
+	resolveSearchFieldInput,
+	resolveSearchFieldRoot,
+	searchFieldIconBaseClass,
+	searchFieldInputBaseClass,
+	searchFieldRootBaseClass
+} from '../components/molecules/search-field/index.js';
+export type { SearchFieldProps } from '../components/molecules/search-field/index.js';
