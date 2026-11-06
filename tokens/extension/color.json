@@ -1,0 +1,32 @@
+{
+  "extension": {
+    "color": {
+      "$type": "color",
+      "$description": "Status colors beyond core shadcn semantics. Emit as --success|warning|info (+ -foreground). See tokens/EXTENSION_STATUS.md.",
+      "success": {
+        "$value": "#1C9C70",
+        "$description": "Audited Pack success green (toast) ≈ #1C9C70"
+      },
+      "success-foreground": {
+        "$value": "{primitive.color.black}",
+        "$description": "AA on success: black on #1C9C70 ≈ 6.0:1 (white fails AA ≈ 3.5:1 for normal text)"
+      },
+      "warning": {
+        "$value": "#D97706",
+        "$description": "Provisional — not in Pack screenshots"
+      },
+      "warning-foreground": {
+        "$value": "{primitive.color.black}",
+        "$description": "AA on warning: black preferred (white fails AA)"
+      },
+      "info": {
+        "$value": "#2563EB",
+        "$description": "Provisional — not in Pack screenshots"
+      },
+      "info-foreground": {
+        "$value": "{primitive.color.white}",
+        "$description": "AA on info ≈ 5.2:1 with white"
+      }
+    }
+  }
+}

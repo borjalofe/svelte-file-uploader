@@ -26,12 +26,12 @@ This milestone only answers that foundation question — not the product yet.
 - Primitive color ramps (`brand` / `neutral`) — [`tokens/COLOR_RAMPS.md`](./tokens/COLOR_RAMPS.md)
 - Non-color primitives (space, type, single radius, shadow, motion) — [`tokens/NON_COLOR_PRIMITIVES.md`](./tokens/NON_COLOR_PRIMITIVES.md)
 - Semantic → shadcn CSS variable map — [`tokens/SEMANTIC_SHADCN_MAP.md`](./tokens/SEMANTIC_SHADCN_MAP.md)
+- Extension status colors (success/warning/info) — [`tokens/EXTENSION_STATUS.md`](./tokens/EXTENSION_STATUS.md)
 
 **Out of scope**
 
 - Upload/list UI, Nest modules, Zod schemas, or deploy
 - Full Compose `api`/`web` images (M12), cloud DB
-- Extension success/warning/info colors and `:root`/`.dark`/`@theme` wiring (later `[token]` issues)
 - Product components; a11y / integration / Storybook CI gates; container image scans
 
 ## Architecture
@@ -60,7 +60,7 @@ flowchart LR
 | `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook |
 | `packages/domain` | `@pack-challenge/domain` | Shared domain placeholder |
 | `packages/tokens` | `@pack-challenge/tokens` | Validate `tokens/**` + emit theme CSS |
-| `tokens/` | — | DTCG sources (primitives + semantic → shadcn map) |
+| `tokens/` | — | DTCG sources (primitives + semantic + extension status) |
 
 ## How to run
 
@@ -120,6 +120,8 @@ Primitive ramps: [`tokens/COLOR_RAMPS.md`](./tokens/COLOR_RAMPS.md) — `brand.5
 Non-color primitives: [`tokens/NON_COLOR_PRIMITIVES.md`](./tokens/NON_COLOR_PRIMITIVES.md) — single `radius.default`; provisional system/ui-sans fonts until font/logo review.
 
 Semantic map: [`tokens/SEMANTIC_SHADCN_MAP.md`](./tokens/SEMANTIC_SHADCN_MAP.md) — token → `--css-var` → Tailwind (`primary` ← brand orange; AA-safe `primary-foreground`). Components must not import `primitive.*`.
+
+Extension status: [`tokens/EXTENSION_STATUS.md`](./tokens/EXTENSION_STATUS.md) — `success` ≈ `#1C9C70` (audited); `warning`/`info` provisional; registered on `:root`, `.dark`, and `@theme inline`.
 
 ## Technical decisions
 
