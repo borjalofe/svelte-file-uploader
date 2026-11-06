@@ -1,0 +1,19 @@
+{
+  "name": "@pack-challenge/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Nest API stub — features land in later milestones",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "check-types": "tsc --noEmit",
+    "dev": "node --experimental-strip-types --watch src/main.ts",
+    "lint": "tsc --noEmit",
+    "start": "node --experimental-strip-types src/main.ts",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.8"
+  }
+}

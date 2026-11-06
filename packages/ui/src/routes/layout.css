@@ -1,0 +1,10 @@
+@import 'tailwindcss';
+
+/*
+ * Placeholder for design tokens.
+ * components.json → tailwind.cssVariables: true (shadcn-svelte new-york / neutral — later sign-off).
+ */
+:root {
+	/* --background: ...; */
+	/* --foreground: ...; */
+}
