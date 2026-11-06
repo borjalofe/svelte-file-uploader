@@ -48,6 +48,7 @@ This milestone only answers that foundation question — not the product yet.
 - Atom **Table** — `packages/ui/src/components/atoms/table/` (shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` story)
 - Atom **Tabs** — `packages/ui/src/components/atoms/tabs/` (bits-ui / shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` stories; per-item disabled)
 - Atom **Textarea** — `packages/ui/src/components/atoms/textarea/` (shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` story)
+- Atom **Toast (Sonner)** — `packages/ui/src/components/atoms/toast-sonner/` (svelte-sonner / shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` story)
 
 **Out of scope**
 
@@ -78,7 +79,7 @@ flowchart LR
 | --- | --- | --- |
 | `apps/web` | `@pack-challenge/web` | SvelteKit host |
 | `apps/api` | `@pack-challenge/api` | Bootable API stub |
-| `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + Avatar, Badge, Button, Card, Dialog, DropdownMenu, Input, Label, Select, Separator, Table, Tabs, Textarea) |
+| `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + Avatar, Badge, Button, Card, Dialog, DropdownMenu, Input, Label, Select, Separator, Table, Tabs, Textarea, Toast/Sonner) |
 | `packages/domain` | `@pack-challenge/domain` | Shared domain placeholder |
 | `packages/tokens` | `@pack-challenge/tokens` | Validate `tokens/**` + emit theme CSS |
 | `tokens/` | — | DTCG sources (primitives + semantic + extension) → emitted theme CSS |
