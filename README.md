@@ -34,12 +34,13 @@ This milestone only answers that foundation question — not the product yet.
 - Particle **Spacer** — `packages/ui/src/components/particles/spacer/` (fixed semantic size or flex-grow)
 - Particle **Divider** — `packages/ui/src/components/particles/divider/` (orientation + semantic `border` / `foreground`)
 - Particle **VisuallyHidden** — `packages/ui/src/components/particles/visually-hidden/` (SR-only; unhides on focus)
+- Atoms a11y CI — required `a11y` job (`pnpm a11y`); axe via Storybook Vitest for stories tagged `a11y-gate` — [`packages/ui/A11Y.md`](./packages/ui/A11Y.md)
 
 **Out of scope**
 
 - Upload/list UI, Nest modules, Zod schemas, or deploy
 - Full Compose `api`/`web` images (M12), cloud DB
-- Product components; a11y / integration CI gates; container image scans
+- Product components; integration CI gates; container image scans
 
 ## Architecture
 
@@ -103,10 +104,11 @@ GitHub Actions workflow **PR gate** (`.github/workflows/pr-gate.yml`) on `pull_r
 | `lint` | `pnpm lint` |
 | `unit` | `pnpm test` (includes `packages/ui/src/components/particles/**`) |
 | `storybook` | `pnpm storybook:build` |
+| `a11y` | `pnpm a11y` (axe on stories tagged `a11y-gate`) |
 | `tokens` | `pnpm tokens:check` (`tokens:validate` + `tokens:build`) |
 | `audit` | `pnpm audit` (`pnpm audit --audit-level=high`) |
 
-Audit fails the gate on **high** and **critical** advisories; moderate/low are reported in the job summary but do not fail. The **`tokens`** job fails on invalid/cyclic aliases, forbidden semantic paths (`color.text.*`, `color.action.*`, `color.surface.elevated`, `color.focus`), and `radius.sm` / `md` / `lg`; it emits CSS vars to `packages/tokens/dist/` (gitignored). The **`storybook`** job fails on a broken Storybook build. Mark `lint`, `unit`, `storybook`, `tokens`, and `audit` as required on `main` for an honest merge.
+Audit fails the gate on **high** and **critical** advisories; moderate/low are reported in the job summary but do not fail. The **`tokens`** job fails on invalid/cyclic aliases, forbidden semantic paths (`color.text.*`, `color.action.*`, `color.surface.elevated`, `color.focus`), and `radius.sm` / `md` / `lg`; it emits CSS vars to `packages/tokens/dist/` (gitignored). The **`storybook`** job fails on a broken Storybook build. The **`a11y`** job fails on axe violations for atom-gated stories (`parameters.a11y.test = 'error'` + tag `a11y-gate` — see [`packages/ui/A11Y.md`](./packages/ui/A11Y.md)). Mark `lint`, `unit`, `storybook`, `a11y`, `tokens`, and `audit` as required on `main` for an honest merge.
 
 ### Daily vulnerability scan
 
@@ -153,7 +155,7 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 
 - **Scaffold over product** — empty Nest and domain keep the graph honest; nothing pretends to upload files yet.
 - **Library UI as SvelteKit app** — `/ds` and Storybook need a Kit surface; that adds demo-app weight versus a pure component folder.
-- **PR gate ≠ full quality matrix** — lint/unit/storybook/tokens/audit; a11y and integration stay later.
+- **PR gate ≠ full quality matrix** — lint/unit/storybook/a11y/tokens/audit; integration stays later.
 - **Node 22+** — aligns with current toolchain; older LTS is out of scope.
 
 ## Quality evidence
@@ -164,6 +166,7 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 | PR lint | `pnpm lint` (CI job `lint`) | Workspace lint green |
 | PR unit | `pnpm test` (CI job `unit`) | Smoke tests green for web, api, ui, domain (particles under UI) |
 | PR storybook | `pnpm storybook:build` (CI job `storybook`) | Static Storybook build for `@pack-challenge/ui` |
+| PR a11y | `pnpm a11y` (CI job `a11y`) | Axe green for `a11y-gate` stories (atoms+) |
 | PR audit | `pnpm audit` (CI job `audit`) | No high/critical advisories; summary in the job log |
 | PR tokens | `pnpm tokens:check` (CI job `tokens`) | Alias/forbidden-path validation + theme CSS emit |
 | Daily audit | Actions → **Daily audit** → Run workflow | Same high threshold; visible failure if regressions land |

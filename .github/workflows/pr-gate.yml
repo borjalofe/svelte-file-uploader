@@ -88,6 +88,34 @@ jobs:
       - name: Build Storybook
         run: pnpm storybook:build
 
+  # Axe via Storybook Vitest + addon-a11y for stories tagged a11y-gate (atoms+) — mark required on main.
+  a11y:
+    name: a11y
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Chromium
+        run: pnpm --filter @pack-challenge/ui exec playwright install chromium --with-deps
+
+      - name: Axe accessibility (a11y-gate stories)
+        run: pnpm a11y
+
   tokens:
     name: tokens
     runs-on: ubuntu-latest
