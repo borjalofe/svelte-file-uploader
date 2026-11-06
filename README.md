@@ -33,12 +33,13 @@ This milestone only answers that foundation question — not the product yet.
 - Particle **Stack** — `packages/ui/src/components/particles/stack/` (direction/gap/align/justify via semantic space)
 - Particle **Spacer** — `packages/ui/src/components/particles/spacer/` (fixed semantic size or flex-grow)
 - Particle **Divider** — `packages/ui/src/components/particles/divider/` (orientation + semantic `border` / `foreground`)
+- Particle **VisuallyHidden** — `packages/ui/src/components/particles/visually-hidden/` (SR-only; unhides on focus)
 
 **Out of scope**
 
 - Upload/list UI, Nest modules, Zod schemas, or deploy
 - Full Compose `api`/`web` images (M12), cloud DB
-- Remaining particles (VisuallyHidden); product components; a11y / integration CI gates; container image scans
+- Product components; a11y / integration CI gates; container image scans
 
 ## Architecture
 
