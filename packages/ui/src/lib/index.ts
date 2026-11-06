@@ -279,6 +279,20 @@ export {
 } from '../components/atoms/textarea/index.js';
 export type { TextareaProps } from '../components/atoms/textarea/index.js';
 export {
+	Toaster,
+	resolveToaster,
+	toast,
+	toastActionButtonClass,
+	toastBaseClass,
+	toastCancelButtonClass,
+	toastDescriptionClass,
+	toastSuccessClass,
+	toasterBaseClass,
+	toasterDefaultTheme,
+	toasterStyleVars
+} from '../components/atoms/toast-sonner/index.js';
+export type { ToasterProps } from '../components/atoms/toast-sonner/index.js';
+export {
 	SearchField,
 	resolveSearchFieldInput,
 	resolveSearchFieldRoot,
