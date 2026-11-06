@@ -59,6 +59,38 @@ export type { BadgeProps, BadgeVariant } from '../components/atoms/badge/index.j
 export { Button, buttonVariants, resolveButton } from '../components/atoms/button/index.js';
 export type { ButtonProps, ButtonSize, ButtonVariant } from '../components/atoms/button/index.js';
 export {
+	Card,
+	CardAction,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+	cardActionBaseClass,
+	cardContentBaseClass,
+	cardDescriptionBaseClass,
+	cardFooterBaseClass,
+	cardHeaderBaseClass,
+	cardRootBaseClass,
+	cardTitleBaseClass,
+	resolveCardAction,
+	resolveCardContent,
+	resolveCardDescription,
+	resolveCardFooter,
+	resolveCardHeader,
+	resolveCardRoot,
+	resolveCardTitle
+} from '../components/atoms/card/index.js';
+export type {
+	CardActionProps,
+	CardContentProps,
+	CardDescriptionProps,
+	CardFooterProps,
+	CardHeaderProps,
+	CardRootProps,
+	CardTitleProps
+} from '../components/atoms/card/index.js';
+export {
 	Dialog,
 	DialogClose,
 	DialogContent,
