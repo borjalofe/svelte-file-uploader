@@ -14,3 +14,10 @@ export type {
 	StackJustify,
 	StackProps
 } from '../components/particles/stack/index.js';
+export {
+	Spacer,
+	heightClass,
+	resolveSpacer,
+	widthClass
+} from '../components/particles/spacer/index.js';
+export type { SpacerAxis, SpacerProps } from '../components/particles/spacer/index.js';
