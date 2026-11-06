@@ -27,7 +27,7 @@ This milestone only answers that foundation question — not the product yet.
 - Upload/list UI, Nest modules, Zod schemas, or deploy
 - Full Compose `api`/`web` images (M12), cloud DB
 - Design tokens or product components
-- Daily scheduled audit scan, a11y / integration / Storybook CI gates
+- a11y / integration / Storybook CI gates; container image scans (when images exist)
 
 ## Architecture
 
@@ -89,6 +89,17 @@ GitHub Actions workflow **PR gate** (`.github/workflows/pr-gate.yml`) on `pull_r
 
 Audit fails the gate on **high** and **critical** advisories; moderate/low are reported in the job summary but do not fail. Mark these three checks as required on `main` for an honest merge.
 
+### Daily vulnerability scan
+
+Workflow **Daily audit** (`.github/workflows/daily-audit.yml`) — independent of the PR gate:
+
+| Trigger | Detail |
+| --- | --- |
+| Schedule | Cron `0 6 * * *` (06:00 UTC daily) |
+| Manual | Actions → **Daily audit** → Run workflow (`workflow_dispatch`) |
+
+Job: `audit` → `pnpm audit` (fail at **high**/**critical**). Failures show in the Actions run / job summary; triage is manual.
+
 ## Technical decisions
 
 | Choice | Why | Discarded |
@@ -116,6 +127,7 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 | PR lint | `pnpm lint` (CI job `lint`) | Workspace lint green |
 | PR unit | `pnpm test` (CI job `unit`) | Smoke tests green for web, api, ui, domain |
 | PR audit | `pnpm audit` (CI job `audit`) | No high/critical advisories; summary in the job log |
+| Daily audit | Actions → **Daily audit** → Run workflow | Same high threshold; visible failure if regressions land |
 | UI typecheck/build | `pnpm --filter @pack-challenge/ui build` | `svelte-check` clean |
 | Storybook | `pnpm storybook:build` | `storybook-static` for UI |
 | Postgres | `docker compose up -d db` | `db` healthcheck **healthy** |
@@ -128,7 +140,6 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 
 ## Next steps
 
-1. Daily scheduled dependency audit (follow-up infra issue).
-2. Wire Nest beyond the stub against Compose `db`.
-3. Domain Zod schemas and the first UI atoms against `/ds`.
-4. Product upload/list flow once the stack boots as one path.
+1. Wire Nest beyond the stub against Compose `db`.
+2. Domain Zod schemas and the first UI atoms against `/ds`.
+3. Product upload/list flow once the stack boots as one path.
