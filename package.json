@@ -9,6 +9,7 @@
     "check-types": "turbo run check-types",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "audit": "pnpm audit --audit-level=high",
     "storybook": "pnpm --filter @pack-challenge/ui storybook",
     "storybook:build": "pnpm --filter @pack-challenge/ui build-storybook"
   },
