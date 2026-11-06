@@ -42,3 +42,9 @@ export { Button, buttonVariants, resolveButton } from '../components/atoms/butto
 export type { ButtonProps, ButtonSize, ButtonVariant } from '../components/atoms/button/index.js';
 export { Input, inputBaseClass, resolveInput } from '../components/atoms/input/index.js';
 export type { InputProps } from '../components/atoms/input/index.js';
+export {
+	Textarea,
+	resolveTextarea,
+	textareaBaseClass
+} from '../components/atoms/textarea/index.js';
+export type { TextareaProps } from '../components/atoms/textarea/index.js';
