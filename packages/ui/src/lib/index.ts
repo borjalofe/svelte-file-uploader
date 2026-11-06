@@ -40,3 +40,5 @@ export {
 export type { VisuallyHiddenProps } from '../components/particles/visually-hidden/index.js';
 export { Button, buttonVariants, resolveButton } from '../components/atoms/button/index.js';
 export type { ButtonProps, ButtonSize, ButtonVariant } from '../components/atoms/button/index.js';
+export { Input, inputBaseClass, resolveInput } from '../components/atoms/input/index.js';
+export type { InputProps } from '../components/atoms/input/index.js';
