@@ -97,6 +97,26 @@ export type {
 	SelectValueProps
 } from '../components/atoms/select/index.js';
 export {
+	Tabs,
+	TabsContent,
+	TabsList,
+	TabsTrigger,
+	resolveTabsContent,
+	resolveTabsList,
+	resolveTabsRoot,
+	resolveTabsTrigger,
+	tabsContentBaseClass,
+	tabsListBaseClass,
+	tabsRootBaseClass,
+	tabsTriggerBaseClass
+} from '../components/atoms/tabs/index.js';
+export type {
+	TabsContentProps,
+	TabsListProps,
+	TabsRootProps,
+	TabsTriggerProps
+} from '../components/atoms/tabs/index.js';
+export {
 	Textarea,
 	resolveTextarea,
 	textareaBaseClass
