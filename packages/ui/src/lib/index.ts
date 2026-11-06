@@ -141,6 +141,44 @@ export {
 } from '../components/atoms/separator/index.js';
 export type { SeparatorProps } from '../components/atoms/separator/index.js';
 export {
+	Table,
+	TableBody,
+	TableCaption,
+	TableCell,
+	TableFooter,
+	TableHead,
+	TableHeader,
+	TableRow,
+	resolveTableBody,
+	resolveTableCaption,
+	resolveTableCell,
+	resolveTableContainer,
+	resolveTableFooter,
+	resolveTableHead,
+	resolveTableHeader,
+	resolveTableRoot,
+	resolveTableRow,
+	tableBodyBaseClass,
+	tableCaptionBaseClass,
+	tableCellBaseClass,
+	tableContainerBaseClass,
+	tableFooterBaseClass,
+	tableHeadBaseClass,
+	tableHeaderBaseClass,
+	tableRootBaseClass,
+	tableRowBaseClass
+} from '../components/atoms/table/index.js';
+export type {
+	TableBodyProps,
+	TableCaptionProps,
+	TableCellProps,
+	TableFooterProps,
+	TableHeadProps,
+	TableHeaderProps,
+	TableRootProps,
+	TableRowProps
+} from '../components/atoms/table/index.js';
+export {
 	Tabs,
 	TabsContent,
 	TabsList,
