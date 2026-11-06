@@ -36,5 +36,12 @@ export default defineConfig(
 				parser: ts.parser
 			}
 		}
+	},
+	{
+		// Design-system atoms accept consumer hrefs; SvelteKit resolve() belongs in apps.
+		files: ['src/components/atoms/**/*.svelte'],
+		rules: {
+			'svelte/no-navigation-without-resolve': 'off'
+		}
 	}
 );

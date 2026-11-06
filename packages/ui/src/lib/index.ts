@@ -38,3 +38,5 @@ export {
 	SR_ONLY_CLASS
 } from '../components/particles/visually-hidden/index.js';
 export type { VisuallyHiddenProps } from '../components/particles/visually-hidden/index.js';
+export { Button, buttonVariants, resolveButton } from '../components/atoms/button/index.js';
+export type { ButtonProps, ButtonSize, ButtonVariant } from '../components/atoms/button/index.js';

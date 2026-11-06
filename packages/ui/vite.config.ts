@@ -35,7 +35,7 @@ export default defineConfig({
 				test: {
 					name: 'server',
 					environment: 'node',
-					// Particles (and later atoms+) land under src/components/** — covered by this glob.
+					// Particles + atom unit helpers under src/components/**
 					include: ['src/**/*.{test,spec}.{js,ts}'],
 					exclude: ['src/**/*.svelte.{test,spec}.{js,ts}']
 				}
