@@ -78,3 +78,9 @@ export type {
 	SelectTriggerProps,
 	SelectValueProps
 } from '../components/atoms/select/index.js';
+export {
+	Textarea,
+	resolveTextarea,
+	textareaBaseClass
+} from '../components/atoms/textarea/index.js';
+export type { TextareaProps } from '../components/atoms/textarea/index.js';
