@@ -31,12 +31,13 @@ This milestone only answers that foundation question — not the product yet.
 - Particles CI — `unit` covers `packages/ui/src/components/particles/**`; required `storybook` job (`pnpm storybook:build`)
 - Semantic spacing scale — [`tokens/SEMANTIC_SPACE.md`](./tokens/SEMANTIC_SPACE.md)
 - Particle **Stack** — `packages/ui/src/components/particles/stack/` (direction/gap/align/justify via semantic space)
+- Particle **Divider** — `packages/ui/src/components/particles/divider/` (orientation + semantic `border` / `foreground`)
 
 **Out of scope**
 
 - Upload/list UI, Nest modules, Zod schemas, or deploy
 - Full Compose `api`/`web` images (M12), cloud DB
-- Remaining particles (Spacer/Divider/VisuallyHidden); product components; a11y / integration CI gates; container image scans
+- Remaining particles (Spacer/VisuallyHidden); product components; a11y / integration CI gates; container image scans
 
 ## Architecture
 
