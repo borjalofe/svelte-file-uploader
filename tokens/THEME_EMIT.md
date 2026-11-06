@@ -21,7 +21,7 @@ Issue: #18
 ## Guardrails
 
 - Components use semantic/extension utilities (`bg-primary`, `text-muted-foreground`, …) — **no raw hex** in component styles.
-- Run `pnpm tokens:build` (or `tokens:check`) before Storybook / UI dev if `dist/theme.css` is missing.
+- Run `pnpm tokens:build` (or `tokens:check`) before Storybook / UI lint/dev if `dist/theme.css` is missing (Prettier resolves the package export).
 
 ## Verify
 

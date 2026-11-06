@@ -1,7 +1,7 @@
 import type { Preview } from '@storybook/sveltekit';
 
 import '../src/routes/layout.css';
-import ThemeDecorator from './ThemeDecorator.svelte';
+import ThemeDecorator from '../src/stories/ThemeDecorator.svelte';
 
 const preview: Preview = {
 	decorators: [() => ThemeDecorator],
