@@ -301,7 +301,24 @@ export {
 	resolveInputFieldHint,
 	resolveInputFieldIds
 } from '../components/molecules/input-field/index.js';
+export type { InputFieldControl, InputFieldProps } from '../components/molecules/input-field/index.js';
+export {
+	SearchField,
+	resolveSearchFieldInput,
+	resolveSearchFieldRoot,
+	searchFieldIconBaseClass,
+	searchFieldInputBaseClass,
+	searchFieldRootBaseClass
+} from '../components/molecules/search-field/index.js';
+export type { SearchFieldProps } from '../components/molecules/search-field/index.js';
+export {
+	SelectField,
+	resolveSelectFieldError,
+	resolveSelectFieldRoot,
+	selectFieldErrorBaseClass,
+	selectFieldRootBaseClass
+} from '../components/molecules/select-field/index.js';
 export type {
-	InputFieldControl,
-	InputFieldProps
-} from '../components/molecules/input-field/index.js';
+	SelectFieldOption,
+	SelectFieldProps
+} from '../components/molecules/select-field/index.js';
