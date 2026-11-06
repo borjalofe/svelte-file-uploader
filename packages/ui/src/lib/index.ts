@@ -59,6 +59,44 @@ export type { BadgeProps, BadgeVariant } from '../components/atoms/badge/index.j
 export { Button, buttonVariants, resolveButton } from '../components/atoms/button/index.js';
 export type { ButtonProps, ButtonSize, ButtonVariant } from '../components/atoms/button/index.js';
 export {
+	Dialog,
+	DialogClose,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogOverlay,
+	DialogPortal,
+	DialogTitle,
+	DialogTrigger,
+	dialogCloseBaseClass,
+	dialogContentBaseClass,
+	dialogDescriptionBaseClass,
+	dialogFooterBaseClass,
+	dialogHeaderBaseClass,
+	dialogOverlayBaseClass,
+	dialogTitleBaseClass,
+	resolveDialogClose,
+	resolveDialogContent,
+	resolveDialogDescription,
+	resolveDialogFooter,
+	resolveDialogHeader,
+	resolveDialogOverlay,
+	resolveDialogTitle
+} from '../components/atoms/dialog/index.js';
+export type {
+	DialogCloseProps,
+	DialogContentProps,
+	DialogDescriptionProps,
+	DialogFooterProps,
+	DialogHeaderProps,
+	DialogOverlayProps,
+	DialogPortalProps,
+	DialogRootProps,
+	DialogTitleProps,
+	DialogTriggerProps
+} from '../components/atoms/dialog/index.js';
+export {
 	DropdownMenu,
 	DropdownMenuCheckboxGroup,
 	DropdownMenuCheckboxItem,
