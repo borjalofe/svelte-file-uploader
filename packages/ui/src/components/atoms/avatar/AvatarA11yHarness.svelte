@@ -4,19 +4,23 @@
 	let {
 		alt = 'Ada Lovelace',
 		initials = 'AL',
-		src = '',
-		'aria-label': ariaLabel = alt
+		src = ''
 	}: {
 		alt?: string;
 		initials?: string;
 		src?: string;
-		'aria-label'?: string;
 	} = $props();
 </script>
 
-<Avatar aria-label={ariaLabel}>
-	{#if src}
+{#if src}
+	<!-- Name comes from the image `alt` — do not put aria-label on the root div. -->
+	<Avatar>
 		<AvatarImage {src} {alt} />
-	{/if}
-	<AvatarFallback aria-hidden={src ? 'true' : undefined}>{initials}</AvatarFallback>
-</Avatar>
+		<AvatarFallback aria-hidden="true">{initials}</AvatarFallback>
+	</Avatar>
+{:else}
+	<!-- Fallback-only: role=img makes aria-label valid on the root. -->
+	<Avatar role="img" aria-label={alt}>
+		<AvatarFallback aria-hidden="true">{initials}</AvatarFallback>
+	</Avatar>
+{/if}

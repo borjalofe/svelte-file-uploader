@@ -12,16 +12,16 @@ afterEach(() => {
 
 describe('Avatar atom a11y (#33)', () => {
 	it('exposes an accessible name via fallback initials', async () => {
-		const { container, getByLabelText } = render(AvatarA11yHarness, {
+		const { container, getByRole } = render(AvatarA11yHarness, {
 			props: { alt: 'Ada Lovelace', initials: 'AL' }
 		});
 
-		expect(getByLabelText('Ada Lovelace')).toBeTruthy();
+		expect(getByRole('img', { name: 'Ada Lovelace' })).toBeTruthy();
 		expect(await axe(container)).toHaveNoViolations();
 	});
 
-	it('keeps accessible name when an image src is provided', async () => {
-		const { container, getByLabelText } = render(AvatarA11yHarness, {
+	it('names the control via image alt without aria-label on the root', async () => {
+		const { container, getByAltText } = render(AvatarA11yHarness, {
 			props: {
 				alt: 'Grace Hopper',
 				initials: 'GH',
@@ -29,7 +29,7 @@ describe('Avatar atom a11y (#33)', () => {
 			}
 		});
 
-		expect(getByLabelText('Grace Hopper')).toBeTruthy();
+		expect(getByAltText('Grace Hopper')).toBeTruthy();
 		expect(await axe(container)).toHaveNoViolations();
 	});
 });
