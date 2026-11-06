@@ -27,12 +27,13 @@ This milestone only answers that foundation question — not the product yet.
 - Non-color primitives (space, type, single radius, shadow, motion) — [`tokens/NON_COLOR_PRIMITIVES.md`](./tokens/NON_COLOR_PRIMITIVES.md)
 - Semantic → shadcn CSS variable map — [`tokens/SEMANTIC_SHADCN_MAP.md`](./tokens/SEMANTIC_SHADCN_MAP.md)
 - Extension status colors (success/warning/info) — [`tokens/EXTENSION_STATUS.md`](./tokens/EXTENSION_STATUS.md)
+- Particles CI — `unit` covers `packages/ui/src/components/particles/**`; required `storybook` job (`pnpm storybook:build`)
 
 **Out of scope**
 
 - Upload/list UI, Nest modules, Zod schemas, or deploy
 - Full Compose `api`/`web` images (M12), cloud DB
-- Product components; a11y / integration / Storybook CI gates; container image scans
+- Product components; a11y / integration CI gates; container image scans
 
 ## Architecture
 
@@ -94,11 +95,12 @@ GitHub Actions workflow **PR gate** (`.github/workflows/pr-gate.yml`) on `pull_r
 | Job | Command |
 | --- | --- |
 | `lint` | `pnpm lint` |
-| `unit` | `pnpm test` |
+| `unit` | `pnpm test` (includes `packages/ui/src/components/particles/**`) |
+| `storybook` | `pnpm storybook:build` |
 | `tokens` | `pnpm tokens:check` (`tokens:validate` + `tokens:build`) |
 | `audit` | `pnpm audit` (`pnpm audit --audit-level=high`) |
 
-Audit fails the gate on **high** and **critical** advisories; moderate/low are reported in the job summary but do not fail. The **`tokens`** job fails on invalid/cyclic aliases, forbidden semantic paths (`color.text.*`, `color.action.*`, `color.surface.elevated`, `color.focus`), and `radius.sm` / `md` / `lg`; it emits CSS vars to `packages/tokens/dist/` (gitignored). Mark `lint`, `unit`, `tokens`, and `audit` as required on `main` for an honest merge.
+Audit fails the gate on **high** and **critical** advisories; moderate/low are reported in the job summary but do not fail. The **`tokens`** job fails on invalid/cyclic aliases, forbidden semantic paths (`color.text.*`, `color.action.*`, `color.surface.elevated`, `color.focus`), and `radius.sm` / `md` / `lg`; it emits CSS vars to `packages/tokens/dist/` (gitignored). The **`storybook`** job fails on a broken Storybook build. Mark `lint`, `unit`, `storybook`, `tokens`, and `audit` as required on `main` for an honest merge.
 
 ### Daily vulnerability scan
 
@@ -140,7 +142,7 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 
 - **Scaffold over product** — empty Nest and domain keep the graph honest; nothing pretends to upload files yet.
 - **Library UI as SvelteKit app** — `/ds` and Storybook need a Kit surface; that adds demo-app weight versus a pure component folder.
-- **PR gate ≠ full quality matrix** — lint/unit/tokens/audit; Storybook, a11y, and integration stay later.
+- **PR gate ≠ full quality matrix** — lint/unit/storybook/tokens/audit; a11y and integration stay later.
 - **Node 22+** — aligns with current toolchain; older LTS is out of scope.
 
 ## Quality evidence
@@ -149,12 +151,12 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 | --- | --- | --- |
 | Install | `pnpm install` | Lockfile resolves all `@pack-challenge/*` workspaces |
 | PR lint | `pnpm lint` (CI job `lint`) | Workspace lint green |
-| PR unit | `pnpm test` (CI job `unit`) | Smoke tests green for web, api, ui, domain |
+| PR unit | `pnpm test` (CI job `unit`) | Smoke tests green for web, api, ui, domain (particles under UI) |
+| PR storybook | `pnpm storybook:build` (CI job `storybook`) | Static Storybook build for `@pack-challenge/ui` |
 | PR audit | `pnpm audit` (CI job `audit`) | No high/critical advisories; summary in the job log |
 | PR tokens | `pnpm tokens:check` (CI job `tokens`) | Alias/forbidden-path validation + theme CSS emit |
 | Daily audit | Actions → **Daily audit** → Run workflow | Same high threshold; visible failure if regressions land |
 | UI typecheck/build | `pnpm --filter @pack-challenge/ui build` | `svelte-check` clean |
-| Storybook | `pnpm storybook:build` | `storybook-static` for UI |
 | Postgres | `docker compose up -d db` | `db` healthcheck **healthy** |
 
 ## Lessons learned
