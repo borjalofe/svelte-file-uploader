@@ -38,6 +38,7 @@ This milestone only answers that foundation question — not the product yet.
 - Atom **Avatar** — `packages/ui/src/components/atoms/avatar/` (bits-ui / shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` stories)
 - Atom **Badge** — `packages/ui/src/components/atoms/badge/` (shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` story)
 - Atom **Button** — `packages/ui/src/components/atoms/button/` (shadcn-svelte new-york on semantic tokens; unit + `a11y-gate` stories)
+- Atom **Dialog** — `packages/ui/src/components/atoms/dialog/` (bits-ui / shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` story)
 - Atom **Input** — `packages/ui/src/components/atoms/input/` (shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` story)
 - Atom **Label** — `packages/ui/src/components/atoms/label/` (bits-ui / shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` stories)
 - Atom **Select** — `packages/ui/src/components/atoms/select/` (bits-ui / shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` stories)
@@ -74,7 +75,7 @@ flowchart LR
 | --- | --- | --- |
 | `apps/web` | `@pack-challenge/web` | SvelteKit host |
 | `apps/api` | `@pack-challenge/api` | Bootable API stub |
-| `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + Avatar, Badge, Button, Input, Label, Select, Separator, Tabs, Textarea) |
+| `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + Avatar, Badge, Button, Dialog, Input, Label, Select, Separator, Tabs, Textarea) |
 | `packages/domain` | `@pack-challenge/domain` | Shared domain placeholder |
 | `packages/tokens` | `@pack-challenge/tokens` | Validate `tokens/**` + emit theme CSS |
 | `tokens/` | — | DTCG sources (primitives + semantic + extension) → emitted theme CSS |

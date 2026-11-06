@@ -58,6 +58,44 @@ export { Badge, badgeVariants, resolveBadge } from '../components/atoms/badge/in
 export type { BadgeProps, BadgeVariant } from '../components/atoms/badge/index.js';
 export { Button, buttonVariants, resolveButton } from '../components/atoms/button/index.js';
 export type { ButtonProps, ButtonSize, ButtonVariant } from '../components/atoms/button/index.js';
+export {
+	Dialog,
+	DialogClose,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogOverlay,
+	DialogPortal,
+	DialogTitle,
+	DialogTrigger,
+	dialogCloseBaseClass,
+	dialogContentBaseClass,
+	dialogDescriptionBaseClass,
+	dialogFooterBaseClass,
+	dialogHeaderBaseClass,
+	dialogOverlayBaseClass,
+	dialogTitleBaseClass,
+	resolveDialogClose,
+	resolveDialogContent,
+	resolveDialogDescription,
+	resolveDialogFooter,
+	resolveDialogHeader,
+	resolveDialogOverlay,
+	resolveDialogTitle
+} from '../components/atoms/dialog/index.js';
+export type {
+	DialogCloseProps,
+	DialogContentProps,
+	DialogDescriptionProps,
+	DialogFooterProps,
+	DialogHeaderProps,
+	DialogOverlayProps,
+	DialogPortalProps,
+	DialogRootProps,
+	DialogTitleProps,
+	DialogTriggerProps
+} from '../components/atoms/dialog/index.js';
 export { Input, inputBaseClass, resolveInput } from '../components/atoms/input/index.js';
 export type { InputProps } from '../components/atoms/input/index.js';
 export { Label, labelBaseClass, resolveLabel } from '../components/atoms/label/index.js';
