@@ -25,7 +25,7 @@ This milestone only answers that foundation question — not the product yet.
 
 - Upload/list UI, Nest modules, Zod schemas, Postgres, Docker Compose, or deploy
 - Design tokens or product components
-- Full PR CI gate (next infra issue)
+- Daily scheduled audit scan, a11y / integration / Storybook CI gates
 
 ## Architecture
 
@@ -63,6 +63,18 @@ pnpm storybook:build     # static Storybook build for @pack-challenge/ui
 
 Example: after `pnpm install`, `pnpm test` should report green smoke tests for web, api, ui, and domain. Open Storybook to see the **Welcome** story; the UI package also serves a `/ds` stub route under `pnpm --filter @pack-challenge/ui dev`.
 
+## How we test
+
+GitHub Actions workflow **PR gate** (`.github/workflows/pr-gate.yml`) on `pull_request` and `push` to `main`:
+
+| Job | Command |
+| --- | --- |
+| `lint` | `pnpm lint` |
+| `unit` | `pnpm test` |
+| `audit` | `pnpm audit` (`pnpm audit --audit-level=high`) |
+
+Audit fails the gate on **high** and **critical** advisories; moderate/low are reported in the job summary but do not fail. Mark these three checks as required on `main` for an honest merge.
+
 ## Technical decisions
 
 | Choice | Why | Discarded |
@@ -78,7 +90,7 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 
 - **Scaffold over product** — empty Nest and domain keep the graph honest; nothing pretends to upload files yet.
 - **Library UI as SvelteKit app** — `/ds` and Storybook need a Kit surface; that adds demo-app weight versus a pure component folder.
-- **No full CI gate yet** — local `pnpm test` / Storybook build are the evidence until the next infra issue.
+- **PR gate ≠ full quality matrix** — lint/unit/audit only; Storybook, a11y, and integration stay later.
 - **Node 22+** — aligns with current toolchain; older LTS is out of scope.
 
 ## Quality evidence
@@ -86,10 +98,11 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 | Check | Command | Expected |
 | --- | --- | --- |
 | Install | `pnpm install` | Lockfile resolves all `@pack-challenge/*` workspaces |
-| Smoke tests | `pnpm test` | Unit smokes pass for web, api, ui, domain |
+| PR lint | `pnpm lint` (CI job `lint`) | Workspace lint green |
+| PR unit | `pnpm test` (CI job `unit`) | Smoke tests green for web, api, ui, domain |
+| PR audit | `pnpm audit` (CI job `audit`) | No high/critical advisories; summary in the job log |
 | UI typecheck/build | `pnpm --filter @pack-challenge/ui build` | `svelte-check` clean |
 | Storybook | `pnpm storybook:build` | `storybook-static` for UI |
-| Lint (UI) | `pnpm --filter @pack-challenge/ui lint` | Prettier + ESLint clean |
 
 ## Lessons learned
 
@@ -99,7 +112,7 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 
 ## Next steps
 
-1. PR CI gate (lint/test) on the workspace.
+1. Daily scheduled dependency audit (follow-up infra issue).
 2. Compose Postgres + wire Nest beyond the stub.
 3. Domain Zod schemas and the first UI atoms against `/ds`.
 4. Product upload/list flow once the stack boots as one path.
