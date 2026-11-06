@@ -293,6 +293,16 @@ export {
 } from '../components/atoms/toast-sonner/index.js';
 export type { ToasterProps } from '../components/atoms/toast-sonner/index.js';
 export {
+	FilePickerField,
+	filePickerFieldControlsBaseClass,
+	filePickerFieldErrorBaseClass,
+	filePickerFieldRootBaseClass,
+	resolveFilePickerFieldControls,
+	resolveFilePickerFieldError,
+	resolveFilePickerFieldRoot
+} from '../components/molecules/file-picker-field/index.js';
+export type { FilePickerFieldProps } from '../components/molecules/file-picker-field/index.js';
+export {
 	SearchField,
 	resolveSearchFieldInput,
 	resolveSearchFieldRoot,
