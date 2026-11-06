@@ -31,3 +31,10 @@ export type {
 	DividerOrientation,
 	DividerProps
 } from '../components/particles/divider/index.js';
+export {
+	VisuallyHidden,
+	NOT_SR_ONLY_CLASS,
+	resolveVisuallyHidden,
+	SR_ONLY_CLASS
+} from '../components/particles/visually-hidden/index.js';
+export type { VisuallyHiddenProps } from '../components/particles/visually-hidden/index.js';
