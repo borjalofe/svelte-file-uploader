@@ -37,6 +37,8 @@ This milestone only answers that foundation question — not the product yet.
 - Atoms a11y CI — required `a11y` job (`pnpm a11y`); axe via Storybook Vitest for stories tagged `a11y-gate` — [`packages/ui/A11Y.md`](./packages/ui/A11Y.md)
 - Atom **Button** — `packages/ui/src/components/atoms/button/` (shadcn-svelte new-york on semantic tokens; unit + `a11y-gate` stories)
 - Atom **Input** — `packages/ui/src/components/atoms/input/` (shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` story)
+- Atom **Label** — `packages/ui/src/components/atoms/label/` (bits-ui / shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` stories)
+- Atom **Textarea** — `packages/ui/src/components/atoms/textarea/` (shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` story)
 
 **Out of scope**
 
@@ -67,7 +69,7 @@ flowchart LR
 | --- | --- | --- |
 | `apps/web` | `@pack-challenge/web` | SvelteKit host |
 | `apps/api` | `@pack-challenge/api` | Bootable API stub |
-| `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + Button, Input) |
+| `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + Button, Input, Label, Textarea) |
 | `packages/domain` | `@pack-challenge/domain` | Shared domain placeholder |
 | `packages/tokens` | `@pack-challenge/tokens` | Validate `tokens/**` + emit theme CSS |
 | `tokens/` | — | DTCG sources (primitives + semantic + extension) → emitted theme CSS |
