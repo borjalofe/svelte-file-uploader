@@ -21,12 +21,13 @@ This milestone only answers that foundation question — not the product yet.
 - `packages/domain` (`@pack-challenge/domain`) — package entry + smoke test
 - Living ADRs under [docs/decisions/](./docs/decisions/)
 - Compose **`db`** (Postgres) + env contract; service names **`api`** / **`web`** reserved
+- Brand audit from Pack screenshots — [`docs/brand/AUDIT.md`](./docs/brand/AUDIT.md)
 
 **Out of scope**
 
 - Upload/list UI, Nest modules, Zod schemas, or deploy
 - Full Compose `api`/`web` images (M12), cloud DB
-- Design tokens or product components
+- Design tokens or product components (audit only — no invented scales)
 - a11y / integration / Storybook CI gates; container image scans (when images exist)
 
 ## Architecture
@@ -100,6 +101,10 @@ Workflow **Daily audit** (`.github/workflows/daily-audit.yml`) — independent o
 
 Job: `audit` → `pnpm audit` (fail at **high**/**critical**). Failures show in the Actions run / job summary; triage is manual.
 
+## Brand
+
+Visual contract audit (screenshots + findings): [`docs/brand/AUDIT.md`](./docs/brand/AUDIT.md). Includes color anchors, atomic classification, open questions, and the Resources filter rule (**All** always enabled; other type tabs disabled unless ≥1 resource of that type). Tokens and components come later — unknowns in that doc must not be invented.
+
 ## Technical decisions
 
 | Choice | Why | Discarded |
@@ -110,7 +115,7 @@ Job: `audit` → `pnpm audit` (fail at **high**/**critical**). Failures show in 
 
 ADRs: [0001 — Turborepo + pnpm](./docs/decisions/0001-turborepo-pnpm-monorepo.md), [0002 — Compose Postgres + env](./docs/decisions/0002-compose-postgres-env-contract.md). The [Decisions index](./docs/decisions/) lists only ADRs that shipped with code.
 
-Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral` — see `packages/ui/components.json` (`cssVariables: true`).
+Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral` — see `packages/ui/components.json` (`cssVariables: true`) and color/filter notes in [`docs/brand/AUDIT.md`](./docs/brand/AUDIT.md).
 
 ## Trade-offs and limitations
 
