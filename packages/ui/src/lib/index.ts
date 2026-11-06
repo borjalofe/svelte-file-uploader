@@ -58,6 +58,48 @@ export { Badge, badgeVariants, resolveBadge } from '../components/atoms/badge/in
 export type { BadgeProps, BadgeVariant } from '../components/atoms/badge/index.js';
 export { Button, buttonVariants, resolveButton } from '../components/atoms/button/index.js';
 export type { ButtonProps, ButtonSize, ButtonVariant } from '../components/atoms/button/index.js';
+export {
+	DropdownMenu,
+	DropdownMenuCheckboxGroup,
+	DropdownMenuCheckboxItem,
+	DropdownMenuContent,
+	DropdownMenuGroup,
+	DropdownMenuGroupHeading,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuPortal,
+	DropdownMenuRadioGroup,
+	DropdownMenuRadioItem,
+	DropdownMenuSeparator,
+	DropdownMenuShortcut,
+	DropdownMenuSub,
+	DropdownMenuSubContent,
+	DropdownMenuSubTrigger,
+	DropdownMenuTrigger,
+	dropdownMenuContentBaseClass,
+	dropdownMenuItemBaseClass,
+	resolveDropdownMenuContent,
+	resolveDropdownMenuItem
+} from '../components/atoms/dropdownmenu/index.js';
+export type {
+	DropdownMenuCheckboxGroupProps,
+	DropdownMenuCheckboxItemProps,
+	DropdownMenuContentProps,
+	DropdownMenuGroupHeadingProps,
+	DropdownMenuGroupProps,
+	DropdownMenuItemProps,
+	DropdownMenuLabelProps,
+	DropdownMenuPortalProps,
+	DropdownMenuRadioGroupProps,
+	DropdownMenuRadioItemProps,
+	DropdownMenuRootProps,
+	DropdownMenuSeparatorProps,
+	DropdownMenuShortcutProps,
+	DropdownMenuSubContentProps,
+	DropdownMenuSubProps,
+	DropdownMenuSubTriggerProps,
+	DropdownMenuTriggerProps
+} from '../components/atoms/dropdownmenu/index.js';
 export { Input, inputBaseClass, resolveInput } from '../components/atoms/input/index.js';
 export type { InputProps } from '../components/atoms/input/index.js';
 export { Label, labelBaseClass, resolveLabel } from '../components/atoms/label/index.js';
