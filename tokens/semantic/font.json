@@ -1,0 +1,16 @@
+{
+  "semantic": {
+    "font": {
+      "$type": "fontFamily",
+      "$description": "shadcn --font-sans / --font-mono ← provisional primitive stacks.",
+      "sans": {
+        "$value": "{primitive.fontFamily.sans}",
+        "$description": "Provisional until font/logo review"
+      },
+      "mono": {
+        "$value": "{primitive.fontFamily.mono}",
+        "$description": "Provisional"
+      }
+    }
+  }
+}

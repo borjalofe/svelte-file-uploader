@@ -1,0 +1,9 @@
+{
+  "semantic": {
+    "radius": {
+      "$type": "dimension",
+      "$description": "shadcn --radius ← single primitive radius (no sm|md|lg).",
+      "$value": "{primitive.radius.default}"
+    }
+  }
+}
