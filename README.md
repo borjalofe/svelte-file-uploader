@@ -42,6 +42,7 @@ This milestone only answers that foundation question — not the product yet.
 - Atom **Label** — `packages/ui/src/components/atoms/label/` (bits-ui / shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` stories)
 - Atom **Select** — `packages/ui/src/components/atoms/select/` (bits-ui / shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` stories)
 - Atom **Separator** — `packages/ui/src/components/atoms/separator/` (bits-ui / shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` story)
+- Atom **Tabs** — `packages/ui/src/components/atoms/tabs/` (bits-ui / shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` stories; per-item disabled)
 - Atom **Textarea** — `packages/ui/src/components/atoms/textarea/` (shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` story)
 
 **Out of scope**
@@ -73,7 +74,7 @@ flowchart LR
 | --- | --- | --- |
 | `apps/web` | `@pack-challenge/web` | SvelteKit host |
 | `apps/api` | `@pack-challenge/api` | Bootable API stub |
-| `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + Avatar, Badge, Button, Input, Label, Select, Separator, Textarea) |
+| `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + Avatar, Badge, Button, Input, Label, Select, Separator, Tabs, Textarea) |
 | `packages/domain` | `@pack-challenge/domain` | Shared domain placeholder |
 | `packages/tokens` | `@pack-challenge/tokens` | Validate `tokens/**` + emit theme CSS |
 | `tokens/` | — | DTCG sources (primitives + semantic + extension) → emitted theme CSS |
