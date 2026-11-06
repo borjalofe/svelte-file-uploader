@@ -38,3 +38,5 @@ export {
 	SR_ONLY_CLASS
 } from '../components/particles/visually-hidden/index.js';
 export type { VisuallyHiddenProps } from '../components/particles/visually-hidden/index.js';
+export { Input, inputBaseClass, resolveInput } from '../components/atoms/input/index.js';
+export type { InputProps } from '../components/atoms/input/index.js';
