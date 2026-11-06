@@ -292,3 +292,12 @@ export {
 	toasterStyleVars
 } from '../components/atoms/toast-sonner/index.js';
 export type { ToasterProps } from '../components/atoms/toast-sonner/index.js';
+export {
+	SearchField,
+	resolveSearchFieldInput,
+	resolveSearchFieldRoot,
+	searchFieldIconBaseClass,
+	searchFieldInputBaseClass,
+	searchFieldRootBaseClass
+} from '../components/molecules/search-field/index.js';
+export type { SearchFieldProps } from '../components/molecules/search-field/index.js';
