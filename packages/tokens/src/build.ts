@@ -34,6 +34,11 @@ export function isThemeColorToken(path: string[]): boolean {
   );
 }
 
+/** Semantic space scale → Tailwind `--spacing-*` via `@theme inline`. */
+export function isThemeSpaceToken(path: string[]): boolean {
+  return path[0] === 'semantic' && path[1] === 'space';
+}
+
 StyleDictionary.registerTransform({
   name: 'name/pack',
   type: 'name',
@@ -70,6 +75,16 @@ StyleDictionary.registerFormat({
     const themeColorLines = shortColorTokens.map(
       (token) => `  --color-${token.name}: var(--${token.name});`
     );
+
+    const spaceTokens = dictionary.allTokens.filter((token) =>
+      isThemeSpaceToken(token.path.map(String))
+    );
+    // --space-4 → @theme --spacing-4 (Tailwind gap/p/m scale)
+    const themeSpacingLines = spaceTokens.map((token) => {
+      const step = token.path.map(String).at(-1);
+      return `  --spacing-${step}: var(--${token.name});`;
+    });
+
     const themeExtra = [
       '  --radius: var(--radius);',
       '  --font-sans: var(--font-sans);',
@@ -92,6 +107,7 @@ StyleDictionary.registerFormat({
       '',
       '@theme inline {',
       ...themeColorLines,
+      ...themeSpacingLines,
       ...themeExtra,
       '}',
       ''
