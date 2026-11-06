@@ -16,11 +16,7 @@
 	});
 </script>
 
-<Story
-	name="Primary"
-	tags={['a11y-gate']}
-	parameters={{ a11y: { test: 'error' } }}
->
+<Story name="Primary" tags={['a11y-gate']} parameters={{ a11y: { test: 'error' } }}>
 	{#snippet template()}
 		<Button variant="default" size="default">Upload</Button>
 	{/snippet}
