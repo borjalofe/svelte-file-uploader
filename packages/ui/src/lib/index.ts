@@ -97,6 +97,12 @@ export type {
 	SelectValueProps
 } from '../components/atoms/select/index.js';
 export {
+	Separator,
+	resolveSeparator,
+	separatorBaseClass
+} from '../components/atoms/separator/index.js';
+export type { SeparatorProps } from '../components/atoms/separator/index.js';
+export {
 	Textarea,
 	resolveTextarea,
 	textareaBaseClass
