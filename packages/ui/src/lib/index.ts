@@ -292,3 +292,16 @@ export {
 	toasterStyleVars
 } from '../components/atoms/toast-sonner/index.js';
 export type { ToasterProps } from '../components/atoms/toast-sonner/index.js';
+export {
+	InputField,
+	inputFieldErrorClass,
+	inputFieldHintClass,
+	inputFieldRequiredMarkClass,
+	resolveInputFieldError,
+	resolveInputFieldHint,
+	resolveInputFieldIds
+} from '../components/molecules/input-field/index.js';
+export type {
+	InputFieldControl,
+	InputFieldProps
+} from '../components/molecules/input-field/index.js';
