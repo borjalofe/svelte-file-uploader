@@ -383,3 +383,15 @@ export type {
 	ResourceTypeCounts,
 	ResourcesToolbarProps
 } from '../components/organisms/resources-toolbar/index.js';
+export {
+	UPLOAD_CATEGORY_OPTIONS,
+	UPLOAD_LANGUAGE_OPTIONS,
+	UPLOAD_PROVIDER_OPTIONS,
+	UploadResourceDialog,
+	resolveUploadResourceDialogForm,
+	uploadResourceDialogFormBaseClass
+} from '../components/organisms/upload-resource-dialog/index.js';
+export type {
+	UploadResourceDialogProps,
+	UploadResourcePayload
+} from '../components/organisms/upload-resource-dialog/index.js';
