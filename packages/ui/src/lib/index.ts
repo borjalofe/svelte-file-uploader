@@ -400,6 +400,16 @@ export type {
 	ResourcesToolbarProps
 } from '../components/organisms/resources-toolbar/index.js';
 export {
+	SupportChatFab,
+	resolveSupportChatFabButton,
+	resolveSupportChatFabRoot,
+	resolveSupportChatFabStatus,
+	supportChatFabButtonBaseClass,
+	supportChatFabRootBaseClass,
+	supportChatFabStatusBaseClass
+} from '../components/organisms/support-chat-fab/index.js';
+export type { SupportChatFabProps } from '../components/organisms/support-chat-fab/index.js';
+export {
 	UPLOAD_CATEGORY_OPTIONS,
 	UPLOAD_LANGUAGE_OPTIONS,
 	UPLOAD_PROVIDER_OPTIONS,
