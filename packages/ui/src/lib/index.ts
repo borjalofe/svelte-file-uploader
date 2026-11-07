@@ -421,3 +421,19 @@ export type {
 	UploadResourceDialogProps,
 	UploadResourcePayload
 } from '../components/organisms/upload-resource-dialog/index.js';
+export {
+	DsCatalogLayout,
+	dsCatalogLayoutAsideBaseClass,
+	dsCatalogLayoutMainBaseClass,
+	dsCatalogLayoutNavBaseClass,
+	dsCatalogLayoutNavLinkActiveClass,
+	dsCatalogLayoutNavLinkBaseClass,
+	dsCatalogLayoutRootBaseClass,
+	dsCatalogLayoutTitleBaseClass,
+	resolveDsCatalogLayoutRoot,
+	resolveDsCatalogNavLink
+} from '../components/templates/ds-catalog-layout/index.js';
+export type {
+	DsCatalogLayoutProps,
+	DsCatalogNavItem
+} from '../components/templates/ds-catalog-layout/index.js';
