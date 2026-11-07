@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
-import { RESOURCE_FILE_SIZE_MAX, type ResourceListQueryInput } from '@pack-challenge/domain';
+import { RESOURCE_FILE_SIZE_MAX } from '@pack-challenge/domain';
 import { ResourcesService, type MultipartResourceFields } from './resources.service.js';
 
 @Controller('resources')
@@ -21,7 +21,7 @@ export class ResourcesController {
 	constructor(private readonly resources: ResourcesService) {}
 
 	/**
-	 * GET /resources — list resources.
+	 * GET /resources — list/search with form fields + safe file metadata (no `storagePath`).
 	 *
 	 * Query params (shared Zod `resourceListQuerySchema`):
 	 * - `q` — optional search string; case-insensitive match on **title** OR **description** (ILIKE / substring)
@@ -29,7 +29,7 @@ export class ResourcesController {
 	 * - `limit` (default 20), `offset` (default 0)
 	 */
 	@Get()
-	list(@Query() query: ResourceListQueryInput) {
+	list(@Query() query: Record<string, string | string[] | undefined>) {
 		return this.resources.list(query);
 	}
 
