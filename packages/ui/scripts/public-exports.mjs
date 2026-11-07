@@ -39,6 +39,7 @@ export function readAllowlist() {
 	return [...raw.exports].sort((a, b) => a.localeCompare(b));
 }
 
+/** @param {string[]} exports */
 export function writeAllowlist(exports) {
 	const payload = {
 		description:
