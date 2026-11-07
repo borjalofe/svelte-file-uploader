@@ -2,6 +2,13 @@
 @import '@pack-challenge/tokens/theme.css';
 
 /*
+ * Tailwind v4 ignores node_modules / dependency packages by default.
+ * Register the workspace UI kit so utilities used only in @pack-challenge/ui
+ * (flex, sr-only, bg-primary, …) are emitted into the web CSS bundle.
+ */
+@source '../../../../packages/ui/src';
+
+/*
  * Pack theme: CSS variables from @pack-challenge/tokens (generated).
  * UI organisms use semantic/extension utilities — no raw hex.
  */
