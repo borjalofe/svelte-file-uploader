@@ -4,6 +4,7 @@ import {
 	Get,
 	HttpCode,
 	HttpStatus,
+	Inject,
 	Param,
 	Post,
 	Query,
@@ -18,7 +19,8 @@ import { ResourcesService, type MultipartResourceFields } from './resources.serv
 
 @Controller('resources')
 export class ResourcesController {
-	constructor(private readonly resources: ResourcesService) {}
+	// Explicit @Inject: tsx (Compose/dev) does not emit design:paramtypes; SWC tests do.
+	constructor(@Inject(ResourcesService) private readonly resources: ResourcesService) {}
 
 	/**
 	 * GET /resources — list/search with form fields + safe file metadata (no `storagePath`).
