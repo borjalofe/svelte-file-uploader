@@ -470,3 +470,12 @@ export type {
 	TokenSwatchKind,
 	TokensReferencePageProps
 } from '../components/pages/tokens-reference-page/index.js';
+export {
+	UPLOAD_SUCCESS_TOAST_MESSAGE,
+	UploadResourceDemoPage,
+	resolveMockUploadSuccess,
+	resolveUploadResourceDemoPageRoot,
+	uploadResourceDemoPageIntroBaseClass,
+	uploadResourceDemoPageRootBaseClass
+} from '../components/pages/upload-resource-demo-page/index.js';
+export type { UploadResourceDemoPageProps } from '../components/pages/upload-resource-demo-page/index.js';
