@@ -325,3 +325,21 @@ export type {
 	SelectFieldOption,
 	SelectFieldProps
 } from '../components/molecules/select-field/index.js';
+export {
+	MultiSelectList,
+	ROLE_MULTI_OPTIONS,
+	multiSelectListCheckboxBaseClass,
+	multiSelectListErrorBaseClass,
+	multiSelectListGroupBaseClass,
+	multiSelectListItemBaseClass,
+	multiSelectListRootBaseClass,
+	resolveMultiSelectListCheckbox,
+	resolveMultiSelectListError,
+	resolveMultiSelectListGroup,
+	resolveMultiSelectListItem,
+	resolveMultiSelectListRoot
+} from '../components/molecules/multi-select-list/index.js';
+export type {
+	MultiSelectListOption,
+	MultiSelectListProps
+} from '../components/molecules/multi-select-list/index.js';
