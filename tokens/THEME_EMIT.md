@@ -15,7 +15,8 @@ Issue: #18
 
 | Surface | How |
 | --- | --- |
-| `@pack-challenge/ui` `layout.css` | `@import '@pack-challenge/tokens/theme.css'` |
+| `@pack-challenge/ui` `layout.css` | `@import '@pack-challenge/tokens/theme.css'` + `@source '../'` |
+| `@pack-challenge/web` `layout.css` | same theme import + `@source` → `packages/ui/src` (Tailwind v4 does not scan workspace UI otherwise) |
 | Storybook | preview imports `layout.css`; Theme story uses `bg-primary` |
 
 ## Guardrails

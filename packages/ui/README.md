@@ -40,12 +40,21 @@ Runtime dependencies pulled with the library (do not re-declare unless you need 
 
 ## Theme import
 
-Components use Tailwind v4 utilities bound to Pack CSS variables. Import the emitted theme **before** (or with) Tailwind in the app stylesheet:
+Components use Tailwind v4 utilities bound to Pack CSS variables. Import the emitted theme **before** (or with) Tailwind in the app stylesheet, and **register this package as a Tailwind source** (v4 ignores `node_modules` / dependency packages unless `@source`d):
 
 ```css
 @import 'tailwindcss';
 @import '@pack-challenge/tokens/theme.css';
+
+/* Monorepo: path is relative to the app stylesheet */
+@source '../../../../packages/ui/src';
+
+/* Published / node_modules consumer example:
+@source '../node_modules/@pack-challenge/ui/src';
+*/
 ```
+
+Without `@source`, the app HTML will render but Pack UI classes (`flex`, `sr-only`, `bg-primary`, …) will not appear in the CSS bundle.
 
 Build tokens first when the CSS is missing (`packages/tokens/dist/` is gitignored):
 

@@ -2,6 +2,12 @@
 @import '@pack-challenge/tokens/theme.css';
 
 /*
+ * Scan this package's sources relative to this stylesheet so Storybook (and any
+ * consumer that imports this file) emits utilities defined only under src/.
+ */
+@source '../';
+
+/*
  * Pack theme: CSS variables from @pack-challenge/tokens (generated).
  * components.json → tailwind.cssVariables: true (shadcn-svelte new-york / neutral).
  * Components must use semantic/extension utilities — no raw hex.
