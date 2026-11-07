@@ -399,3 +399,13 @@ export type {
 	ResourceTypeCounts,
 	ResourcesToolbarProps
 } from '../components/organisms/resources-toolbar/index.js';
+export {
+	SupportChatFab,
+	resolveSupportChatFabButton,
+	resolveSupportChatFabRoot,
+	resolveSupportChatFabStatus,
+	supportChatFabButtonBaseClass,
+	supportChatFabRootBaseClass,
+	supportChatFabStatusBaseClass
+} from '../components/organisms/support-chat-fab/index.js';
+export type { SupportChatFabProps } from '../components/organisms/support-chat-fab/index.js';
