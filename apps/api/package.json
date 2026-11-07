@@ -12,7 +12,8 @@
 		"start": "tsx src/main.ts",
 		"test": "vitest run",
 		"db:generate": "drizzle-kit generate",
-		"db:migrate": "drizzle-kit migrate"
+		"db:migrate": "drizzle-kit migrate",
+		"db:migrate:runtime": "tsx src/db/migrate.ts"
 	},
 	"dependencies": {
 		"@nestjs/common": "^12.4.0",
