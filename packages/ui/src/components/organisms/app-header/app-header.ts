@@ -11,7 +11,8 @@ export const appHeaderRootBaseClass =
 export const appHeaderBrandBaseClass =
 	'text-foreground text-lg font-semibold tracking-tight lowercase';
 
-export const appHeaderNavBaseClass = 'flex min-w-0 flex-1 items-center justify-center gap-4 overflow-x-auto';
+export const appHeaderNavBaseClass =
+	'flex min-w-0 flex-1 items-center justify-center gap-4 overflow-x-auto';
 
 export const appHeaderNavLinkBaseClass =
 	'text-muted-foreground hover:text-foreground inline-flex h-9 shrink-0 items-center border-b-2 border-transparent text-sm font-medium transition-colors';

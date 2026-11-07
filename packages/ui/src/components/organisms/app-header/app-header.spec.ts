@@ -18,9 +18,7 @@ describe('AppHeader organism (#48)', () => {
 			'Counterparties',
 			'Events'
 		]);
-		expect(PACK_APP_HEADER_NAV_ITEMS.find((item) => item.label === 'Resources')?.active).toBe(
-			true
-		);
+		expect(PACK_APP_HEADER_NAV_ITEMS.find((item) => item.label === 'Resources')?.active).toBe(true);
 	});
 
 	it('uses semantic chrome and primary active underline (no raw hex)', () => {

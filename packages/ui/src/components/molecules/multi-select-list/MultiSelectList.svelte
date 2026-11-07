@@ -66,7 +66,7 @@
 	{#if variant === 'dropdown'}
 		<Select type="multiple" bind:value>
 			<SelectTrigger
-				id={id}
+				{id}
 				class="w-full"
 				{disabled}
 				aria-labelledby={labelId}
