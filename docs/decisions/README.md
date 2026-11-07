@@ -8,3 +8,4 @@ Living Architecture Decision Records (ADRs) for this repo. Only ship ADRs that t
 | [0002](./0002-compose-postgres-env-contract.md) | Compose Postgres + env contract | Accepted |
 | [0003](./0003-token-pipeline.md) | Token validation + theme emit pipeline | Accepted |
 | [0004](./0004-theme-css-emit.md) | Theme CSS emit (`:root` / `.dark` / `@theme inline`) | Accepted |
+| [0005](./0005-drizzle-resources-migration.md) | Drizzle for Resources migrations | Accepted |
