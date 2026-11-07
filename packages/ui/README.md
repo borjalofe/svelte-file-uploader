@@ -2,7 +2,7 @@
 
 Pack design-system library for Svelte 5 apps (particles → atoms → molecules → organisms → templates → pages). Public entry: `packages/ui/src/lib/index.ts` via `package.json` `exports["."]`.
 
-Today the package is **workspace-private** (`private: true`, version `0.0.0`). Consumers in this monorepo use `workspace:*`. Registry install / SemVer `0.y.z` land in later M9 contract issues.
+Preprod version **`0.1.0`** (`0.y.z` only — not production `1.x`). The package remains **workspace-private** (`private: true`) until a separate human-approved publish. Consumers in this monorepo use `workspace:*`. See [`CHANGELOG.md`](./CHANGELOG.md).
 
 Related gates:
 
@@ -127,6 +127,7 @@ pnpm --filter @pack-challenge/ui build-storybook
 
 ## Non-goals (this package README)
 
-- Publishing / changelog SemVer policy (separate M9 contract issue)
+- npm registry publish (preprod tag only unless separately approved)
+- Production SemVer `1.x`
 - Nest API, Zod domain schemas, or production upload backends
 - Guaranteeing deep component-path imports
