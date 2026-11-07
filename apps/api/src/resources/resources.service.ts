@@ -8,8 +8,11 @@ import {
 	RESOURCE_FILE_MIME_TYPES,
 	RESOURCE_FILE_SIZE_MAX,
 	resourceCreateSchema,
+	resourceListQuerySchema,
 	type Resource,
-	type ResourceFileMimeType
+	type ResourceFileMimeType,
+	type ResourceList,
+	type ResourceListQueryInput
 } from '@pack-challenge/domain';
 import { LocalFileStore } from '../storage/local-file.store.js';
 import type { ResourcesRepository } from './resources.repository.js';
@@ -30,6 +33,24 @@ export class ResourcesService {
 		private readonly files: LocalFileStore,
 		private readonly resources: ResourcesRepository
 	) {}
+
+	/**
+	 * List/search resources.
+	 * Query param `q` (optional): case-insensitive substring match on **title** and **description**.
+	 */
+	async list(rawQuery: ResourceListQueryInput): Promise<ResourceList> {
+		const parsed = resourceListQuerySchema.safeParse(rawQuery);
+		if (!parsed.success) {
+			throw new BadRequestException({
+				message: 'Validation failed',
+				issues: parsed.error.issues.map((issue) => ({
+					path: issue.path.join('.'),
+					message: issue.message
+				}))
+			});
+		}
+		return this.resources.list(parsed.data);
+	}
 
 	async createFromMultipart(
 		fields: MultipartResourceFields,
