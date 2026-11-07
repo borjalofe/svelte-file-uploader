@@ -367,7 +367,6 @@ export {
 } from '../components/organisms/app-header/index.js';
 export type { AppHeaderNavItem, AppHeaderProps } from '../components/organisms/app-header/index.js';
 export {
-	RESOURCE_CONTENT_TYPES,
 	ResourcesDataTable,
 	countResourceTypes,
 	resolveResourcesDataTableRoot,
@@ -378,10 +377,25 @@ export {
 	sortResourceRows
 } from '../components/organisms/resources-data-table/index.js';
 export type {
-	ResourceContentType,
-	ResourceTypeCounts,
 	ResourcesDataTableProps,
 	ResourcesDataTableRow,
 	ResourcesDataTableSortColumn,
 	ResourcesDataTableSortDirection
 } from '../components/organisms/resources-data-table/index.js';
+export {
+	RESOURCE_CONTENT_TYPES,
+	RESOURCE_TAB_LABELS,
+	RESOURCE_TAB_VALUES,
+	ResourcesToolbar,
+	isResourceTabEnabled,
+	resolveResourcesToolbarRoot,
+	resolveResourcesToolbarSearch,
+	resourcesToolbarRootBaseClass,
+	resourcesToolbarSearchBaseClass
+} from '../components/organisms/resources-toolbar/index.js';
+export type {
+	ResourceContentType,
+	ResourceTabValue,
+	ResourceTypeCounts,
+	ResourcesToolbarProps
+} from '../components/organisms/resources-toolbar/index.js';

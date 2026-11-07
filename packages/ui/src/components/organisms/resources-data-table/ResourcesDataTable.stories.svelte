@@ -22,7 +22,7 @@
 			viewCount: 42,
 			uploadedBy: 'Ada Lovelace',
 			provider: 'AWS',
-			type: 'video'
+			type: 'videos'
 		},
 		{
 			id: '2',
@@ -31,7 +31,7 @@
 			viewCount: 12,
 			uploadedBy: 'Grace Hopper',
 			provider: 'GCP',
-			type: 'document'
+			type: 'documents'
 		},
 		{
 			id: '3',
@@ -40,7 +40,7 @@
 			viewCount: 7,
 			uploadedBy: 'Ada Lovelace',
 			provider: 'AWS',
-			type: 'lesson'
+			type: 'lessons'
 		}
 	];
 </script>
@@ -54,7 +54,7 @@
 <Story name="VideosOnly">
 	{#snippet template()}
 		<ResourcesDataTable
-			rows={demoRows.filter((row) => row.type === 'video')}
+			rows={demoRows.filter((row) => row.type === 'videos')}
 			caption="Video resources"
 		/>
 	{/snippet}

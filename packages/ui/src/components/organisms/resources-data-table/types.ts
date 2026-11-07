@@ -1,8 +1,8 @@
 import type { HTMLAttributes } from 'svelte/elements';
 import type { ClassValue, WithElementRef } from '../../../lib/utils.js';
+import type { ResourceContentType, ResourceTypeCounts } from '../resources-toolbar/types.js';
 
-/** Content types used by Resources tabs (All is not a row type). */
-export type ResourceContentType = 'video' | 'document' | 'lesson' | 'archive';
+export type { ResourceContentType, ResourceTypeCounts };
 
 export type ResourcesDataTableRow = {
 	id: string;
@@ -11,7 +11,7 @@ export type ResourcesDataTableRow = {
 	viewCount: number;
 	uploadedBy: string;
 	provider: string;
-	/** Per-row type for toolbar tab enablement / counts. */
+	/** Per-row type for toolbar tab enablement / counts (`videos` | …). */
 	type: ResourceContentType;
 };
 
@@ -19,8 +19,6 @@ export type ResourcesDataTableSortColumn =
 	'title' | 'path' | 'viewCount' | 'uploadedBy' | 'provider' | 'type';
 
 export type ResourcesDataTableSortDirection = 'asc' | 'desc';
-
-export type ResourceTypeCounts = Record<ResourceContentType, number>;
 
 export type ResourcesDataTableProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
 	rows?: ResourcesDataTableRow[];

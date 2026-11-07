@@ -10,7 +10,7 @@
 			viewCount: 42,
 			uploadedBy: 'Ada Lovelace',
 			provider: 'AWS',
-			type: 'video'
+			type: 'videos'
 		},
 		{
 			id: '2',
@@ -19,7 +19,7 @@
 			viewCount: 12,
 			uploadedBy: 'Grace Hopper',
 			provider: 'GCP',
-			type: 'document'
+			type: 'documents'
 		}
 	];
 </script>

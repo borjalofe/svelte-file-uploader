@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
+import { RESOURCE_CONTENT_TYPES } from '../resources-toolbar/resources-toolbar.js';
 import {
-	RESOURCE_CONTENT_TYPES,
 	countResourceTypes,
 	resolveResourcesDataTableRoot,
 	sortResourceRows
@@ -15,7 +15,7 @@ const sampleRows: ResourcesDataTableRow[] = [
 		viewCount: 2,
 		uploadedBy: 'Ada',
 		provider: 'AWS',
-		type: 'document'
+		type: 'documents'
 	},
 	{
 		id: '2',
@@ -24,7 +24,7 @@ const sampleRows: ResourcesDataTableRow[] = [
 		viewCount: 10,
 		uploadedBy: 'Grace',
 		provider: 'GCP',
-		type: 'video'
+		type: 'videos'
 	},
 	{
 		id: '3',
@@ -33,17 +33,17 @@ const sampleRows: ResourcesDataTableRow[] = [
 		viewCount: 1,
 		uploadedBy: 'Ada',
 		provider: 'AWS',
-		type: 'video'
+		type: 'videos'
 	}
 ];
 
 describe('ResourcesDataTable organism (#50)', () => {
-	it('exposes type metadata counts for toolbar tab enablement', () => {
-		expect(RESOURCE_CONTENT_TYPES).toEqual(['video', 'document', 'lesson', 'archive']);
+	it('exposes type metadata counts aligned with ResourcesToolbar tabs', () => {
+		expect(RESOURCE_CONTENT_TYPES).toEqual(['videos', 'documents', 'lessons', 'archive']);
 		expect(countResourceTypes(sampleRows)).toEqual({
-			video: 2,
-			document: 1,
-			lesson: 0,
+			videos: 2,
+			documents: 1,
+			lessons: 0,
 			archive: 0
 		});
 	});

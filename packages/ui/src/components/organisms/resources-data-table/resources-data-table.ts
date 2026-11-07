@@ -1,24 +1,17 @@
 import { type ClassValue, cn } from '../../../lib/utils.js';
+import { RESOURCE_CONTENT_TYPES } from '../resources-toolbar/resources-toolbar.js';
+import type { ResourceContentType, ResourceTypeCounts } from '../resources-toolbar/types.js';
 import type {
-	ResourceContentType,
-	ResourceTypeCounts,
 	ResourcesDataTableRow,
 	ResourcesDataTableSortColumn,
 	ResourcesDataTableSortDirection
 } from './types.js';
 
-/** Visible Resources type tabs excluding All (see docs/brand/AUDIT.md). */
-export const RESOURCE_CONTENT_TYPES = [
-	'video',
-	'document',
-	'lesson',
-	'archive'
-] as const satisfies readonly ResourceContentType[];
-
+/** Singular Badge labels (table cells); tabs use plural via ResourcesToolbar. */
 export const resourceContentTypeLabel: Record<ResourceContentType, string> = {
-	video: 'Video',
-	document: 'Document',
-	lesson: 'Lesson',
+	videos: 'Video',
+	documents: 'Document',
+	lessons: 'Lesson',
 	archive: 'Archive'
 };
 
@@ -31,14 +24,12 @@ export const resourcesDataTableSortIconBaseClass = 'size-3.5 shrink-0 opacity-70
 
 /** Count rows by content type for toolbar tab enablement (≥1 enables a tab). */
 export function countResourceTypes(rows: ResourcesDataTableRow[]): ResourceTypeCounts {
-	const counts: ResourceTypeCounts = {
-		video: 0,
-		document: 0,
-		lesson: 0,
-		archive: 0
-	};
+	const counts: ResourceTypeCounts = {};
+	for (const type of RESOURCE_CONTENT_TYPES) {
+		counts[type] = 0;
+	}
 	for (const row of rows) {
-		counts[row.type] += 1;
+		counts[row.type] = (counts[row.type] ?? 0) + 1;
 	}
 	return counts;
 }

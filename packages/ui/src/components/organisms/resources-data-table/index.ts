@@ -1,6 +1,5 @@
 export { default as ResourcesDataTable } from './ResourcesDataTable.svelte';
 export {
-	RESOURCE_CONTENT_TYPES,
 	countResourceTypes,
 	resolveResourcesDataTableRoot,
 	resourceContentTypeLabel,
