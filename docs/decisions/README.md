@@ -10,3 +10,4 @@ Living Architecture Decision Records (ADRs) for this repo. Only ship ADRs that t
 | [0004](./0004-theme-css-emit.md) | Theme CSS emit (`:root` / `.dark` / `@theme inline`) | Accepted |
 | [0005](./0005-drizzle-resources-migration.md) | Drizzle for Resources migrations | Accepted |
 | [0006](./0006-nest-local-file-store.md) | Nest multipart create + local filesystem store | Accepted |
+| [0007](./0007-compose-full-stack.md) | Compose full-stack Postgres + API + web | Accepted |

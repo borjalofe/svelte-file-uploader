@@ -20,7 +20,7 @@ This milestone only answers that foundation question — not the product yet.
 - `packages/ui` (`@pack-challenge/ui`) — library layout, `/ds` stub, Tailwind (`cssVariables: true` placeholder), Storybook welcome, Vitest smoke
 - `packages/domain` (`@pack-challenge/domain`) — shared Zod Resource create/list schemas + constants (Nest + SvelteKit)
 - Living ADRs under [docs/decisions/](./docs/decisions/)
-- Compose **`db`** (Postgres) + env contract; service names **`api`** / **`web`** reserved
+- Compose **`db`** + **`api`** + **`web`** (Postgres, Nest, SvelteKit) for Pack evaluators
 - Brand audit from Pack screenshots — [`docs/brand/AUDIT.md`](./docs/brand/AUDIT.md)
 - Token pipeline CI — validate `tokens/**` + emit CSS vars (`pnpm tokens:check`)
 - Primitive color ramps (`brand` / `neutral`) — [`tokens/COLOR_RAMPS.md`](./tokens/COLOR_RAMPS.md)
@@ -70,8 +70,7 @@ This milestone only answers that foundation question — not the product yet.
 
 **Out of scope**
 
-- Upload/list product UI wired to the live API, or deploy
-- Full Compose `api`/`web` images (M12), cloud DB
+- Cloud DB / public deploy (later milestones)
 - Remaining atoms; remaining `/ds` demo pages; container image scans
 
 ## Architecture
@@ -104,45 +103,33 @@ flowchart LR
 
 ## How to run
 
-**Prerequisites:** Node ≥ 22, [pnpm](https://pnpm.io) 11, Docker (for Postgres).
+**Prerequisites:** Docker (Pack evaluator path). Optional for contributors: Node ≥ 22, [pnpm](https://pnpm.io) 11.
 
-```bash
-pnpm install
-pnpm dev                 # Turbo: web, ui, api stub, domain
-pnpm test                # smoke unit tests across the workspace
-pnpm tokens:check        # validate tokens/** + emit CSS vars
-pnpm storybook           # UI package → http://localhost:6006
-pnpm storybook:build     # static Storybook build for @pack-challenge/ui
-pnpm integration         # pages integration Vitest project (CI job `integration`)
-pnpm consumer-contract   # @pack-challenge/ui allowlist + export map + publish dry-run
-pnpm exports:check       # allowlist ↔ index.ts (also run inside consumer-contract)
-```
-
-Example: after `pnpm install`, `pnpm test` should report green smoke tests for web, api, ui, and domain. Open Storybook to see the **Welcome** story; the UI package also serves a `/ds` stub route under `pnpm --filter @pack-challenge/ui dev`.
-
-### How to run the database
+### Pack evaluator (Compose full stack)
 
 ```bash
 cp .env.example .env
+docker compose up --build
+```
+
+- **Web UI:** http://localhost:5173
+- **API health:** http://localhost:3000/health
+- **API resources:** http://localhost:3000/resources
+
+Compose applies Drizzle migrations on **`api`** start (`db` must be healthy first). Uploaded files persist in the `api_files` volume.
+
+### Contributor (host pnpm + Compose `db` only)
+
+```bash
+pnpm install
+cp .env.example .env
 docker compose up -d db
-docker compose ps   # db should be healthy
-```
-
-Compose services: **`db`** (now), **`api`** / **`web`** (reserved for M12). Host apps use `DATABASE_URL` from `.env`; in-compose services reach Postgres at hostname `db`.
-
-Apply the Resources migration (Drizzle, maps domain Zod fields):
-
-```bash
 pnpm --filter @pack-challenge/api db:migrate
-```
-
-Run the Nest API (host; uses `DATABASE_URL` + `FILE_STORAGE_ROOT` from `.env`):
-
-```bash
-pnpm --filter @pack-challenge/api start   # default http://localhost:3000
-# GET /resources — list/search (safe file meta; no storagePath)
-# GET /resources/:id/file — download by id
-# POST /resources — multipart create
+pnpm --filter @pack-challenge/api start   # http://localhost:3000
+pnpm --filter @pack-challenge/web dev     # http://localhost:5173
+pnpm test
+pnpm tokens:check
+pnpm storybook                           # http://localhost:6006
 ```
 
 
@@ -205,7 +192,7 @@ Semantic space: [`tokens/SEMANTIC_SPACE.md`](./tokens/SEMANTIC_SPACE.md) — `se
 | Style Dictionary + custom token guards | Emit CSS vars; fail CI on bad aliases / forbidden paths | Schema-only CI (can’t resolve `{aliases}`); hand-maintained CSS vars |
 | Generate-on-build theme (`:root` / `.dark` / `@theme`) | One source of truth; Tailwind utilities from CSS vars | Committing generated CSS; hand-maintained `@theme` |
 
-ADRs: [0001](./docs/decisions/0001-turborepo-pnpm-monorepo.md), [0002](./docs/decisions/0002-compose-postgres-env-contract.md), [0003 — token pipeline](./docs/decisions/0003-token-pipeline.md), [0004 — theme CSS emit](./docs/decisions/0004-theme-css-emit.md), [0005 — Drizzle resources migration](./docs/decisions/0005-drizzle-resources-migration.md), [0006 — Nest local file store](./docs/decisions/0006-nest-local-file-store.md). The [Decisions index](./docs/decisions/) lists only ADRs that shipped with code.
+ADRs: [0001](./docs/decisions/0001-turborepo-pnpm-monorepo.md), [0002](./docs/decisions/0002-compose-postgres-env-contract.md), [0003 — token pipeline](./docs/decisions/0003-token-pipeline.md), [0004 — theme CSS emit](./docs/decisions/0004-theme-css-emit.md), [0005 — Drizzle resources migration](./docs/decisions/0005-drizzle-resources-migration.md), [0006 — Nest local file store](./docs/decisions/0006-nest-local-file-store.md), [0007 — Compose full stack](./docs/decisions/0007-compose-full-stack.md). The [Decisions index](./docs/decisions/) lists only ADRs that shipped with code.
 
 Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral` — see `packages/ui/components.json` (`cssVariables: true`) and color/filter notes in [`docs/brand/AUDIT.md`](./docs/brand/AUDIT.md).
 
