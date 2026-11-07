@@ -11,7 +11,7 @@
           "spread": "0px",
           "color": "#00000026"
         },
-        "$description": "Provisional soft elevation (modal/toast-like)"
+        "$description": "Provisional Pack soft elevation for modal/toast (docs/brand/source). Recipe not measurable from PNGs — 0/4/16/0 @ 15% black locked for product until brand sign-off. Emits as Tailwind shadow-soft."
       }
     }
   }

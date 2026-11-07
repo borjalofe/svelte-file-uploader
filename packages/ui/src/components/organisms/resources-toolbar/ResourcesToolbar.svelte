@@ -7,7 +7,9 @@
 		RESOURCE_TAB_VALUES,
 		isResourceTabEnabled,
 		resolveResourcesToolbarRoot,
-		resolveResourcesToolbarSearch
+		resolveResourcesToolbarSearch,
+		resourcesToolbarTabsListBaseClass,
+		resourcesToolbarTabsTriggerBaseClass
 	} from './resources-toolbar.js';
 	import type { ResourceTabValue, ResourceTypeCounts, ResourcesToolbarProps } from './types.js';
 
@@ -39,9 +41,13 @@
 	{...restProps}
 >
 	<Tabs bind:value>
-		<TabsList aria-label={tabsLabel}>
+		<TabsList aria-label={tabsLabel} class={resourcesToolbarTabsListBaseClass}>
 			{#each RESOURCE_TAB_VALUES as tab (tab)}
-				<TabsTrigger value={tab} disabled={!isResourceTabEnabled(tab, counts)}>
+				<TabsTrigger
+					value={tab}
+					disabled={!isResourceTabEnabled(tab, counts)}
+					class={resourcesToolbarTabsTriggerBaseClass}
+				>
 					{RESOURCE_TAB_LABELS[tab]}
 				</TabsTrigger>
 			{/each}

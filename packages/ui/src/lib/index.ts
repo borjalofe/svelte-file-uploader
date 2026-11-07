@@ -393,7 +393,9 @@ export {
 	resolveResourcesToolbarRoot,
 	resolveResourcesToolbarSearch,
 	resourcesToolbarRootBaseClass,
-	resourcesToolbarSearchBaseClass
+	resourcesToolbarSearchBaseClass,
+	resourcesToolbarTabsListBaseClass,
+	resourcesToolbarTabsTriggerBaseClass
 } from '../components/organisms/resources-toolbar/index.js';
 export type {
 	ResourceContentType,

@@ -18,13 +18,13 @@ describe('Toast (Sonner) atom (#40)', () => {
 
 	it('applies semantic toast surface + Pack success extension classes', () => {
 		const resolved = resolveToaster();
-		expect(resolved.toastOptions.classes?.toast).toContain('group-[.toaster]:bg-background');
+		expect(resolved.toastOptions.classes?.toast).toContain('group-[.toaster]:bg-card');
 		expect(resolved.toastOptions.classes?.toast).toContain('group-[.toaster]:text-foreground');
 		expect(resolved.toastOptions.classes?.description).toContain('text-muted-foreground');
 		expect(resolved.toastOptions.classes?.success).toContain('bg-success');
 		expect(resolved.toastOptions.classes?.success).toContain('text-success-foreground');
 		expect(resolved.toastOptions.classes?.toast).not.toMatch(/#[0-9a-fA-F]{3,8}/);
-		expect(toastBaseClass).toContain('shadow-lg');
+		expect(toastBaseClass).toContain('shadow-soft');
 		expect(toastSuccessClass).toContain('border-success');
 	});
 
@@ -35,6 +35,6 @@ describe('Toast (Sonner) atom (#40)', () => {
 		});
 		expect(resolved.className).toContain('z-[100]');
 		expect(resolved.toastOptions.classes?.toast).toContain('uppercase');
-		expect(resolved.toastOptions.classes?.toast).toContain('bg-background');
+		expect(resolved.toastOptions.classes?.toast).toContain('bg-card');
 	});
 });

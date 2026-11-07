@@ -39,10 +39,10 @@ Also visible (not elevated to a full ramp): near-white surfaces (`#FFFFFF` / `#F
 | --- | --- |
 | Controls | Text fields, selects, and primary buttons use **rounded** corners (moderate radius — not pill buttons except chips). |
 | Modal | Card-like panel, light border; sits above a **dimming overlay** (1)/(2). |
-| Shadow | Soft elevation under modal / toast — **recipe not measurable** from PNGs (blur/spread/opacity unknown). |
+| Shadow | Soft elevation under modal / toast — recipe not measurable from PNGs; **provisional product lock:** `shadow-soft` (`0 4px 16px 0 #00000026`). |
 | Pills | Provider/Type badges are pill-shaped, neutral gray fill, no strong border. |
 | Nav | Active top-nav item (**Resources**) uses an underline accent in primary orange. |
-| Sub-nav | Type tabs (All / Videos / …): active **All** reads as selected; inactive tabs look quieter. **Active color vs primary orange is unclear** from screenshots alone. |
+| Sub-nav | Type tabs (All / Videos / …): active **All** uses a thin **blue** underline (not orange primary). Product lock: `extension.color.info` / `border-info` until brand sign-off. |
 
 ## Pattern → atomic classification
 
@@ -92,8 +92,8 @@ Do **not** invent answers in token PRs until resolved or explicitly scoped:
 | Exact **font-family** + weight scale | Screenshots are raster; no CSS |
 | **Logo** SVG / asset pack | Only raster wordmark visible |
 | Full **brand color ramp** (hover/pressed/muted primary, borders, surfaces) | Only a few anchors sampled |
-| **Sub-nav active** color (blue/dark vs orange primary) | Inactive vs active styling ambiguous in PNGs |
-| **Shadow** recipe (y-offset, blur, opacity) | Not measurable from flat screenshots |
+| **Sub-nav active** color (blue/dark vs orange primary) | **Provisional product lock (P2):** `extension.color.info` `#2563EB` underline on Resources type tabs — observed blue in source (3); still open for brand sign-off |
+| **Shadow** recipe (y-offset, blur, opacity) | **Provisional product lock (P2):** `primitive.shadow.soft` = `0 4px 16px 0 #00000026` → Tailwind `shadow-soft` on modal/toast; still open for brand sign-off |
 | **Dark mode** | No dark UI in source images |
 | Focus rings / motion / density scale | Not specified |
 | Full type taxonomy beyond visible tabs | Only All / Videos / Documents / Lessons / Archive shown |

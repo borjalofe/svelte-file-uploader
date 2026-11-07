@@ -273,6 +273,8 @@
 		"ResourcesToolbarProps",
 		"resourcesToolbarRootBaseClass",
 		"resourcesToolbarSearchBaseClass",
+		"resourcesToolbarTabsListBaseClass",
+		"resourcesToolbarTabsTriggerBaseClass",
 		"ResourceTabValue",
 		"ResourceTypeCounts",
 		"ROLE_MULTI_OPTIONS",
