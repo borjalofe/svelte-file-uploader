@@ -38,8 +38,12 @@ export default defineConfig(
 		}
 	},
 	{
-		// Design-system atoms accept consumer hrefs; SvelteKit resolve() belongs in apps.
-		files: ['src/components/atoms/**/*.svelte'],
+		// Design-system components accept consumer hrefs; SvelteKit resolve() belongs in apps.
+		files: [
+			'src/components/atoms/**/*.svelte',
+			'src/components/molecules/**/*.svelte',
+			'src/components/organisms/**/*.svelte'
+		],
 		rules: {
 			'svelte/no-navigation-without-resolve': 'off'
 		}
