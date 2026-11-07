@@ -31,11 +31,7 @@ export class ApiError extends Error {
 	readonly status: number;
 	readonly issues: { path: string; message: string }[];
 
-	constructor(
-		message: string,
-		status: number,
-		issues: { path: string; message: string }[] = []
-	) {
+	constructor(message: string, status: number, issues: { path: string; message: string }[] = []) {
 		super(message);
 		this.name = 'ApiError';
 		this.status = status;
