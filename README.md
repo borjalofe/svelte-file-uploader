@@ -59,6 +59,7 @@ This milestone only answers that foundation question — not the product yet.
 - Organism **ResourcesToolbar** — `packages/ui/src/components/organisms/resources-toolbar/` (type Tabs + SearchField + Upload; **All** never disabled; other tabs need ≥1 of that type from parent `counts`; unit + axe + `a11y-gate` stories)
 - Organism **SupportChatFab** — `packages/ui/src/components/organisms/support-chat-fab/` (circular primary FAB + extension success status dot; click callback only; unit + axe + `a11y-gate` story)
 - Organism **UploadResourceDialog** — `packages/ui/src/components/organisms/upload-resource-dialog/` (Dialog + stacked InputField/SelectField/MultiSelectList/FilePickerField + Upload; mock `onUpload` payload; bits-ui focus trap; unit + axe + `a11y-gate` stories)
+- Template **DashboardShell** — `packages/ui/src/components/templates/dashboard-shell/` (header + main Card + optional region slots; no domain copy; Storybook only — no automated unit/a11y)
 
 **Out of scope**
 
@@ -89,7 +90,7 @@ flowchart LR
 | --- | --- | --- |
 | `apps/web` | `@pack-challenge/web` | SvelteKit host |
 | `apps/api` | `@pack-challenge/api` | Bootable API stub |
-| `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + atoms; molecules FilePickerField, InputField, MultiSelectList, SearchField, SelectField; organisms AppHeader, ResourcesDataTable, ResourcesToolbar, SupportChatFab, UploadResourceDialog) |
+| `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + atoms; molecules FilePickerField, InputField, MultiSelectList, SearchField, SelectField; organisms AppHeader, ResourcesDataTable, ResourcesToolbar, SupportChatFab, UploadResourceDialog; template DashboardShell) |
 | `packages/domain` | `@pack-challenge/domain` | Shared domain placeholder |
 | `packages/tokens` | `@pack-challenge/tokens` | Validate `tokens/**` + emit theme CSS |
 | `tokens/` | — | DTCG sources (primitives + semantic + extension) → emitted theme CSS |

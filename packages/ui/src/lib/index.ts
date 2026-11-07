@@ -421,3 +421,17 @@ export type {
 	UploadResourceDialogProps,
 	UploadResourcePayload
 } from '../components/organisms/upload-resource-dialog/index.js';
+export {
+	DashboardShell,
+	dashboardShellBodyBaseClass,
+	dashboardShellHeaderBaseClass,
+	dashboardShellMainBaseClass,
+	dashboardShellRegionBaseClass,
+	dashboardShellRootBaseClass,
+	resolveDashboardShellBody,
+	resolveDashboardShellHeader,
+	resolveDashboardShellMain,
+	resolveDashboardShellRegion,
+	resolveDashboardShellRoot
+} from '../components/templates/dashboard-shell/index.js';
+export type { DashboardShellProps } from '../components/templates/dashboard-shell/index.js';
