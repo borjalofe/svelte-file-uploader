@@ -4,10 +4,9 @@ import {
 	type Resource,
 	type ResourceListQueryInput
 } from '@pack-challenge/domain';
-import type { ResourcesDataTableRow } from '@pack-challenge/ui';
 import { z } from 'zod';
 import { getPublicApiUrl } from './config.js';
-import { mapResourceToTableRow } from '../resources/map-resource-row.js';
+import { mapResourceToTableRow, type LiveResourceRow } from '../resources/map-resource-row.js';
 
 export type ListResourcesInput = Pick<ResourceListQueryInput, 'q' | 'limit' | 'offset'>;
 
@@ -87,7 +86,7 @@ async function readApiError(response: Response): Promise<ApiError> {
 export async function listResources(
 	input: ListResourcesInput = {},
 	fetchImpl: typeof fetch = fetch
-): Promise<ResourcesDataTableRow[]> {
+): Promise<LiveResourceRow[]> {
 	const url = new URL('/resources', `${getPublicApiUrl()}/`);
 	if (input.q?.trim()) {
 		url.searchParams.set('q', input.q.trim());

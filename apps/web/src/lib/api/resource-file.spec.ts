@@ -19,6 +19,7 @@ describe('openResourceFile (#77)', () => {
 		const blob = new Blob(['%PDF'], { type: 'application/pdf' });
 		const fetchImpl = vi.fn().mockResolvedValue({
 			ok: true,
+			headers: { get: () => 'application/pdf' },
 			blob: async () => blob
 		});
 

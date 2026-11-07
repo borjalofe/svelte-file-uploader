@@ -32,6 +32,7 @@ describe('mapResourceToTableRow (#75)', () => {
 		expect(row.provider).toBe('Pack');
 		expect(row.viewCount).toBe(0);
 		expect(row.uploadedBy).toBe('—');
+		expect(row.mimeType).toBe('application/pdf');
 	});
 
 	it('maps video resources to the videos tab type', () => {
@@ -40,5 +41,6 @@ describe('mapResourceToTableRow (#75)', () => {
 			file: { ...base.file, mimeType: 'video/webm', originalName: 'clip.webm' }
 		});
 		expect(row.type).toBe('videos');
+		expect(row.mimeType).toBe('video/webm');
 	});
 });
