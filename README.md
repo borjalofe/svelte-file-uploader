@@ -49,6 +49,7 @@ This milestone only answers that foundation question — not the product yet.
 - Atom **Tabs** — `packages/ui/src/components/atoms/tabs/` (bits-ui / shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` stories; per-item disabled)
 - Atom **Textarea** — `packages/ui/src/components/atoms/textarea/` (shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` story)
 - Atom **Toast (Sonner)** — `packages/ui/src/components/atoms/toast-sonner/` (svelte-sonner / shadcn-svelte new-york on semantic tokens; unit + axe + `a11y-gate` story)
+- Molecule **InputField** — `packages/ui/src/components/molecules/input-field/` (Label + Input/Textarea + hint/error; unit + axe + `a11y-gate` stories)
 - Molecule **SearchField** — `packages/ui/src/components/molecules/search-field/` (Input + leading search icon; unit + axe + `a11y-gate` stories)
 
 **Out of scope**
@@ -80,7 +81,7 @@ flowchart LR
 | --- | --- | --- |
 | `apps/web` | `@pack-challenge/web` | SvelteKit host |
 | `apps/api` | `@pack-challenge/api` | Bootable API stub |
-| `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + Avatar, Badge, Button, Card, Dialog, DropdownMenu, Input, Label, Select, Separator, Table, Tabs, Textarea, Toast/Sonner; molecule SearchField) |
+| `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + atoms; molecules InputField, SearchField) |
 | `packages/domain` | `@pack-challenge/domain` | Shared domain placeholder |
 | `packages/tokens` | `@pack-challenge/tokens` | Validate `tokens/**` + emit theme CSS |
 | `tokens/` | — | DTCG sources (primitives + semantic + extension) → emitted theme CSS |
