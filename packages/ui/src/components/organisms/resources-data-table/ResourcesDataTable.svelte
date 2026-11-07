@@ -39,6 +39,7 @@
 		rows = [],
 		caption = 'Uploaded content',
 		class: className,
+		onRowClick,
 		onRowAction,
 		...restProps
 	}: ResourcesDataTableProps = $props();
@@ -65,6 +66,18 @@
 
 	function emitAction(action: 'edit' | 'duplicate' | 'delete', row: ResourcesDataTableRow) {
 		onRowAction?.({ action, row });
+	}
+
+	function activateRow(row: ResourcesDataTableRow) {
+		onRowClick?.(row);
+	}
+
+	function onRowKeydown(event: KeyboardEvent, row: ResourcesDataTableRow) {
+		if (!onRowClick) return;
+		if (event.key === 'Enter' || event.key === ' ') {
+			event.preventDefault();
+			activateRow(row);
+		}
 	}
 </script>
 
@@ -140,7 +153,15 @@
 		</TableHeader>
 		<TableBody>
 			{#each sortedRows as row (row.id)}
-				<TableRow data-resource-type={row.type}>
+				<TableRow
+					data-resource-type={row.type}
+					class={onRowClick ? 'cursor-pointer' : undefined}
+					tabindex={onRowClick ? 0 : undefined}
+					role={onRowClick ? 'link' : undefined}
+					aria-label={onRowClick ? `Open ${row.title}` : undefined}
+					onclick={() => activateRow(row)}
+					onkeydown={(event) => onRowKeydown(event, row)}
+				>
 					<TableCell class="font-medium">{row.title}</TableCell>
 					<TableCell class="text-muted-foreground">{row.path}</TableCell>
 					<TableCell>{row.viewCount}</TableCell>
@@ -151,7 +172,10 @@
 					<TableCell>
 						<Badge variant="secondary">{resourceContentTypeLabel[row.type]}</Badge>
 					</TableCell>
-					<TableCell>
+					<TableCell
+						onclick={(event) => event.stopPropagation()}
+						onkeydown={(event) => event.stopPropagation()}
+					>
 						<DropdownMenu>
 							<DropdownMenuTrigger>
 								{#snippet child({ props })}
