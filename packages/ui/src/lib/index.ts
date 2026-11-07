@@ -303,6 +303,19 @@ export {
 } from '../components/molecules/file-picker-field/index.js';
 export type { FilePickerFieldProps } from '../components/molecules/file-picker-field/index.js';
 export {
+	InputField,
+	inputFieldErrorClass,
+	inputFieldHintClass,
+	inputFieldRequiredMarkClass,
+	resolveInputFieldError,
+	resolveInputFieldHint,
+	resolveInputFieldIds
+} from '../components/molecules/input-field/index.js';
+export type {
+	InputFieldControl,
+	InputFieldProps
+} from '../components/molecules/input-field/index.js';
+export {
 	SearchField,
 	resolveSearchFieldInput,
 	resolveSearchFieldRoot,
