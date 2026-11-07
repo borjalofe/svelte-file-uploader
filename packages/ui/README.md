@@ -32,8 +32,8 @@ Also ensure the app can resolve `@pack-challenge/tokens` (theme CSS). In this wo
 
 ## Peer dependencies
 
-| Package | Range | Notes |
-| --- | --- | --- |
+| Package  | Range    | Notes                                             |
+| -------- | -------- | ------------------------------------------------- |
 | `svelte` | `^5.0.0` | Required peer (`package.json` `peerDependencies`) |
 
 Runtime dependencies pulled with the library (do not re-declare unless you need a different version): `@pack-challenge/tokens`, `bits-ui`, `@lucide/svelte`, `svelte-sonner`.
