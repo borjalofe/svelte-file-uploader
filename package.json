@@ -19,7 +19,8 @@
     "integration": "pnpm --filter @pack-challenge/ui test:integration",
     "exports:check": "pnpm --filter @pack-challenge/ui exports:check",
     "publish:dry-run": "pnpm --filter @pack-challenge/ui publish:dry-run",
-    "consumer-contract": "pnpm --filter @pack-challenge/ui check:consumer-contract"
+    "consumer-contract": "pnpm --filter @pack-challenge/ui check:consumer-contract",
+    "api:test": "pnpm --filter @pack-challenge/api test"
   },
   "devDependencies": {
     "prettier": "^3.8.3",
