@@ -15,6 +15,7 @@
 		statusLabel = 'Support available',
 		class: className,
 		disabled,
+		onclick,
 		...restProps
 	}: SupportChatFabProps = $props();
 
@@ -23,7 +24,7 @@
 	const status = $derived(resolveSupportChatFabStatus());
 </script>
 
-<div data-slot="support-chat-fab" class={root.className}>
+<div data-slot="support-chat-fab" class={root.className} {...restProps}>
 	<Button
 		bind:ref
 		type="button"
@@ -31,9 +32,9 @@
 		size="icon-lg"
 		class={button.className}
 		{disabled}
+		{onclick}
 		aria-label={ariaLabel}
 		data-slot="support-chat-fab-button"
-		{...restProps}
 	>
 		<MessageCircleIcon aria-hidden="true" />
 	</Button>
