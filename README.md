@@ -70,8 +70,7 @@ This milestone only answers that foundation question — not the product yet.
 
 **Out of scope**
 
-- Upload/list product UI wired to the live API, or deploy
-- Full Compose `api`/`web` images (M12), cloud DB
+- Full Compose `api`/`web` images (M12), cloud DB, or public deploy
 - Remaining atoms; remaining `/ds` demo pages; container image scans
 
 ## Architecture
@@ -95,8 +94,8 @@ flowchart LR
 
 | Path | Package | Role today |
 | --- | --- | --- |
-| `apps/web` | `@pack-challenge/web` | SvelteKit host |
-| `apps/api` | `@pack-challenge/api` | Nest Resources create/list/search + local file store + Drizzle migration |
+| `apps/web` | `@pack-challenge/web` | SvelteKit Resources page — live list/search, upload dialog → Nest, row-click download |
+| `apps/api` | `@pack-challenge/api` | Nest Resources create/list/search/download + local file store + Drizzle migration |
 | `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + atoms; molecules FilePickerField, InputField, MultiSelectList, SearchField, SelectField; organisms AppHeader, ResourcesDataTable, ResourcesToolbar, SupportChatFab, UploadResourceDialog; templates DashboardShell, DsCatalogLayout; pages ResourcesCatalogPage, TokensReferencePage) |
 | `packages/domain` | `@pack-challenge/domain` | Shared Zod Resource schemas (create/list + file metadata) |
 | `packages/tokens` | `@pack-challenge/tokens` | Validate `tokens/**` + emit theme CSS |
@@ -143,6 +142,9 @@ pnpm --filter @pack-challenge/api start   # default http://localhost:3000
 # GET /resources — list/search (safe file meta; no storagePath)
 # GET /resources/:id/file — download by id
 # POST /resources — multipart create
+
+pnpm --filter @pack-challenge/web dev     # SvelteKit → PUBLIC_API_URL (default http://localhost:3000)
+# Resources page: search, Upload dialog → POST /resources, row click → file download
 ```
 
 
@@ -210,7 +212,7 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 
 ## Trade-offs and limitations
 
-- **API ahead of product UI** — Nest create/list/search and local file store are up; the catalog page is not wired to live API yet.
+- **Product UI is thin** — Resources page talks to Nest for list/search/upload/download; richer Pack chrome and `/ds` demos remain separate.
 - **Library UI as SvelteKit app** — `/ds` and Storybook need a Kit surface; that adds demo-app weight versus a pure component folder.
 - **PR gate ≠ full quality matrix** — lint/unit/api/storybook/a11y/integration/tokens/audit; product E2E and page composition still later.
 - **Node 22+** — aligns with current toolchain; older LTS is out of scope.
@@ -234,6 +236,7 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 | Postgres | `docker compose up -d db` | `db` healthcheck **healthy** |
 | Resources migrate | `pnpm --filter @pack-challenge/api db:migrate` | `resources` table + enums apply (idempotent) |
 | API unit | `pnpm api:test` | Nest create/list/search/download + storage tests green |
+| Web unit | `pnpm --filter @pack-challenge/web test` | list/create client + row mappers green |
 
 ## Lessons learned
 
@@ -243,5 +246,5 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 
 ## Next steps
 
-1. Product upload/list flow once the catalog page calls the live API.
-2. Mark PR gate job **`api`** required on `main` branch protection (if not already).
+1. Mark PR gate job **`api`** required on `main` branch protection (if not already).
+2. Full Compose `api`/`web` images (M12) and public deploy when ready.
