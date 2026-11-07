@@ -1,23 +1,23 @@
 # svelte-file-uploader
 
-**Status:** Pack take-home — Resources upload/list/search/download running locally
+**Status:** Pack take-home — Resources upload/list/search/download running locally (Compose or host pnpm)
 
-Monorepo for a Pack-style **Resources** product: shared Svelte design system, SvelteKit web app, Nest API, Zod domain schemas, and Compose Postgres.
+Monorepo for a Pack-style **Resources** product: shared Svelte design system, SvelteKit web app, Nest API, Zod domain schemas, and Compose Postgres (+ optional full-stack `api`/`web` images).
 
 ## Problem
 
-A take-home needs one honest layout for **UI**, **web**, **API**, and **shared types** — not four repos and conflicting package managers. This repo answers that with pnpm + Turborepo, then ships a thin live Resources path against Nest + Postgres (not a fake demo API).
+A take-home needs one honest layout for **UI**, **web**, **API**, and **shared types** — not four repos and conflicting package managers. This repo answers that with pnpm + Turborepo, then ships a thin live Resources path against Nest + Postgres (not a fake demo API). Pack evaluators can run the stack with Compose alone.
 
 ## Stack
 
 | Path | Package | What runs today |
 | --- | --- | --- |
 | `apps/web` | `@pack-challenge/web` | SvelteKit Resources page — list/search, upload dialog → Nest, row-click download |
-| `apps/api` | `@pack-challenge/api` | Nest `POST`/`GET /resources`, `GET /resources/:id/file`, local file store, Drizzle |
+| `apps/api` | `@pack-challenge/api` | Nest `POST`/`GET /resources`, `GET /resources/:id/file`, `/health`, local file store, Drizzle |
 | `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook + `/ds` demos |
 | `packages/domain` | `@pack-challenge/domain` | Shared Zod Resource create/list schemas + constants |
 | `packages/tokens` | `@pack-challenge/tokens` | Validate `tokens/**` + emit theme CSS |
-| `compose.yaml` | — | Postgres 16 (`db`); `api` / `web` service names reserved for M12 |
+| `compose.yaml` | — | Postgres 16 (`db`) + Nest (`api`) + SvelteKit (`web`) for evaluators |
 
 ```mermaid
 flowchart LR
@@ -37,6 +37,23 @@ flowchart LR
 ```
 
 ## How to run
+
+### Pack evaluator (Compose full stack)
+
+**Prerequisite:** Docker.
+
+```bash
+cp .env.example .env
+docker compose up --build
+```
+
+- **Web UI:** http://localhost:5173
+- **API health:** http://localhost:3000/health
+- **API resources:** http://localhost:3000/resources
+
+Compose applies Drizzle migrations on **`api`** start (`db` must be healthy first). Uploaded files persist in the `api_files` volume. See ADR [0007](./docs/decisions/0007-compose-full-stack.md).
+
+### Contributor (host pnpm + Compose `db`)
 
 **Prerequisites:** Node ≥ 22, [pnpm](https://pnpm.io) 11, Docker.
 
@@ -59,7 +76,7 @@ pnpm api:test               # Nest tests (needs DATABASE_URL for Drizzle specs)
 pnpm tokens:check           # token validate + theme emit
 ```
 
-Host apps use `DATABASE_URL` → `localhost`; in-compose services would use hostname `db`. Uploaded objects land under `FILE_STORAGE_ROOT` (default `var/file-store`).
+Host apps use `DATABASE_URL` → `localhost`; in-compose `api` uses hostname `db`. Uploaded objects land under `FILE_STORAGE_ROOT` (default `var/file-store` on host).
 
 ## Decisions
 
@@ -73,6 +90,7 @@ Living ADRs (only those locked by shipped code): [docs/decisions/](./docs/decisi
 | [0004](./docs/decisions/0004-theme-css-emit.md) | Theme CSS emit (`:root` / `.dark` / `@theme`) |
 | [0005](./docs/decisions/0005-drizzle-resources-migration.md) | Drizzle Resources migration |
 | [0006](./docs/decisions/0006-nest-local-file-store.md) | Nest multipart + local file store |
+| [0007](./docs/decisions/0007-compose-full-stack.md) | Compose full-stack Postgres + API + web |
 
 ## Design system (`/ds`)
 
@@ -130,18 +148,20 @@ Local smoke:
 | Check | Command |
 | --- | --- |
 | Install | `pnpm install` |
-| Postgres | `docker compose up -d db` → healthy |
+| Compose stack | `docker compose up --build` → web :5173, API `/health` |
+| Postgres only | `docker compose up -d db` → healthy |
 | Migrate | `pnpm --filter @pack-challenge/api db:migrate` |
 | API | `pnpm api:test` |
 | Web | `pnpm --filter @pack-challenge/web test` |
 
 ## Trade-offs
 
-- **Thin product chrome** — Resources page is real; Pack marketing layout and full Compose `api`/`web` images are later.
+- **Thin product chrome** — Resources page is real; Pack marketing layout is out of scope.
+- **Two run paths** — Compose full stack for evaluators; host pnpm + Compose `db` for day-to-day contribution.
 - **Library UI as Kit app** — `/ds` and Storybook need a Kit surface (extra weight vs a pure component folder).
 - **PR gate ≠ full E2E** — unit/api/web/a11y/integration; browser product E2E still later.
 
 ## Next steps
 
 1. Mark PR gate jobs **`api`** and **`web`** required on `main` (if not already).
-2. Compose `api`/`web` images (M12) and public deploy when ready.
+2. Public deploy when ready.

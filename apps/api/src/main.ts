@@ -7,7 +7,7 @@ import { loadApiEnv } from './config/env.js';
 export async function bootstrap(): Promise<void> {
 	const env = loadApiEnv();
 	const app = await NestFactory.create(AppModule, { logger: ['error', 'warn', 'log'] });
-	// Browser apps (SvelteKit on WEB_PORT) call Nest cross-origin for list/upload.
+	// Browser on the host (Compose `web` / Vite) calls published API_PORT cross-origin.
 	app.enableCors({
 		origin: true,
 		methods: ['GET', 'POST', 'OPTIONS'],
