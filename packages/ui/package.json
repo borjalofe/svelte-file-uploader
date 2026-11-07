@@ -37,6 +37,7 @@
 		"exports:check": "node ./scripts/public-exports.mjs check",
 		"exports:write": "node ./scripts/public-exports.mjs write",
 		"publish:dry-run": "pnpm publish --dry-run --no-git-checks",
+		"check:consumer-contract": "node ./scripts/check-consumer-contract.mjs",
 		"storybook": "pnpm --filter @pack-challenge/tokens build && storybook dev -p 6006",
 		"build-storybook": "pnpm --filter @pack-challenge/tokens build && storybook build"
 	},

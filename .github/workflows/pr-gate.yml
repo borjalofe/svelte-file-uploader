@@ -142,35 +142,6 @@ jobs:
       - name: Pages integration
         run: pnpm integration
 
-  # Public export allowlist + publish dry-run for @pack-challenge/ui — mark required on main.
-  # See packages/ui/PUBLIC_API.md (#63).
-  exports:
-    name: exports
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Public export surface
-        run: pnpm exports:check
-
-      - name: Publish dry-run
-        run: pnpm publish:dry-run
-
   tokens:
     name: tokens
     runs-on: ubuntu-latest
@@ -194,6 +165,33 @@ jobs:
 
       - name: Validate tokens + emit theme
         run: pnpm tokens:check
+
+  # @pack-challenge/ui allowlist + export map + pack/publish dry-run — mark required on main.
+  # Broken allowlist / export paths fail this job (`pnpm consumer-contract`) —
+  # see packages/ui/CONSUMER_CONTRACT.md and packages/ui/PUBLIC_API.md (#62 / #63).
+  consumer-contract:
+    name: consumer-contract
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Export map + publish dry-run
+        run: pnpm consumer-contract
 
   audit:
     name: audit

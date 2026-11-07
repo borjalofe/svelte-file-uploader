@@ -44,4 +44,4 @@ pnpm --filter @pack-challenge/ui exports:write
 pnpm --filter @pack-challenge/ui publish:dry-run
 ```
 
-CI job **`exports`** (`.github/workflows/pr-gate.yml`) runs `exports:check` + `publish:dry-run` and should be required on `main`.
+CI job **`consumer-contract`** (`.github/workflows/pr-gate.yml`) runs allowlist + pack/publish dry-run via `pnpm consumer-contract` and should be required on `main` — see [`CONSUMER_CONTRACT.md`](./CONSUMER_CONTRACT.md).
