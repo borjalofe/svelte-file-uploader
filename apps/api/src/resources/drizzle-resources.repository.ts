@@ -1,19 +1,17 @@
-import { count, desc, eq } from 'drizzle-orm';
+import { and, count, desc, eq, ilike, or, sql, type SQL } from 'drizzle-orm';
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js';
 import type {
 	Resource,
 	ResourceCategory,
 	ResourceLanguage,
+	ResourceList,
+	ResourceListQuery,
 	ResourceProvider,
 	ResourceRole
 } from '@pack-challenge/domain';
 import * as schema from '../db/schema.js';
-import type {
-	CreateResourceRow,
-	ListResourcesQuery,
-	ListResourcesResult,
-	ResourcesRepository
-} from './resources.repository.js';
+import { toIlikeSubstring } from './like-pattern.js';
+import type { CreateResourceRow, ResourcesRepository } from './resources.repository.js';
 
 type Db = PostgresJsDatabase<typeof schema>;
 
@@ -53,20 +51,64 @@ export class DrizzleResourcesRepository implements ResourcesRepository {
 		return row ? mapRow(row) : null;
 	}
 
-	async list(query: ListResourcesQuery): Promise<ListResourcesResult> {
-		const [totalRow] = await this.db.select({ value: count() }).from(schema.resources);
-		const total = Number(totalRow?.value ?? 0);
-		const rows = await this.db
+	async list(query: ResourceListQuery): Promise<ResourceList> {
+		const where = buildWhere(query);
+
+		const countQuery = this.db.select({ value: count() }).from(schema.resources);
+		const [{ value: total }] = where
+			? await countQuery.where(where)
+			: await countQuery;
+
+		const listQuery = this.db
 			.select()
 			.from(schema.resources)
 			.orderBy(desc(schema.resources.createdAt))
 			.limit(query.limit)
 			.offset(query.offset);
+
+		const rows = where ? await listQuery.where(where) : await listQuery;
+
 		return {
 			items: rows.map(mapRow),
-			total
+			total: Number(total),
+			limit: query.limit,
+			offset: query.offset
 		};
 	}
+}
+
+function buildWhere(query: ResourceListQuery): SQL | undefined {
+	const parts: SQL[] = [];
+
+	if (query.q) {
+		const pattern = toIlikeSubstring(query.q);
+		parts.push(
+			or(
+				ilike(schema.resources.title, pattern),
+				ilike(schema.resources.description, pattern)
+			)!
+		);
+	}
+	if (query.category) {
+		parts.push(eq(schema.resources.category, query.category));
+	}
+	if (query.language) {
+		parts.push(eq(schema.resources.language, query.language));
+	}
+	if (query.provider) {
+		parts.push(eq(schema.resources.provider, query.provider));
+	}
+	if (query.role) {
+		parts.push(sql`${query.role} = ANY(${schema.resources.roles})`);
+	}
+
+	if (parts.length === 0) {
+		return undefined;
+	}
+	if (parts.length === 1) {
+		return parts[0];
+	}
+	return and(...parts);
 }
 
 function mapRow(row: schema.ResourceRow): Resource {

@@ -10,7 +10,8 @@ import {
 	resourceCreateSchema,
 	resourceListQuerySchema,
 	type Resource,
-	type ResourceFileMimeType
+	type ResourceFileMimeType,
+	type ResourceListQueryInput
 } from '@pack-challenge/domain';
 import { LocalFileStore } from '../storage/local-file.store.js';
 import { toResourceListItem, type ResourceListDto } from './resource-list.dto.js';
@@ -32,6 +33,29 @@ export class ResourcesService {
 		private readonly files: LocalFileStore,
 		private readonly resources: ResourcesRepository
 	) {}
+
+	/**
+	 * List/search resources (form fields + safe file meta).
+	 * Query param `q` (optional): case-insensitive substring match on **title** and **description**.
+	 * Omits `storagePath` from every item so clients never get FS/object paths.
+	 */
+	async list(rawQuery: ResourceListQueryInput): Promise<ResourceListDto> {
+		const parsed = resourceListQuerySchema.safeParse(rawQuery);
+		if (!parsed.success) {
+			throw new BadRequestException({
+				message: 'Validation failed',
+				issues: parsed.error.issues.map((issue) => ({
+					path: issue.path.join('.'),
+					message: issue.message
+				}))
+			});
+		}
+		const result = await this.resources.list(parsed.data);
+		return {
+			...result,
+			items: result.items.map(toResourceListItem)
+		};
+	}
 
 	async createFromMultipart(
 		fields: MultipartResourceFields,
@@ -89,29 +113,6 @@ export class ResourcesService {
 			await unlink(stored.absolutePath).catch(() => undefined);
 			throw error;
 		}
-	}
-
-	/** List resources with form fields + safe file meta (no storage paths). */
-	async list(rawQuery: Record<string, unknown> = {}): Promise<ResourceListDto> {
-		const parsed = resourceListQuerySchema.safeParse(rawQuery);
-		if (!parsed.success) {
-			throw new BadRequestException({
-				message: 'Invalid list query',
-				issues: parsed.error.issues.map((issue) => ({
-					path: issue.path.join('.'),
-					message: issue.message
-				}))
-			});
-		}
-
-		const { limit, offset } = parsed.data;
-		const { items, total } = await this.resources.list({ limit, offset });
-		return {
-			items: items.map(toResourceListItem),
-			total,
-			limit,
-			offset
-		};
 	}
 }
 

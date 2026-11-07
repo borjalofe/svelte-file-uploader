@@ -12,7 +12,6 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import { RESOURCE_FILE_SIZE_MAX } from '@pack-challenge/domain';
-import type { ResourceListDto } from './resource-list.dto.js';
 import { ResourcesService, type MultipartResourceFields } from './resources.service.js';
 
 @Controller('resources')
@@ -20,11 +19,15 @@ export class ResourcesController {
 	constructor(private readonly resources: ResourcesService) {}
 
 	/**
-	 * List resources with form fields + safe file metadata.
-	 * Does not expose storage paths or directory listings.
+	 * GET /resources — list/search with form fields + safe file metadata (no `storagePath`).
+	 *
+	 * Query params (shared Zod `resourceListQuerySchema`):
+	 * - `q` — optional search string; case-insensitive match on **title** OR **description** (ILIKE / substring)
+	 * - `category`, `language`, `provider`, `role` — optional filters
+	 * - `limit` (default 20), `offset` (default 0)
 	 */
 	@Get()
-	list(@Query() query: Record<string, string>): Promise<ResourceListDto> {
+	list(@Query() query: Record<string, string | string[] | undefined>) {
 		return this.resources.list(query);
 	}
 
