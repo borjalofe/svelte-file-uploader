@@ -15,7 +15,7 @@
 		statusLabel = 'Support available',
 		class: className,
 		disabled,
-		onclick,
+		onOpen,
 		...restProps
 	}: SupportChatFabProps = $props();
 
@@ -32,7 +32,7 @@
 		size="icon-lg"
 		class={button.className}
 		{disabled}
-		{onclick}
+		onclick={onOpen}
 		aria-label={ariaLabel}
 		data-slot="support-chat-fab-button"
 	>

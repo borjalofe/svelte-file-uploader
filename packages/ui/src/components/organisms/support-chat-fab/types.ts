@@ -1,4 +1,4 @@
-import type { HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements';
+import type { HTMLAttributes } from 'svelte/elements';
 import type { ClassValue, WithElementRef } from '../../../lib/utils.js';
 
 export type SupportChatFabProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
@@ -10,6 +10,6 @@ export type SupportChatFabProps = WithElementRef<HTMLAttributes<HTMLDivElement>>
 	statusLabel?: string;
 	disabled?: boolean;
 	/** Click callback only — no chat backend. */
-	onclick?: HTMLButtonAttributes['onclick'];
+	onOpen?: (event: MouseEvent) => void;
 	class?: ClassValue;
 };
