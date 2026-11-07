@@ -354,6 +354,19 @@ export type {
 	SelectFieldProps
 } from '../components/molecules/select-field/index.js';
 export {
+	AppHeader,
+	appHeaderActionsBaseClass,
+	appHeaderBrandBaseClass,
+	appHeaderLocaleBaseClass,
+	appHeaderNavBaseClass,
+	appHeaderNavLinkActiveClass,
+	appHeaderNavLinkBaseClass,
+	appHeaderRootBaseClass,
+	resolveAppHeaderNavLink,
+	resolveAppHeaderRoot
+} from '../components/organisms/app-header/index.js';
+export type { AppHeaderNavItem, AppHeaderProps } from '../components/organisms/app-header/index.js';
+export {
 	RESOURCE_CONTENT_TYPES,
 	RESOURCE_TAB_LABELS,
 	RESOURCE_TAB_VALUES,

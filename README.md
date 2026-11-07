@@ -54,6 +54,8 @@ This milestone only answers that foundation question — not the product yet.
 - Molecule **MultiSelectList** — `packages/ui/src/components/molecules/multi-select-list/` (Role multi options: Mentor/Coach, Mentee/Coachee; unit + axe + `a11y-gate` stories)
 - Molecule **SearchField** — `packages/ui/src/components/molecules/search-field/` (Input + leading search icon; unit + axe + `a11y-gate` stories)
 - Molecule **SelectField** — `packages/ui/src/components/molecules/select-field/` (Label + Select + error; unit + axe + `a11y-gate` stories)
+- Organism **AppHeader** — `packages/ui/src/components/organisms/app-header/` (logo slot + nav + locale slot + Avatar; primary active underline; unit + axe + `a11y-gate` story)
+- Organism **ResourcesToolbar** — `packages/ui/src/components/organisms/resources-toolbar/` (type Tabs + SearchField + Upload; **All** never disabled; other tabs need ≥1 of that type from parent `counts`; unit + axe + `a11y-gate` stories)
 
 **Out of scope**
 
@@ -84,7 +86,7 @@ flowchart LR
 | --- | --- | --- |
 | `apps/web` | `@pack-challenge/web` | SvelteKit host |
 | `apps/api` | `@pack-challenge/api` | Bootable API stub |
-| `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + atoms; molecules FilePickerField, InputField, MultiSelectList, SearchField, SelectField) |
+| `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + atoms; molecules FilePickerField, InputField, MultiSelectList, SearchField, SelectField; organisms AppHeader, ResourcesToolbar) |
 | `packages/domain` | `@pack-challenge/domain` | Shared domain placeholder |
 | `packages/tokens` | `@pack-challenge/tokens` | Validate `tokens/**` + emit theme CSS |
 | `tokens/` | — | DTCG sources (primitives + semantic + extension) → emitted theme CSS |
