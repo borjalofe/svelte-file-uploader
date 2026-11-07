@@ -1,1 +1,8 @@
 @import 'tailwindcss';
+@import '@pack-challenge/tokens/theme.css';
+
+/*
+ * Pack theme: CSS variables from @pack-challenge/tokens (generated).
+ * UI organisms use semantic/extension utilities — no raw hex.
+ */
+@custom-variant dark (&:is(.dark *));

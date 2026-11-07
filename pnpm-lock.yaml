@@ -93,6 +93,9 @@ importers:
       '@pack-challenge/domain':
         specifier: workspace:*
         version: link:../../packages/domain
+      '@pack-challenge/tokens':
+        specifier: workspace:*
+        version: link:../../packages/tokens
       '@pack-challenge/ui':
         specifier: workspace:*
         version: link:../../packages/ui
