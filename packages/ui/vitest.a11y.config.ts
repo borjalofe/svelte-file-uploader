@@ -17,11 +17,7 @@ export default defineConfig({
 		name: 'a11y-specs',
 		environment: 'jsdom',
 		setupFiles: ['./src/vitest-setup-a11y.ts'],
-		include: [
-			'src/**/*.a11y.{test,spec}.{js,ts}',
-			// Page integration mounts (jsdom) until dedicated CI job (#57)
-			'src/**/*.integration.{test,spec}.{js,ts}'
-		],
+		include: ['src/**/*.a11y.{test,spec}.{js,ts}'],
 		expect: { requireAssertions: true }
 	}
 });

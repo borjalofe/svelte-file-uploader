@@ -1,8 +1,6 @@
 /**
- * @vitest-environment jsdom
- *
- * Page-level integration: mount TokensReferencePage and assert live swatch
- * surfaces bind shipped CSS variables (no dedicated CI job until #57).
+ * Page-level integration (CI job `integration` / `pnpm integration`):
+ * mount TokensReferencePage and assert live swatch surfaces bind shipped CSS vars.
  */
 import { cleanup, render } from '@testing-library/svelte';
 import { afterEach, describe, expect, it } from 'vitest';
