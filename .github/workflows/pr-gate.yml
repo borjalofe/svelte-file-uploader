@@ -113,6 +113,43 @@ jobs:
       - name: API typecheck
         run: pnpm --filter @pack-challenge/api check-types
 
+  # SvelteKit web (@pack-challenge/web) — lint + unit + typecheck before closing M11 (#78).
+  # Mark `web` required on main so live Resources page regressions fail the gate.
+  web:
+    name: web
+    runs-on: ubuntu-latest
+    env:
+      PUBLIC_API_URL: http://localhost:3000
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Emit theme CSS (web imports @pack-challenge/tokens/theme.css)
+        run: pnpm tokens:build
+
+      - name: Web lint
+        run: pnpm web:lint
+
+      - name: Web unit tests
+        run: pnpm web:test
+
+      - name: Web typecheck
+        run: pnpm web:check
+
   # Broken Storybook (missing stories, compile errors) fails this job — mark required on main.
   storybook:
     name: storybook
