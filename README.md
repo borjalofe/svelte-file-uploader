@@ -154,6 +154,7 @@ GitHub Actions workflow **PR gate** (`.github/workflows/pr-gate.yml`) on `pull_r
 | --- | --- |
 | `lint` | `pnpm lint` |
 | `unit` | `pnpm test` (includes `packages/ui/src/components/particles/**`) |
+| `api` | migrate + `pnpm api:test` + API typecheck (ephemeral Postgres 16) |
 | `storybook` | `pnpm storybook:build` |
 | `a11y` | `pnpm a11y` (axe on stories tagged `a11y-gate`) |
 | `integration` | `pnpm integration` (pages `*.integration.spec.ts`) |
@@ -161,7 +162,7 @@ GitHub Actions workflow **PR gate** (`.github/workflows/pr-gate.yml`) on `pull_r
 | `consumer-contract` | `pnpm consumer-contract` (allowlist + export map + publish dry-run) |
 | `audit` | `pnpm audit` (`pnpm audit --audit-level=high`) |
 
-Audit fails the gate on **high** and **critical** advisories; moderate/low are reported in the job summary but do not fail. The **`tokens`** job fails on invalid/cyclic aliases, forbidden semantic paths (`color.text.*`, `color.action.*`, `color.surface.elevated`, `color.focus`), and `radius.sm` / `md` / `lg`; it emits CSS vars to `packages/tokens/dist/` (gitignored). The **`storybook`** job fails on a broken Storybook build. The **`a11y`** job fails on axe violations for atom-gated stories (`parameters.a11y.test = 'error'` + tag `a11y-gate` — see [`packages/ui/A11Y.md`](./packages/ui/A11Y.md)). The **`integration`** job fails when page integration specs fail (stub under `pages/` proves the wire — see [`packages/ui/INTEGRATION.md`](./packages/ui/INTEGRATION.md)). The **`consumer-contract`** job fails when the public allowlist drifts, `@pack-challenge/ui` export paths are missing, or pack/publish dry-run fails — see [`packages/ui/CONSUMER_CONTRACT.md`](./packages/ui/CONSUMER_CONTRACT.md) and [`packages/ui/PUBLIC_API.md`](./packages/ui/PUBLIC_API.md) (preprod SemVer **0.y.z**). Mark `lint`, `unit`, `storybook`, `a11y`, `integration`, `tokens`, `consumer-contract`, and `audit` as required on `main` for an honest merge.
+Audit fails the gate on **high** and **critical** advisories; moderate/low are reported in the job summary but do not fail. The **`api`** job fails when Nest Resources tests or API typecheck fail (runs `db:migrate` against job-scoped Postgres so Drizzle specs are not skipped). The **`tokens`** job fails on invalid/cyclic aliases, forbidden semantic paths (`color.text.*`, `color.action.*`, `color.surface.elevated`, `color.focus`), and `radius.sm` / `md` / `lg`; it emits CSS vars to `packages/tokens/dist/` (gitignored). The **`storybook`** job fails on a broken Storybook build. The **`a11y`** job fails on axe violations for atom-gated stories (`parameters.a11y.test = 'error'` + tag `a11y-gate` — see [`packages/ui/A11Y.md`](./packages/ui/A11Y.md)). The **`integration`** job fails when page integration specs fail (stub under `pages/` proves the wire — see [`packages/ui/INTEGRATION.md`](./packages/ui/INTEGRATION.md)). The **`consumer-contract`** job fails when the public allowlist drifts, `@pack-challenge/ui` export paths are missing, or pack/publish dry-run fails — see [`packages/ui/CONSUMER_CONTRACT.md`](./packages/ui/CONSUMER_CONTRACT.md) and [`packages/ui/PUBLIC_API.md`](./packages/ui/PUBLIC_API.md) (preprod SemVer **0.y.z**). Mark `lint`, `unit`, `api`, `storybook`, `a11y`, `integration`, `tokens`, `consumer-contract`, and `audit` as required on `main` for an honest merge.
 
 ### Daily vulnerability scan
 
@@ -211,7 +212,7 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 
 - **API ahead of product UI** — Nest create/list/search and local file store are up; the catalog page is not wired to live API yet.
 - **Library UI as SvelteKit app** — `/ds` and Storybook need a Kit surface; that adds demo-app weight versus a pure component folder.
-- **PR gate ≠ full quality matrix** — lint/unit/storybook/a11y/integration/tokens/audit; product E2E and page composition still later.
+- **PR gate ≠ full quality matrix** — lint/unit/api/storybook/a11y/integration/tokens/audit; product E2E and page composition still later.
 - **Node 22+** — aligns with current toolchain; older LTS is out of scope.
 
 ## Quality evidence
@@ -221,6 +222,7 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 | Install | `pnpm install` | Lockfile resolves all `@pack-challenge/*` workspaces |
 | PR lint | `pnpm lint` (CI job `lint`) | Workspace lint green |
 | PR unit | `pnpm test` (CI job `unit`) | Smoke tests green for web, api, ui, domain (particles under UI) |
+| PR api | `pnpm api:test` + API typecheck (CI job `api`) | Nest Resources tests + types green against ephemeral Postgres |
 | PR storybook | `pnpm storybook:build` (CI job `storybook`) | Static Storybook build for `@pack-challenge/ui` |
 | PR a11y | `pnpm a11y` (CI job `a11y`) | Axe green for `a11y-gate` stories (atoms+) |
 | PR integration | `pnpm integration` (CI job `integration`) | Pages integration Vitest green (TokensReferencePage + gate stub) |
@@ -231,7 +233,7 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 | UI typecheck/build | `pnpm --filter @pack-challenge/ui build` | `svelte-check` clean |
 | Postgres | `docker compose up -d db` | `db` healthcheck **healthy** |
 | Resources migrate | `pnpm --filter @pack-challenge/api db:migrate` | `resources` table + enums apply (idempotent) |
-| API unit | `pnpm --filter @pack-challenge/api test` | Nest create/list/search + storage tests green |
+| API unit | `pnpm api:test` | Nest create/list/search/download + storage tests green |
 
 ## Lessons learned
 
@@ -242,4 +244,4 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 ## Next steps
 
 1. Product upload/list flow once the catalog page calls the live API.
-2. CI job for API tests / migrate against ephemeral Postgres.
+2. Mark PR gate job **`api`** required on `main` branch protection (if not already).
