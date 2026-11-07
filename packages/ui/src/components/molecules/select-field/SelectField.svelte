@@ -7,6 +7,7 @@
 		SelectTrigger,
 		SelectValue
 	} from '../../atoms/select/index.js';
+	import { SR_ONLY_CLASS } from '../../particles/visually-hidden/index.js';
 	import { resolveSelectFieldError, resolveSelectFieldRoot } from './select-field.js';
 	import type { SelectFieldProps } from './types.js';
 
@@ -16,6 +17,7 @@
 		label,
 		triggerId = 'select-field',
 		'aria-label': ariaLabel,
+		labelVisuallyHidden = false,
 		placeholder = 'Select an option',
 		disabled = false,
 		invalid = false,
@@ -40,7 +42,7 @@
 	data-invalid={invalid ? 'true' : undefined}
 	{...restProps}
 >
-	<Label for={triggerId}>{label}</Label>
+	<Label for={triggerId} class={labelVisuallyHidden ? SR_ONLY_CLASS : undefined}>{label}</Label>
 	<Select type="single" bind:value>
 		<SelectTrigger
 			id={triggerId}

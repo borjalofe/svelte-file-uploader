@@ -40,5 +40,5 @@
 			<UploadResourceDialog bind:open={dialogOpen} onUpload={handleUpload} />
 		{/snippet}
 	</DashboardShell>
-	<Toaster richColors position="bottom-right" />
+	<Toaster richColors position="top-center" />
 </div>

@@ -7,8 +7,10 @@
 		filterResourceCatalogRows,
 		ResourcesDataTable,
 		ResourcesToolbar,
+		SupportChatFab,
 		toast,
 		Toaster,
+		UPLOAD_SUCCESS_TOAST_MESSAGE,
 		UploadResourceDialog,
 		type ResourceTabValue,
 		type UploadResourcePayload
@@ -162,7 +164,7 @@
 				file
 			});
 			dialogOpen = false;
-			toast.success(`Uploaded “${created.title}”`);
+			toast.success(UPLOAD_SUCCESS_TOAST_MESSAGE);
 			await refresh(query);
 			if (!rows.some((row) => row.id === created.id)) {
 				rows = [mapResourceToTableRow(created), ...rows];
@@ -181,13 +183,7 @@
 
 <DashboardShell>
 	{#snippet header()}
-		<AppHeader
-			navItems={[
-				{ href: '/', label: 'Resources', active: true },
-				{ href: '#library', label: 'Library' },
-				{ href: '#settings', label: 'Settings' }
-			]}
-		/>
+		<AppHeader />
 	{/snippet}
 
 	{#snippet main()}
@@ -234,4 +230,6 @@
 	onDownload={handlePreviewDownload}
 />
 
-<Toaster richColors position="bottom-right" />
+<SupportChatFab class="fixed end-6 bottom-6 z-40" />
+
+<Toaster richColors position="top-center" />

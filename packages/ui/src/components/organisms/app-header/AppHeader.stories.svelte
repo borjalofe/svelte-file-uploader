@@ -17,16 +17,7 @@
 
 <Story name="Default" tags={['a11y-gate']} parameters={{ a11y: { test: 'error' } }}>
 	{#snippet template()}
-		<AppHeader
-			brandLabel="pack"
-			avatarLabel="Ada Lovelace"
-			avatarInitials="AL"
-			navItems={[
-				{ href: '#resources', label: 'Resources', active: true },
-				{ href: '#library', label: 'Library' },
-				{ href: '#settings', label: 'Settings' }
-			]}
-		/>
+		<AppHeader brandLabel="pack" avatarLabel="Ada Lovelace" avatarInitials="AL" />
 	{/snippet}
 </Story>
 

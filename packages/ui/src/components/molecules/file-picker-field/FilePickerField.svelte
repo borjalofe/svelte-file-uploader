@@ -18,6 +18,7 @@
 		label = 'File',
 		inputId = 'file-picker-field',
 		'aria-label': ariaLabel,
+		labelVisuallyHidden = false,
 		placeholder = 'No file selected',
 		buttonLabel = 'Select file',
 		disabled = false,
@@ -61,7 +62,7 @@
 	data-invalid={invalid ? 'true' : undefined}
 	{...restProps}
 >
-	<Label for={inputId}>{label}</Label>
+	<Label for={inputId} class={labelVisuallyHidden ? SR_ONLY_CLASS : undefined}>{label}</Label>
 	<div class={controls.className} data-slot="file-picker-field-controls">
 		<Input
 			id={inputId}

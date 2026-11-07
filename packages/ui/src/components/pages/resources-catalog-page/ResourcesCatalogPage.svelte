@@ -37,13 +37,7 @@
 
 <DashboardShell bind:ref data-slot="resources-catalog-page" {...restProps}>
 	{#snippet header()}
-		<AppHeader
-			navItems={[
-				{ href: '#resources', label: 'Resources', active: true },
-				{ href: '#library', label: 'Library' },
-				{ href: '#settings', label: 'Settings' }
-			]}
-		/>
+		<AppHeader />
 	{/snippet}
 
 	{#snippet main()}
@@ -54,4 +48,4 @@
 	{/snippet}
 </DashboardShell>
 
-<Toaster richColors position="bottom-right" />
+<Toaster richColors position="top-center" />

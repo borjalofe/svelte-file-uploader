@@ -2,6 +2,7 @@
 	import { Input } from '../../atoms/input/index.js';
 	import { Label } from '../../atoms/label/index.js';
 	import { Textarea } from '../../atoms/textarea/index.js';
+	import { SR_ONLY_CLASS } from '../../particles/visually-hidden/index.js';
 	import { Stack } from '../../particles/stack/index.js';
 	import {
 		inputFieldRequiredMarkClass,
@@ -15,6 +16,7 @@
 		label,
 		id,
 		required = false,
+		labelVisuallyHidden = false,
 		hint,
 		error,
 		control = 'input',
@@ -35,9 +37,9 @@
 </script>
 
 <Stack direction="column" gap="2" class={className} data-slot="input-field">
-	<Label for={ids.controlId}>
+	<Label for={ids.controlId} class={labelVisuallyHidden ? SR_ONLY_CLASS : undefined}>
 		{label}
-		{#if required}
+		{#if required && !labelVisuallyHidden}
 			<span class={inputFieldRequiredMarkClass} aria-hidden="true">*</span>
 		{/if}
 	</Label>

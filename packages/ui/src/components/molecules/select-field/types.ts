@@ -10,12 +10,17 @@ export type SelectFieldOption = {
 export type SelectFieldProps = WithElementRef<
 	Omit<HTMLAttributes<HTMLDivElement>, 'aria-label'>
 > & {
-	/** Visible field label. */
+	/** Field label. */
 	label: string;
 	/** Forwarded to Label `for` / SelectTrigger `id`. */
 	triggerId?: string;
 	/** Accessible name on the trigger (defaults to `label`). */
 	'aria-label'?: string;
+	/**
+	 * When true, keep the label for a11y but hide it visually (Pack upload wizard
+	 * uses in-field placeholders like `Category*`).
+	 */
+	labelVisuallyHidden?: boolean;
 	value?: string;
 	placeholder?: string;
 	disabled?: boolean;
