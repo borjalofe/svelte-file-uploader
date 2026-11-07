@@ -24,6 +24,8 @@ export type ResourcesDataTableProps = WithElementRef<HTMLAttributes<HTMLDivEleme
 	rows?: ResourcesDataTableRow[];
 	caption?: string;
 	class?: ClassValue;
+	/** Fired when a data row is activated (click / Enter / Space). */
+	onRowClick?: (row: ResourcesDataTableRow) => void;
 	/** Fired when a row action is chosen (no real persistence). */
 	onRowAction?: (detail: {
 		action: 'edit' | 'duplicate' | 'delete';

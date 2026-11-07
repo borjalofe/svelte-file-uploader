@@ -12,6 +12,7 @@
 		type ResourceTabValue,
 		type ResourcesDataTableRow
 	} from '@pack-challenge/ui';
+	import { openResourceFile } from '#lib/api/resource-file.js';
 	import { listResources } from '#lib/api/resources.js';
 
 	let tab = $state<ResourceTabValue>('all');
@@ -47,6 +48,15 @@
 		}
 	}
 
+	async function handleRowClick(row: ResourcesDataTableRow) {
+		try {
+			await openResourceFile(row.id, row.path);
+			toast.success('Resource opened successfully!');
+		} catch (err) {
+			toast.error(err instanceof Error ? err.message : 'Failed to open resource file');
+		}
+	}
+
 	function handleUpload() {
 		// POST /resources lands in #76 — keep DS control, toast-only for now.
 		toast.success('Upload wiring lands next — toast only for now.');
@@ -78,7 +88,11 @@
 				<p class="text-sm text-muted-foreground">Loading resources…</p>
 			{/if}
 
-			<ResourcesDataTable rows={visibleRows} caption="Uploaded content" />
+			<ResourcesDataTable
+				rows={visibleRows}
+				caption="Uploaded content"
+				onRowClick={handleRowClick}
+			/>
 		</div>
 	{/snippet}
 </DashboardShell>
