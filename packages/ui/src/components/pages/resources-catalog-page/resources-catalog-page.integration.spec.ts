@@ -28,9 +28,7 @@ describe('ResourcesCatalogPage integration (#59)', () => {
 		expect(isResourceTabEnabled('all', counts)).toBe(true);
 		expect(isResourceTabEnabled('videos', counts)).toBe(true);
 		expect(isResourceTabEnabled('documents', counts)).toBe(false);
-		expect(filterResourceCatalogRows([...RESOURCES_CATALOG_VIDEOS_ONLY], 'videos')).toHaveLength(
-			2
-		);
+		expect(filterResourceCatalogRows([...RESOURCES_CATALOG_VIDEOS_ONLY], 'videos')).toHaveLength(2);
 	});
 
 	it('mixed fixture: types present in the dataset are enabled', () => {
