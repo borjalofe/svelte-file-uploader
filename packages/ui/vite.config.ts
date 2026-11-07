@@ -37,11 +37,17 @@ export default defineConfig({
 					environment: 'node',
 					// Particles + atom unit helpers under src/components/**
 					include: ['src/**/*.{test,spec}.{js,ts}'],
-					exclude: ['src/**/*.svelte.{test,spec}.{js,ts}', 'src/**/*.a11y.{test,spec}.{js,ts}']
+					exclude: [
+						'src/**/*.svelte.{test,spec}.{js,ts}',
+						'src/**/*.a11y.{test,spec}.{js,ts}',
+						'src/**/*.integration.{test,spec}.{js,ts}'
+					]
 				}
 			},
 			// Component axe suites (jsdom) — run via `pnpm test`
 			'./vitest.a11y.config.ts',
+			// Page integration specs — CI job `integration` (`pnpm integration`)
+			'./vitest.integration.config.ts',
 			{
 				extends: true,
 				plugins: [...storybookA11yPlugins],
