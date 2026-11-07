@@ -10,10 +10,19 @@
     "dev": "node --experimental-strip-types --watch src/main.ts",
     "lint": "tsc --noEmit",
     "start": "node --experimental-strip-types src/main.ts",
-    "test": "vitest run"
+    "test": "vitest run",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
   },
   "devDependencies": {
+    "dotenv": "^18.0.9",
+    "drizzle-kit": "^0.31.11",
     "typescript": "^5.9.3",
     "vitest": "^4.1.8"
+  },
+  "dependencies": {
+    "@pack-challenge/domain": "workspace:*",
+    "drizzle-orm": "^0.45.4",
+    "postgres": "^4.1.0"
   }
 }
