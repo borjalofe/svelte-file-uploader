@@ -44,6 +44,9 @@ debug-storybook.log
 dist/
 packages/tokens/dist/
 
+# Local Nest object store (FILE_STORAGE_ROOT default)
+var/
+
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 

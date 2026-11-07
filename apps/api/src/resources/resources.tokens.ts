@@ -1,0 +1,2 @@
+export const FILE_STORAGE_ROOT = Symbol('FILE_STORAGE_ROOT');
+export const RESOURCES_REPOSITORY = Symbol('RESOURCES_REPOSITORY');
