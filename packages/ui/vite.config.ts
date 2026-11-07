@@ -46,6 +46,8 @@ export default defineConfig({
 			},
 			// Component axe suites (jsdom) — run via `pnpm test`
 			'./vitest.a11y.config.ts',
+			// Page integration specs — CI job `integration` (`pnpm integration`)
+			'./vitest.integration.config.ts',
 			{
 				extends: true,
 				plugins: [...storybookA11yPlugins],

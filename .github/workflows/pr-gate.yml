@@ -116,6 +116,32 @@ jobs:
       - name: Axe accessibility (a11y-gate stories)
         run: pnpm a11y
 
+  # Page-level integration specs under packages/ui/src/components/pages/** — mark required on main.
+  # Stub failure fails this job (`pnpm integration`) — see packages/ui/INTEGRATION.md.
+  integration:
+    name: integration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Pages integration
+        run: pnpm integration
+
   tokens:
     name: tokens
     runs-on: ubuntu-latest
