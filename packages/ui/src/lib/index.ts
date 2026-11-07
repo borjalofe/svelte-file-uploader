@@ -335,3 +335,16 @@ export type {
 	SelectFieldOption,
 	SelectFieldProps
 } from '../components/molecules/select-field/index.js';
+export {
+	AppHeader,
+	appHeaderActionsBaseClass,
+	appHeaderBrandBaseClass,
+	appHeaderLocaleBaseClass,
+	appHeaderNavBaseClass,
+	appHeaderNavLinkActiveClass,
+	appHeaderNavLinkBaseClass,
+	appHeaderRootBaseClass,
+	resolveAppHeaderNavLink,
+	resolveAppHeaderRoot
+} from '../components/organisms/app-header/index.js';
+export type { AppHeaderNavItem, AppHeaderProps } from '../components/organisms/app-header/index.js';
