@@ -21,7 +21,10 @@ export function parseIndexExports(source = fs.readFileSync(indexPath, 'utf8')) {
 				.replace(/\/\/.*$/gm, '')
 				.trim();
 			if (!cleaned) continue;
-			const name = cleaned.split(/\s+as\s+/).pop()?.trim();
+			const name = cleaned
+				.split(/\s+as\s+/)
+				.pop()
+				?.trim();
 			if (name) names.add(name);
 		}
 	}
@@ -96,7 +99,9 @@ if (isMain) {
 			assertPackageExportsMap();
 			const exports = parseIndexExports();
 			writeAllowlist(exports);
-			console.log(`Wrote ${exports.length} public exports → ${path.relative(uiRoot, allowlistPath)}`);
+			console.log(
+				`Wrote ${exports.length} public exports → ${path.relative(uiRoot, allowlistPath)}`
+			);
 		} else if (cmd === 'check') {
 			assertPackageExportsMap();
 			const exports = assertAllowlistMatchesIndex();

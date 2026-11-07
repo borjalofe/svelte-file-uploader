@@ -18,11 +18,11 @@ import { Button, ResourcesCatalogPage } from '@pack-challenge/ui';
 
 Until a stable 1.0.0:
 
-| Change | Version bump |
-| --- | --- |
-| Breaking public API / token contract for consumers | **`0.y.0`** (minor) |
-| Compatible features / new exports | **`0.y.z`** (patch) or minor if preferred for visibility |
-| Bugfixes | **`0.y.z`** (patch) |
+| Change                                             | Version bump                                             |
+| -------------------------------------------------- | -------------------------------------------------------- |
+| Breaking public API / token contract for consumers | **`0.y.0`** (minor)                                      |
+| Compatible features / new exports                  | **`0.y.z`** (patch) or minor if preferred for visibility |
+| Bugfixes                                           | **`0.y.z`** (patch)                                      |
 
 Rules:
 
