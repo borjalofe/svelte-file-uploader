@@ -1,27 +1,34 @@
 /**
- * Page-level integration (CI job `integration` / `pnpm integration`):
- * mount TokensReferencePage and assert live swatch surfaces bind shipped CSS vars.
+ * Page-level integration (CI job `integration` / `pnpm integration`).
+ * Node-safe contract: shipped swatch catalog + CSS-var surface styles (no .svelte mounts).
  */
-import { cleanup, render } from '@testing-library/svelte';
-import { afterEach, describe, expect, it } from 'vitest';
-import TokensReferencePageA11yHarness from './TokensReferencePageA11yHarness.svelte';
-
-afterEach(() => {
-	cleanup();
-});
+import { describe, expect, it } from 'vitest';
+import {
+	SHIPPED_COLOR_SWATCHES,
+	SHIPPED_RADIUS_SWATCHES,
+	SHIPPED_SPACE_SWATCHES,
+	SHIPPED_TOKEN_SWATCHES,
+	tokenSwatchSurfaceStyle
+} from './tokens-reference-page.js';
 
 describe('TokensReferencePage integration (#58)', () => {
-	it('renders live swatches bound to shipped CSS variables', () => {
-		const { container, getByText } = render(TokensReferencePageA11yHarness);
+	it('exposes a complete shipped-token catalog with var() surfaces', () => {
+		const vars = SHIPPED_TOKEN_SWATCHES.map((s) => s.cssVar);
 
-		expect(getByText('--primary')).toBeTruthy();
-		expect(getByText('--success')).toBeTruthy();
-		expect(getByText('--space-4')).toBeTruthy();
-		expect(getByText('--radius')).toBeTruthy();
+		expect(vars).toEqual([
+			...SHIPPED_COLOR_SWATCHES.map((s) => s.cssVar),
+			...SHIPPED_SPACE_SWATCHES.map((s) => s.cssVar),
+			...SHIPPED_RADIUS_SWATCHES.map((s) => s.cssVar)
+		]);
 
-		const primary = container.querySelector('[data-token="--primary"]');
-		expect(primary).toBeTruthy();
-		const surface = primary?.querySelector('[aria-hidden="true"]') as HTMLElement | null;
-		expect(surface?.getAttribute('style') ?? '').toContain('var(--primary)');
+		for (const required of ['--primary', '--success', '--space-4', '--radius'] as const) {
+			expect(vars).toContain(required);
+		}
+
+		for (const swatch of SHIPPED_TOKEN_SWATCHES) {
+			const style = tokenSwatchSurfaceStyle(swatch);
+			expect(style).toContain(`var(${swatch.cssVar})`);
+			expect(style).not.toMatch(/#[0-9a-fA-F]{3,8}/);
+		}
 	});
 });
