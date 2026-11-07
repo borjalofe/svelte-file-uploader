@@ -16,6 +16,7 @@
 		"db:migrate:runtime": "tsx src/db/migrate.ts"
 	},
 	"dependencies": {
+		"@aws-sdk/client-s3": "^3.1164.0",
 		"@nestjs/common": "^12.4.0",
 		"@nestjs/core": "^12.4.0",
 		"@nestjs/platform-express": "^12.4.0",
