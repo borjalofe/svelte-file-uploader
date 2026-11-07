@@ -17,11 +17,11 @@ describe('Dialog atom (#36)', () => {
 		expect(dialogOverlayBaseClass).toContain('bg-black/50');
 
 		const content = resolveDialogContent();
-		expect(content.className).toContain('bg-background');
+		expect(content.className).toContain('bg-card');
 		expect(content.className).toContain('border');
 		expect(content.className).toContain('rounded-lg');
 		expect(content.className).not.toMatch(/#[0-9a-fA-F]{3,8}/);
-		expect(dialogContentBaseClass).toContain('shadow-lg');
+		expect(dialogContentBaseClass).toContain('shadow-soft');
 	});
 
 	it('titles and descriptions use semantic foreground tokens', () => {

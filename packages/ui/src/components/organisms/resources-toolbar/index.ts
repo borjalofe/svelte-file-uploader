@@ -7,7 +7,9 @@ export {
 	resolveResourcesToolbarRoot,
 	resolveResourcesToolbarSearch,
 	resourcesToolbarRootBaseClass,
-	resourcesToolbarSearchBaseClass
+	resourcesToolbarSearchBaseClass,
+	resourcesToolbarTabsListBaseClass,
+	resourcesToolbarTabsTriggerBaseClass
 } from './resources-toolbar.js';
 export type {
 	ResourceContentType,

@@ -9,6 +9,16 @@ export const resourcesToolbarRootBaseClass = 'flex w-full min-w-0 flex-wrap item
 
 export const resourcesToolbarSearchBaseClass = 'min-w-40 flex-1';
 
+/**
+ * Pack Resources type tabs — underline chrome (not muted pill Tabs).
+ * Active underline uses extension `info` (observed blue in docs/brand/source/03).
+ */
+export const resourcesToolbarTabsListBaseClass =
+	'bg-transparent text-muted-foreground inline-flex h-auto w-fit items-center justify-start gap-4 rounded-none p-0';
+
+export const resourcesToolbarTabsTriggerBaseClass =
+	'data-[state=active]:border-info data-[state=active]:text-foreground data-[state=active]:bg-transparent text-muted-foreground inline-flex h-9 items-center justify-center rounded-none border-0 border-b-2 border-transparent bg-transparent px-1 py-2 text-sm font-medium shadow-none data-[state=active]:shadow-none';
+
 export const RESOURCE_TAB_VALUES = [
 	'all',
 	'videos',

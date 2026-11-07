@@ -9,7 +9,7 @@ Toast / alerts can use these without raw hex (`bg-success`, `text-success-foregr
 | `extension.color.success-foreground` | `--success-foreground` | `text-success-foreground` | `primitive.color.black` | AA ≈ 6.0:1 |
 | `extension.color.warning` | `--warning` | `bg-warning` | `#D97706` | Provisional |
 | `extension.color.warning-foreground` | `--warning-foreground` | `text-warning-foreground` | black | Provisional |
-| `extension.color.info` | `--info` | `bg-info` | `#2563EB` | Provisional |
+| `extension.color.info` | `--info` | `bg-info` / `border-info` | `#2563EB` | Provisional Pack Resources **sub-nav active underline** (observed blue in `docs/brand/source/03`) |
 | `extension.color.info-foreground` | `--info-foreground` | `text-info-foreground` | white | AA ≈ 5.2:1 |
 
 Emit registers variables on `:root`, mirrors them on `.dark` (light-only product look for now), and maps `--color-*` in `@theme inline`.

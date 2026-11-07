@@ -21,7 +21,7 @@
       },
       "info": {
         "$value": "#2563EB",
-        "$description": "Provisional — not in Pack screenshots"
+        "$description": "Provisional Pack Resources sub-nav active underline (observed blue in docs/brand/source/03). Not a locked brand ramp stop."
       },
       "info-foreground": {
         "$value": "{primitive.color.white}",

@@ -12,8 +12,7 @@ export const toasterStyleVars =
 	'--normal-bg: var(--popover); --normal-text: var(--popover-foreground); --normal-border: var(--border); --border-radius: var(--radius);';
 
 export const toastBaseClass =
-	'group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg';
-
+	'group toast group-[.toaster]:bg-card group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-soft';
 export const toastDescriptionClass = 'group-[.toast]:text-muted-foreground';
 
 export const toastActionButtonClass =

@@ -11,176 +11,191 @@ let buildThemeChain: Promise<void> = Promise.resolve();
 
 /** Map token paths to CSS custom property names (short names for semantic/extension). */
 export function cssVariableName(path: string[]): string {
-  const root = path[0];
+	const root = path[0];
 
-  if (root === 'semantic') {
-    const [, category, ...rest] = path;
-    if (category === 'color') return rest.join('-');
-    if (category === 'radius') return 'radius';
-    if (category === 'font') return ['font', ...rest].join('-');
-    return path.slice(1).join('-');
-  }
+	if (root === 'semantic') {
+		const [, category, ...rest] = path;
+		if (category === 'color') return rest.join('-');
+		if (category === 'radius') return 'radius';
+		if (category === 'font') return ['font', ...rest].join('-');
+		return path.slice(1).join('-');
+	}
 
-  if (root === 'extension') {
-    const [, category, ...rest] = path;
-    if (category === 'color') return rest.join('-');
-    return path.slice(1).join('-');
-  }
+	if (root === 'extension') {
+		const [, category, ...rest] = path;
+		if (category === 'color') return rest.join('-');
+		return path.slice(1).join('-');
+	}
 
-  return path.join('-');
+	return path.join('-');
 }
 
 /** Semantic + extension colors register as Tailwind `--color-*` via `@theme inline`. */
 export function isThemeColorToken(path: string[]): boolean {
-  return (
-    (path[0] === 'semantic' && path[1] === 'color') ||
-    (path[0] === 'extension' && path[1] === 'color')
-  );
+	return (
+		(path[0] === 'semantic' && path[1] === 'color') ||
+		(path[0] === 'extension' && path[1] === 'color')
+	);
 }
 
 /** Semantic space scale → Tailwind `--spacing-*` via `@theme inline`. */
 export function isThemeSpaceToken(path: string[]): boolean {
-  return path[0] === 'semantic' && path[1] === 'space';
+	return path[0] === 'semantic' && path[1] === 'space';
+}
+
+/** Primitive soft elevation → Tailwind `--shadow-*` via `@theme inline` (`shadow-soft`). */
+export function isThemeShadowToken(path: string[]): boolean {
+	return path[0] === 'primitive' && path[1] === 'shadow';
 }
 
 StyleDictionary.registerTransform({
-  name: 'name/pack',
-  type: 'name',
-  transform: (token) => cssVariableName(token.path.map(String))
+	name: 'name/pack',
+	type: 'name',
+	transform: (token) => cssVariableName(token.path.map(String))
 });
 
 StyleDictionary.registerFormat({
-  name: 'css/pack-theme',
-  format: ({ dictionary, options }) => {
-    const rootBody = formattedVariables({
-      format: 'css',
-      dictionary,
-      outputReferences: Boolean(options.outputReferences),
-      usesDtcg: true
-    });
+	name: 'css/pack-theme',
+	format: ({ dictionary, options }) => {
+		const rootBody = formattedVariables({
+			format: 'css',
+			dictionary,
+			outputReferences: Boolean(options.outputReferences),
+			usesDtcg: true
+		});
 
-    const shortColorTokens = dictionary.allTokens.filter((token) =>
-      isThemeColorToken(token.path.map(String))
-    );
+		const shortColorTokens = dictionary.allTokens.filter((token) =>
+			isThemeColorToken(token.path.map(String))
+		);
 
-    const darkDictionary = {
-      ...dictionary,
-      allTokens: shortColorTokens,
-      tokens: dictionary.tokens
-    };
+		const darkDictionary = {
+			...dictionary,
+			allTokens: shortColorTokens,
+			tokens: dictionary.tokens
+		};
 
-    const darkBody = formattedVariables({
-      format: 'css',
-      dictionary: darkDictionary as typeof dictionary,
-      outputReferences: Boolean(options.outputReferences),
-      usesDtcg: true
-    });
+		const darkBody = formattedVariables({
+			format: 'css',
+			dictionary: darkDictionary as typeof dictionary,
+			outputReferences: Boolean(options.outputReferences),
+			usesDtcg: true
+		});
 
-    const themeColorLines = shortColorTokens.map(
-      (token) => `  --color-${token.name}: var(--${token.name});`
-    );
+		const themeColorLines = shortColorTokens.map(
+			(token) => `  --color-${token.name}: var(--${token.name});`
+		);
 
-    const spaceTokens = dictionary.allTokens.filter((token) =>
-      isThemeSpaceToken(token.path.map(String))
-    );
-    // --space-4 → @theme --spacing-4 (Tailwind gap/p/m scale)
-    const themeSpacingLines = spaceTokens.map((token) => {
-      const step = token.path.map(String).at(-1);
-      return `  --spacing-${step}: var(--${token.name});`;
-    });
+		const spaceTokens = dictionary.allTokens.filter((token) =>
+			isThemeSpaceToken(token.path.map(String))
+		);
+		// --space-4 → @theme --spacing-4 (Tailwind gap/p/m scale)
+		const themeSpacingLines = spaceTokens.map((token) => {
+			const step = token.path.map(String).at(-1);
+			return `  --spacing-${step}: var(--${token.name});`;
+		});
 
-    const themeExtra = [
-      '  --radius: var(--radius);',
-      '  --font-sans: var(--font-sans);',
-      '  --font-mono: var(--font-mono);'
-    ];
+		const shadowTokens = dictionary.allTokens.filter((token) =>
+			isThemeShadowToken(token.path.map(String))
+		);
+		// --primitive-shadow-soft → @theme --shadow-soft (Tailwind `shadow-soft`)
+		const themeShadowLines = shadowTokens.map((token) => {
+			const shortName = token.path.map(String).slice(1).join('-');
+			return `  --${shortName}: var(--${token.name});`;
+		});
 
-    return [
-      '/**',
-      ' * Do not edit directly — generated by `@pack-challenge/tokens` (`pnpm tokens:build`).',
-      ' */',
-      '',
-      ':root {',
-      rootBody,
-      '}',
-      '',
-      '/* Light-only product look for now — .dark repeats the same semantic/extension colors. */',
-      '.dark {',
-      darkBody,
-      '}',
-      '',
-      '@theme inline {',
-      ...themeColorLines,
-      ...themeSpacingLines,
-      ...themeExtra,
-      '}',
-      ''
-    ].join('\n');
-  }
+		const themeExtra = [
+			'  --radius: var(--radius);',
+			'  --font-sans: var(--font-sans);',
+			'  --font-mono: var(--font-mono);'
+		];
+
+		return [
+			'/**',
+			' * Do not edit directly — generated by `@pack-challenge/tokens` (`pnpm tokens:build`).',
+			' */',
+			'',
+			':root {',
+			rootBody,
+			'}',
+			'',
+			'/* Light-only product look for now — .dark repeats the same semantic/extension colors. */',
+			'.dark {',
+			darkBody,
+			'}',
+			'',
+			'@theme inline {',
+			...themeColorLines,
+			...themeSpacingLines,
+			...themeShadowLines,
+			...themeExtra,
+			'}',
+			''
+		].join('\n');
+	}
 });
 
 const cssTransforms = StyleDictionary.hooks.transformGroups.css.map((name) =>
-  name === 'name/kebab' ? 'name/pack' : name
+	name === 'name/kebab' ? 'name/pack' : name
 );
 
 async function buildThemeUnqueued(): Promise<void> {
-  const validation = validateTokensDir();
-  if (!validation.ok) {
-    const detail = validation.errors.map((e) => ` - ${e}`).join('\n');
-    throw new Error(`Refusing to emit theme; token validation failed:\n${detail}`);
-  }
+	const validation = validateTokensDir();
+	if (!validation.ok) {
+		const detail = validation.errors.map((e) => ` - ${e}`).join('\n');
+		throw new Error(`Refusing to emit theme; token validation failed:\n${detail}`);
+	}
 
-  fs.mkdirSync(distDir, { recursive: true });
+	fs.mkdirSync(distDir, { recursive: true });
 
-  const tmpName = `theme.${process.pid}.${Date.now()}.css`;
-  const tmpPath = path.join(distDir, tmpName);
+	const tmpName = `theme.${process.pid}.${Date.now()}.css`;
+	const tmpPath = path.join(distDir, tmpName);
 
-  const sd = new StyleDictionary({
-    source: [`${tokensDir}/**/*.json`],
-    platforms: {
-      css: {
-        transforms: cssTransforms,
-        buildPath: `${distDir}/`,
-        files: [
-          {
-            destination: tmpName,
-            format: 'css/pack-theme',
-            options: {
-              outputReferences: true
-            }
-          }
-        ]
-      }
-    }
-  });
+	const sd = new StyleDictionary({
+		source: [`${tokensDir}/**/*.json`],
+		platforms: {
+			css: {
+				transforms: cssTransforms,
+				buildPath: `${distDir}/`,
+				files: [
+					{
+						destination: tmpName,
+						format: 'css/pack-theme',
+						options: {
+							outputReferences: true
+						}
+					}
+				]
+			}
+		}
+	});
 
-  await sd.hasInitialized;
-  await sd.buildAllPlatforms();
+	await sd.hasInitialized;
+	await sd.buildAllPlatforms();
 
-  if (!fs.existsSync(tmpPath)) {
-    throw new Error(`Theme emit failed: missing ${tmpPath}`);
-  }
+	if (!fs.existsSync(tmpPath)) {
+		throw new Error(`Theme emit failed: missing ${tmpPath}`);
+	}
 
-  fs.renameSync(tmpPath, themeCssPath);
-  console.log(`Theme emitted → ${themeCssPath}`);
+	fs.renameSync(tmpPath, themeCssPath);
+	console.log(`Theme emitted → ${themeCssPath}`);
 }
 
 export function buildTheme(): Promise<void> {
-  const run = buildThemeChain.then(() => buildThemeUnqueued());
-  // Keep the chain alive even if a build fails so later callers still run.
-  buildThemeChain = run.catch(() => undefined);
-  return run;
+	const run = buildThemeChain.then(() => buildThemeUnqueued());
+	// Keep the chain alive even if a build fails so later callers still run.
+	buildThemeChain = run.catch(() => undefined);
+	return run;
 }
 
 async function main(): Promise<void> {
-  try {
-    await buildTheme();
-  } catch (error) {
-    console.error(error instanceof Error ? error.message : error);
-    process.exit(1);
-  }
+	try {
+		await buildTheme();
+	} catch (error) {
+		console.error(error instanceof Error ? error.message : error);
+		process.exit(1);
+	}
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  void main();
+	void main();
 }
