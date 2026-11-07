@@ -15,12 +15,12 @@ CI job **`integration`** (`.github/workflows/pr-gate.yml`) runs the same script 
 ## How page specs join the gate
 
 1. Co-locate `*.integration.spec.ts` under `packages/ui/src/components/pages/<name>/`.
-2. Keep unit/a11y stories separate (`*.spec.ts` / `*.a11y.spec.ts` / Storybook) as each page issue requires.
-3. A failing integration assertion fails the `integration` job (the stub in `pages.integration.spec.ts` proves the wire).
+2. Specs must stay **node-safe** (no `.svelte` imports / DOM mounts). Assert page contracts, catalogs, and style helpers in plain TypeScript.
+3. Keep mount/axe coverage in `*.a11y.spec.ts` + Storybook `a11y-gate` as each page issue requires.
+4. A failing integration assertion fails the `integration` job (the stub in `pages.integration.spec.ts` proves the wire).
 
 ## Smoke
 
 ```bash
 pnpm integration
-# → 1 passed (stub) until real page specs land
 ```
