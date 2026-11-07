@@ -451,3 +451,13 @@ export type {
 	DsCatalogLayoutProps,
 	DsCatalogNavItem
 } from '../components/templates/ds-catalog-layout/index.js';
+export {
+	RESOURCES_CATALOG_EMPTY,
+	RESOURCES_CATALOG_MIXED,
+	RESOURCES_CATALOG_VIDEOS_ONLY,
+	ResourcesCatalogPage,
+	filterResourceCatalogRows,
+	resolveResourcesCatalogPageMain,
+	resourcesCatalogPageMainBaseClass
+} from '../components/pages/resources-catalog-page/index.js';
+export type { ResourcesCatalogPageProps } from '../components/pages/resources-catalog-page/index.js';
