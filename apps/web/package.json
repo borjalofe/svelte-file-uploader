@@ -22,6 +22,7 @@
 	},
 	"dependencies": {
 		"@pack-challenge/domain": "workspace:*",
+		"@pack-challenge/tokens": "workspace:*",
 		"@pack-challenge/ui": "workspace:*"
 	},
 	"devDependencies": {
