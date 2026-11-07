@@ -2,12 +2,17 @@ import type { HTMLInputAttributes, HTMLInputTypeAttribute } from 'svelte/element
 import type { InputFieldControl } from './input-field.js';
 
 export type InputFieldProps = {
-	/** Visible field label (associated via `for` / `id`). */
+	/** Field label (associated via `for` / `id`). */
 	label: string;
 	/** Control id; also seeds hint/error ids. */
 	id: string;
 	/** Show required marker + `aria-required`. */
 	required?: boolean;
+	/**
+	 * When true, keep the label for a11y but hide it visually (Pack upload wizard
+	 * uses in-field placeholders like `Title*` instead of external labels).
+	 */
+	labelVisuallyHidden?: boolean;
 	/** Helper copy below the control (ignored when `error` is set). */
 	hint?: string;
 	/** Error copy; sets `aria-invalid` and describes the control. */

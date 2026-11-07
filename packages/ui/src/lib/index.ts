@@ -331,7 +331,8 @@ export {
 } from '../components/molecules/multi-select-list/index.js';
 export type {
 	MultiSelectListOption,
-	MultiSelectListProps
+	MultiSelectListProps,
+	MultiSelectListVariant
 } from '../components/molecules/multi-select-list/index.js';
 export {
 	SearchField,
@@ -355,6 +356,7 @@ export type {
 } from '../components/molecules/select-field/index.js';
 export {
 	AppHeader,
+	PACK_APP_HEADER_NAV_ITEMS,
 	appHeaderActionsBaseClass,
 	appHeaderBrandBaseClass,
 	appHeaderLocaleBaseClass,

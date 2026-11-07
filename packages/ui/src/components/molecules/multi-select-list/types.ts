@@ -7,15 +7,29 @@ export type MultiSelectListOption = {
 	disabled?: boolean;
 };
 
+export type MultiSelectListVariant = 'list' | 'dropdown';
+
 export type MultiSelectListProps = WithElementRef<
 	Omit<HTMLAttributes<HTMLDivElement>, 'aria-label'>
 > & {
-	/** Visible group label. */
+	/** Group / field label. */
 	label: string;
 	/** Stable id prefix for label / error / option ids. */
 	id?: string;
 	/** Accessible name for the group (defaults to `label`). */
 	'aria-label'?: string;
+	/**
+	 * When true, keep the label for a11y but hide it visually (Pack Role field
+	 * uses an in-trigger placeholder).
+	 */
+	labelVisuallyHidden?: boolean;
+	/**
+	 * `list` — always-visible checkboxes (default).
+	 * `dropdown` — Pack Role select chrome (multi Select + placeholder).
+	 */
+	variant?: MultiSelectListVariant;
+	/** Placeholder on the dropdown trigger when nothing is selected. */
+	placeholder?: string;
 	/** Selected option values. */
 	value?: string[];
 	disabled?: boolean;

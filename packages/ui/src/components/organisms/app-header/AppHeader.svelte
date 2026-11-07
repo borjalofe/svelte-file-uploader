@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Avatar, AvatarFallback } from '../../atoms/avatar/index.js';
 	import {
+		PACK_APP_HEADER_NAV_ITEMS,
 		appHeaderActionsBaseClass,
 		appHeaderBrandBaseClass,
 		appHeaderLocaleBaseClass,
@@ -12,11 +13,7 @@
 
 	let {
 		ref = $bindable(null),
-		navItems = [
-			{ href: '#resources', label: 'Resources', active: true },
-			{ href: '#library', label: 'Library' },
-			{ href: '#settings', label: 'Settings' }
-		],
+		navItems = [...PACK_APP_HEADER_NAV_ITEMS],
 		brandLabel = 'pack',
 		avatarLabel = 'Account',
 		avatarInitials = 'PK',
@@ -62,10 +59,10 @@
 			<span
 				class={appHeaderLocaleBaseClass}
 				data-slot="app-header-locale"
-				aria-label="Language EN (placeholder)"
+				aria-label="Language United States (placeholder)"
 				role="img"
 			>
-				EN
+				🇺🇸
 			</span>
 		{/if}
 		<Avatar class="size-8" role="img" aria-label={avatarLabel}>

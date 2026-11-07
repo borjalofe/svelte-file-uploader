@@ -25,7 +25,8 @@
 	let {
 		open = $bindable(false),
 		dialogTitle = 'Upload Resource',
-		dialogDescription = 'Add a new resource to the library.',
+		/** Pack brand screenshots show title only — no supporting description. */
+		dialogDescription = '',
 		title = $bindable(''),
 		description = $bindable(''),
 		category = $bindable<string | undefined>(undefined),
@@ -90,8 +91,9 @@
 				id="upload-resource-title"
 				bind:value={title}
 				required
+				labelVisuallyHidden
 				{disabled}
-				placeholder="Title"
+				placeholder="Title*"
 			/>
 			<InputField
 				label="Description"
@@ -99,8 +101,9 @@
 				control="textarea"
 				bind:value={description}
 				required
+				labelVisuallyHidden
 				{disabled}
-				placeholder="Description"
+				placeholder="Description*"
 				rows={3}
 			/>
 			<SelectField
@@ -108,30 +111,36 @@
 				triggerId="upload-resource-category"
 				bind:value={category}
 				options={[...categoryOptions]}
+				labelVisuallyHidden
 				{disabled}
-				placeholder="Select category"
+				placeholder="Category*"
 			/>
 			<SelectField
 				label="Language"
 				triggerId="upload-resource-language"
 				bind:value={language}
 				options={[...languageOptions]}
+				labelVisuallyHidden
 				{disabled}
-				placeholder="Select language"
+				placeholder="Language*"
 			/>
 			<SelectField
 				label="Provider"
 				triggerId="upload-resource-provider"
 				bind:value={provider}
 				options={[...providerOptions]}
+				labelVisuallyHidden
 				{disabled}
-				placeholder="Select provider"
+				placeholder="Provider*"
 			/>
 			<MultiSelectList
 				label="Role"
 				id="upload-resource-role"
 				bind:value={roles}
 				options={ROLE_MULTI_OPTIONS}
+				variant="dropdown"
+				labelVisuallyHidden
+				placeholder="Role"
 				{disabled}
 			/>
 			<FilePickerField
@@ -140,6 +149,8 @@
 				bind:filename
 				bind:files
 				required
+				labelVisuallyHidden
+				placeholder="No file selected*"
 				{disabled}
 			/>
 		</Stack>

@@ -12,4 +12,8 @@ export {
 	resolveMultiSelectListItem,
 	resolveMultiSelectListRoot
 } from './multi-select-list.js';
-export type { MultiSelectListOption, MultiSelectListProps } from './types.js';
+export type {
+	MultiSelectListOption,
+	MultiSelectListProps,
+	MultiSelectListVariant
+} from './types.js';

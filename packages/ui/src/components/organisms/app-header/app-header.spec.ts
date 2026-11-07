@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+	PACK_APP_HEADER_NAV_ITEMS,
 	appHeaderNavLinkActiveClass,
 	appHeaderRootBaseClass,
 	resolveAppHeaderNavLink,
@@ -7,6 +8,19 @@ import {
 } from './app-header.js';
 
 describe('AppHeader organism (#48)', () => {
+	it('defaults nav to Pack brand chrome items with Resources active', () => {
+		expect(PACK_APP_HEADER_NAV_ITEMS.map((item) => item.label)).toEqual([
+			'Dashboard',
+			'Users',
+			'Feedbacks',
+			'Programs',
+			'Resources',
+			'Counterparties',
+			'Events'
+		]);
+		expect(PACK_APP_HEADER_NAV_ITEMS.find((item) => item.label === 'Resources')?.active).toBe(true);
+	});
+
 	it('uses semantic chrome and primary active underline (no raw hex)', () => {
 		const root = resolveAppHeaderRoot();
 		expect(root.className).toContain('bg-background');
