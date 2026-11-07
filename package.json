@@ -20,7 +20,10 @@
     "exports:check": "pnpm --filter @pack-challenge/ui exports:check",
     "publish:dry-run": "pnpm --filter @pack-challenge/ui publish:dry-run",
     "consumer-contract": "pnpm --filter @pack-challenge/ui check:consumer-contract",
-    "api:test": "pnpm --filter @pack-challenge/api test"
+    "api:test": "pnpm --filter @pack-challenge/api test",
+    "web:lint": "pnpm --filter @pack-challenge/web lint",
+    "web:test": "pnpm --filter @pack-challenge/web test",
+    "web:check": "pnpm --filter @pack-challenge/web check-types"
   },
   "devDependencies": {
     "prettier": "^3.8.3",
