@@ -452,6 +452,16 @@ export type {
 	DsCatalogNavItem
 } from '../components/templates/ds-catalog-layout/index.js';
 export {
+	RESOURCES_CATALOG_EMPTY,
+	RESOURCES_CATALOG_MIXED,
+	RESOURCES_CATALOG_VIDEOS_ONLY,
+	ResourcesCatalogPage,
+	filterResourceCatalogRows,
+	resolveResourcesCatalogPageMain,
+	resourcesCatalogPageMainBaseClass
+} from '../components/pages/resources-catalog-page/index.js';
+export type { ResourcesCatalogPageProps } from '../components/pages/resources-catalog-page/index.js';
+export {
 	SHIPPED_COLOR_SWATCHES,
 	SHIPPED_RADIUS_SWATCHES,
 	SHIPPED_SPACE_SWATCHES,

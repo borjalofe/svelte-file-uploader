@@ -61,6 +61,8 @@ This milestone only answers that foundation question — not the product yet.
 - Organism **UploadResourceDialog** — `packages/ui/src/components/organisms/upload-resource-dialog/` (Dialog + stacked InputField/SelectField/MultiSelectList/FilePickerField + Upload; mock `onUpload` payload; bits-ui focus trap; unit + axe + `a11y-gate` stories)
 - Template **DashboardShell** — `packages/ui/src/components/templates/dashboard-shell/` (header + main Card + optional region slots; no domain copy; Storybook only — no automated unit/a11y)
 - Template **DsCatalogLayout** — `packages/ui/src/components/templates/ds-catalog-layout/` (/ds docs shell: side nav + content slot; stories only; no domain copy)
+- Page **ResourcesCatalogPage** — `packages/ui/src/components/pages/resources-catalog-page/` (DashboardShell + AppHeader + ResourcesToolbar + ResourcesDataTable + Toast; `/ds/resources`; unit + integration + axe + `a11y-gate` stories)
+  - Fixtures: **Empty** (only All enabled), **VideosOnly** (All + Videos), **Mixed** (videos/documents/lessons/archive) — toolbar `counts` from the full dataset; table filtered client-side; no upload API
 - Page **TokensReferencePage** — `packages/ui/src/components/pages/tokens-reference-page/` (DsCatalogLayout + live swatches for shipped tokens; unit + integration + axe + `a11y-gate` story; also on `/ds`)
 - Pages integration CI — required `integration` job (`pnpm integration`); Vitest under `packages/ui/src/components/pages/**` — [`packages/ui/INTEGRATION.md`](./packages/ui/INTEGRATION.md)
 
@@ -68,7 +70,7 @@ This milestone only answers that foundation question — not the product yet.
 
 - Upload/list UI, Nest modules, Zod schemas, or deploy
 - Full Compose `api`/`web` images (M12), cloud DB
-- Remaining atoms; product page composition; container image scans
+- Remaining atoms; remaining `/ds` demo pages; container image scans
 
 ## Architecture
 
@@ -93,7 +95,7 @@ flowchart LR
 | --- | --- | --- |
 | `apps/web` | `@pack-challenge/web` | SvelteKit host |
 | `apps/api` | `@pack-challenge/api` | Bootable API stub |
-| `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + atoms; molecules FilePickerField, InputField, MultiSelectList, SearchField, SelectField; organisms AppHeader, ResourcesDataTable, ResourcesToolbar, SupportChatFab, UploadResourceDialog; templates DashboardShell, DsCatalogLayout; page TokensReferencePage) |
+| `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + atoms; molecules FilePickerField, InputField, MultiSelectList, SearchField, SelectField; organisms AppHeader, ResourcesDataTable, ResourcesToolbar, SupportChatFab, UploadResourceDialog; templates DashboardShell, DsCatalogLayout; pages ResourcesCatalogPage, TokensReferencePage) |
 | `packages/domain` | `@pack-challenge/domain` | Shared domain placeholder |
 | `packages/tokens` | `@pack-challenge/tokens` | Validate `tokens/**` + emit theme CSS |
 | `tokens/` | — | DTCG sources (primitives + semantic + extension) → emitted theme CSS |
