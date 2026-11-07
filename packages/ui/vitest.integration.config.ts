@@ -2,7 +2,8 @@ import { defineConfig } from 'vitest/config';
 
 /**
  * Page-level integration specs — CI job `integration` (`pnpm integration`).
- * See packages/ui/INTEGRATION.md.
+ * Node environment; keep specs free of `.svelte` imports (see packages/ui/INTEGRATION.md).
+ * Mount/composition coverage stays in `*.a11y.spec.ts` + Storybook a11y-gate.
  */
 export default defineConfig({
 	test: {

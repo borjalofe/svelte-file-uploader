@@ -451,3 +451,22 @@ export type {
 	DsCatalogLayoutProps,
 	DsCatalogNavItem
 } from '../components/templates/ds-catalog-layout/index.js';
+export {
+	SHIPPED_COLOR_SWATCHES,
+	SHIPPED_RADIUS_SWATCHES,
+	SHIPPED_SPACE_SWATCHES,
+	SHIPPED_TOKEN_SWATCHES,
+	TokensReferencePage,
+	resolveTokensReferencePageRoot,
+	tokenSwatchSurfaceStyle,
+	tokensReferencePageGridBaseClass,
+	tokensReferencePageRootBaseClass,
+	tokensReferencePageSectionBaseClass,
+	tokensReferencePageSwatchCardBaseClass,
+	tokensReferencePageSwatchSurfaceBaseClass
+} from '../components/pages/tokens-reference-page/index.js';
+export type {
+	TokenSwatch,
+	TokenSwatchKind,
+	TokensReferencePageProps
+} from '../components/pages/tokens-reference-page/index.js';

@@ -61,7 +61,8 @@ This milestone only answers that foundation question — not the product yet.
 - Organism **UploadResourceDialog** — `packages/ui/src/components/organisms/upload-resource-dialog/` (Dialog + stacked InputField/SelectField/MultiSelectList/FilePickerField + Upload; mock `onUpload` payload; bits-ui focus trap; unit + axe + `a11y-gate` stories)
 - Template **DashboardShell** — `packages/ui/src/components/templates/dashboard-shell/` (header + main Card + optional region slots; no domain copy; Storybook only — no automated unit/a11y)
 - Template **DsCatalogLayout** — `packages/ui/src/components/templates/ds-catalog-layout/` (/ds docs shell: side nav + content slot; stories only; no domain copy)
-- Pages integration CI — required `integration` job (`pnpm integration`); Vitest stub under `packages/ui/src/components/pages/**` — [`packages/ui/INTEGRATION.md`](./packages/ui/INTEGRATION.md)
+- Page **TokensReferencePage** — `packages/ui/src/components/pages/tokens-reference-page/` (DsCatalogLayout + live swatches for shipped tokens; unit + integration + axe + `a11y-gate` story; also on `/ds`)
+- Pages integration CI — required `integration` job (`pnpm integration`); Vitest under `packages/ui/src/components/pages/**` — [`packages/ui/INTEGRATION.md`](./packages/ui/INTEGRATION.md)
 
 **Out of scope**
 
@@ -92,7 +93,7 @@ flowchart LR
 | --- | --- | --- |
 | `apps/web` | `@pack-challenge/web` | SvelteKit host |
 | `apps/api` | `@pack-challenge/api` | Bootable API stub |
-| `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + atoms; molecules FilePickerField, InputField, MultiSelectList, SearchField, SelectField; organisms AppHeader, ResourcesDataTable, ResourcesToolbar, SupportChatFab, UploadResourceDialog; templates DashboardShell, DsCatalogLayout) |
+| `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + atoms; molecules FilePickerField, InputField, MultiSelectList, SearchField, SelectField; organisms AppHeader, ResourcesDataTable, ResourcesToolbar, SupportChatFab, UploadResourceDialog; templates DashboardShell, DsCatalogLayout; page TokensReferencePage) |
 | `packages/domain` | `@pack-challenge/domain` | Shared domain placeholder |
 | `packages/tokens` | `@pack-challenge/tokens` | Validate `tokens/**` + emit theme CSS |
 | `tokens/` | — | DTCG sources (primitives + semantic + extension) → emitted theme CSS |
@@ -196,7 +197,7 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 | PR unit | `pnpm test` (CI job `unit`) | Smoke tests green for web, api, ui, domain (particles under UI) |
 | PR storybook | `pnpm storybook:build` (CI job `storybook`) | Static Storybook build for `@pack-challenge/ui` |
 | PR a11y | `pnpm a11y` (CI job `a11y`) | Axe green for `a11y-gate` stories (atoms+) |
-| PR integration | `pnpm integration` (CI job `integration`) | Pages integration Vitest green (stub until `[page]` specs land) |
+| PR integration | `pnpm integration` (CI job `integration`) | Pages integration Vitest green (TokensReferencePage + gate stub) |
 | PR audit | `pnpm audit` (CI job `audit`) | No high/critical advisories; summary in the job log |
 | PR tokens | `pnpm tokens:check` (CI job `tokens`) | Alias/forbidden-path validation + theme CSS emit |
 | Daily audit | Actions → **Daily audit** → Run workflow | Same high threshold; visible failure if regressions land |
