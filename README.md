@@ -94,8 +94,8 @@ flowchart LR
 
 | Path | Package | Role today |
 | --- | --- | --- |
-| `apps/web` | `@pack-challenge/web` | SvelteKit host |
-| `apps/api` | `@pack-challenge/api` | Nest Resources create/list/search + local file store + Drizzle migration |
+| `apps/web` | `@pack-challenge/web` | SvelteKit Resources page — live list/search, upload dialog → Nest, row-click download |
+| `apps/api` | `@pack-challenge/api` | Nest Resources create/list/search/download + local file store + Drizzle migration |
 | `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + atoms; molecules FilePickerField, InputField, MultiSelectList, SearchField, SelectField; organisms AppHeader, ResourcesDataTable, ResourcesToolbar, SupportChatFab, UploadResourceDialog; templates DashboardShell, DsCatalogLayout; pages ResourcesCatalogPage, TokensReferencePage) |
 | `packages/domain` | `@pack-challenge/domain` | Shared Zod Resource schemas (create/list + file metadata) |
 | `packages/tokens` | `@pack-challenge/tokens` | Validate `tokens/**` + emit theme CSS |
@@ -125,8 +125,8 @@ pnpm install
 cp .env.example .env
 docker compose up -d db
 pnpm --filter @pack-challenge/api db:migrate
-pnpm --filter @pack-challenge/api start   # http://localhost:3000
-pnpm --filter @pack-challenge/web dev     # http://localhost:5173
+pnpm --filter @pack-challenge/api start   # http://localhost:3000 — list/search/upload/download + /health
+pnpm --filter @pack-challenge/web dev     # http://localhost:5173 — search, Upload → POST, row click → file
 pnpm test
 pnpm tokens:check
 pnpm storybook                           # http://localhost:6006
@@ -198,6 +198,7 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 
 ## Trade-offs and limitations
 
+- **Product UI is thin** — Resources page talks to Nest for list/search/upload/download; richer Pack chrome and `/ds` demos remain separate.
 - **Library UI as SvelteKit app** — `/ds` and Storybook need a Kit surface; that adds demo-app weight versus a pure component folder.
 - **PR gate ≠ full quality matrix** — lint/unit/api/web/storybook/a11y/integration/tokens/audit; product E2E still later.
 - **Node 22+** — aligns with current toolchain; older LTS is out of scope.
@@ -222,6 +223,7 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 | Postgres | `docker compose up -d db` | `db` healthcheck **healthy** |
 | Resources migrate | `pnpm --filter @pack-challenge/api db:migrate` | `resources` table + enums apply (idempotent) |
 | API unit | `pnpm api:test` | Nest create/list/search/download + storage tests green |
+| Web unit | `pnpm --filter @pack-challenge/web test` | list/create client + row mappers green |
 
 ## Lessons learned
 
@@ -231,5 +233,5 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 
 ## Next steps
 
-1. Wire upload dialog → `POST /resources` (#76) if still open.
-2. Mark PR gate jobs **`api`** and **`web`** required on `main` branch protection (if not already).
+1. Mark PR gate jobs **`api`** and **`web`** required on `main` branch protection (if not already).
+2. Full Compose `api`/`web` images (M12) and public deploy when ready.

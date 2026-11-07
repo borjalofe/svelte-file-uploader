@@ -7,8 +7,12 @@ import { loadApiEnv } from './config/env.js';
 export async function bootstrap(): Promise<void> {
 	const env = loadApiEnv();
 	const app = await NestFactory.create(AppModule, { logger: ['error', 'warn', 'log'] });
-	// Browser on the host (Compose `web`) calls published API_PORT — allow local origins.
-	app.enableCors({ origin: true });
+	// Browser on the host (Compose `web` / Vite) calls published API_PORT cross-origin.
+	app.enableCors({
+		origin: true,
+		methods: ['GET', 'POST', 'OPTIONS'],
+		allowedHeaders: ['Content-Type', 'Accept']
+	});
 	await app.listen(env.apiPort);
 }
 

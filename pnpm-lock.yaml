@@ -99,6 +99,9 @@ importers:
       '@pack-challenge/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      zod:
+        specifier: ^4.6.7
+        version: 4.6.7
     devDependencies:
       '@eslint/js':
         specifier: ^10.0.1
