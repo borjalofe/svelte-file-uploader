@@ -1,4 +1,3 @@
-import type { HTMLAttributes } from 'svelte/elements';
 import type { ClassValue, WithElementRef } from '../../../lib/utils.js';
 
 export type TokenSwatchKind = 'color' | 'space' | 'radius';
@@ -11,6 +10,7 @@ export type TokenSwatch = {
 	kind: TokenSwatchKind;
 };
 
-export type TokensReferencePageProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
+/** Page props stay narrow — avoid HTML `title` colliding with DsCatalogLayout. */
+export type TokensReferencePageProps = WithElementRef<Record<string, never>> & {
 	class?: ClassValue;
 };

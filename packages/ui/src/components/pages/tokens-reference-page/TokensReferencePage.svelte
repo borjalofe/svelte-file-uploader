@@ -13,11 +13,7 @@
 	} from './tokens-reference-page.js';
 	import type { TokensReferencePageProps } from './types.js';
 
-	let {
-		ref = $bindable(null),
-		class: className,
-		...restProps
-	}: TokensReferencePageProps = $props();
+	let { ref = $bindable(null), class: className }: TokensReferencePageProps = $props();
 
 	const root = $derived(resolveTokensReferencePageRoot({ class: className }));
 </script>
@@ -32,7 +28,6 @@
 		{ href: '#components', label: 'Components' }
 	]}
 	data-slot="tokens-reference-page"
-	{...restProps}
 >
 	<div class={root.className}>
 		<header class="flex flex-col gap-1">
