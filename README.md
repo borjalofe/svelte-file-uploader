@@ -141,8 +141,10 @@ Run the Nest API (host; uses `DATABASE_URL` + `FILE_STORAGE_ROOT` from `.env`):
 ```bash
 pnpm --filter @pack-challenge/api start   # default http://localhost:3000
 # GET /resources — list/search (safe file meta; no storagePath)
+# GET /resources/:id/file — download by id
 # POST /resources — multipart create
 ```
+
 
 ## How we test
 
@@ -239,6 +241,5 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 
 ## Next steps
 
-1. Nest `GET /resources/:id/file` download (id-only; no public FS paths).
-2. Product upload/list flow once the catalog page calls the live API.
-3. CI job for API tests / migrate against ephemeral Postgres.
+1. Product upload/list flow once the catalog page calls the live API.
+2. CI job for API tests / migrate against ephemeral Postgres.

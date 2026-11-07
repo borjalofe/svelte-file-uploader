@@ -1,6 +1,7 @@
 import {
 	BadRequestException,
 	Injectable,
+	NotFoundException,
 	PayloadTooLargeException,
 	UnsupportedMediaTypeException
 } from '@nestjs/common';
@@ -13,9 +14,18 @@ import {
 	type ResourceFileMimeType,
 	type ResourceListQueryInput
 } from '@pack-challenge/domain';
-import { LocalFileStore } from '../storage/local-file.store.js';
+import { LocalFileStore, type OpenedObject } from '../storage/local-file.store.js';
 import { toResourceListItem, type ResourceListDto } from './resource-list.dto.js';
 import type { ResourcesRepository } from './resources.repository.js';
+
+const RESOURCE_ID_RE =
+	/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+export type ResourceFileDownload = OpenedObject & {
+	mimeType: string;
+	originalName: string;
+	size: number;
+};
 
 export type MultipartResourceFields = {
 	title?: string;
@@ -54,6 +64,33 @@ export class ResourcesService {
 		return {
 			...result,
 			items: result.items.map(toResourceListItem)
+		};
+	}
+
+	/**
+	 * Stream a stored file by resource id only (never by client path).
+	 * Missing / invalid id, missing object, or unsafe storage key → 404 fail-closed.
+	 */
+	async openFileById(id: string): Promise<ResourceFileDownload> {
+		if (!RESOURCE_ID_RE.test(id)) {
+			throw new NotFoundException('Resource not found');
+		}
+
+		const row = await this.resources.findById(id);
+		if (!row) {
+			throw new NotFoundException('Resource not found');
+		}
+
+		const opened = await this.files.openReadStream(row.storagePath);
+		if (!opened) {
+			throw new NotFoundException('Resource not found');
+		}
+
+		return {
+			...opened,
+			mimeType: row.file.mimeType,
+			originalName: row.file.originalName,
+			size: row.file.size
 		};
 	}
 
