@@ -42,7 +42,9 @@ export default defineConfig(
 		files: [
 			'src/components/atoms/**/*.svelte',
 			'src/components/molecules/**/*.svelte',
-			'src/components/organisms/**/*.svelte'
+			'src/components/organisms/**/*.svelte',
+			'src/components/templates/**/*.svelte',
+			'src/components/pages/**/*.svelte'
 		],
 		rules: {
 			'svelte/no-navigation-without-resolve': 'off'
