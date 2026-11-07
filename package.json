@@ -17,6 +17,8 @@
     "storybook:build": "pnpm --filter @pack-challenge/ui build-storybook",
     "a11y": "pnpm --filter @pack-challenge/ui test:a11y",
     "integration": "pnpm --filter @pack-challenge/ui test:integration",
+    "exports:check": "pnpm --filter @pack-challenge/ui exports:check",
+    "publish:dry-run": "pnpm --filter @pack-challenge/ui publish:dry-run",
     "consumer-contract": "pnpm --filter @pack-challenge/ui check:consumer-contract"
   },
   "devDependencies": {

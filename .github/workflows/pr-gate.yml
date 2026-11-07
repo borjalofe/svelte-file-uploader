@@ -166,8 +166,9 @@ jobs:
       - name: Validate tokens + emit theme
         run: pnpm tokens:check
 
-  # @pack-challenge/ui export map + publish dry-run — mark required on main.
-  # Broken export paths fail this job (`pnpm consumer-contract`) — see packages/ui/CONSUMER_CONTRACT.md.
+  # @pack-challenge/ui allowlist + export map + pack/publish dry-run — mark required on main.
+  # Broken allowlist / export paths fail this job (`pnpm consumer-contract`) —
+  # see packages/ui/CONSUMER_CONTRACT.md and packages/ui/PUBLIC_API.md (#62 / #63).
   consumer-contract:
     name: consumer-contract
     runs-on: ubuntu-latest

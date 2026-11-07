@@ -1,15 +1,18 @@
 # Consumer contract CI gate
 
-Issue: #62  
+Issues: #62, #63  
 Package: `@pack-challenge/ui`
 
 Runner: `pnpm consumer-contract` → `packages/ui` script `check:consumer-contract` (`scripts/check-consumer-contract.mjs`).
 
+Public API / SemVer policy: [`PUBLIC_API.md`](./PUBLIC_API.md).
+
 ## What it checks
 
-1. **Export map** — every file path in `package.json` `exports` exists on disk.
-2. **Pack dry-run** — `pnpm pack --dry-run --json` includes those export targets (broken / omitted paths fail).
-3. **Publish dry-run** — `pnpm publish --dry-run --no-git-checks` succeeds (no registry write).
+1. **Public allowlist** — root export names in `src/lib/index.ts` match `public-exports.allowlist.json`; `exports` map is root-only.
+2. **Export map** — every file path in `package.json` `exports` exists on disk.
+3. **Pack dry-run** — `pnpm pack --dry-run --json` includes those export targets (broken / omitted paths fail).
+4. **Publish dry-run** — `pnpm publish --dry-run --no-git-checks` succeeds (no registry write).
 
 ## Commands
 

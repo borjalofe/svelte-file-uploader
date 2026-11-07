@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * Consumer contract gate (#62):
+ * Consumer contract gate (#62 + #63):
+ * 0) public export allowlist ↔ index.ts + root-only exports map (`public-exports.mjs`)
  * 1) package.json `exports` targets must exist on disk
  * 2) `pnpm pack --dry-run --json` must include those targets
  * 3) `pnpm publish --dry-run --no-git-checks` must succeed
@@ -11,10 +12,20 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { assertAllowlistMatchesIndex, assertPackageExportsMap } from './public-exports.mjs';
 
 const packageRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const packageJsonPath = join(packageRoot, 'package.json');
 const pkg = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
+
+console.log('Checking public export allowlist (#63)…');
+try {
+	assertPackageExportsMap();
+	const names = assertAllowlistMatchesIndex();
+	console.log(`  ok allowlist (${names.length} root exports)`);
+} catch (error) {
+	fail(error instanceof Error ? error.message : String(error));
+}
 
 if (pkg.name !== '@pack-challenge/ui') {
 	fail(`Expected package name @pack-challenge/ui, got ${pkg.name}`);
