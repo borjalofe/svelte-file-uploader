@@ -65,6 +65,7 @@ This milestone only answers that foundation question — not the product yet.
   - Fixtures: **Empty** (only All enabled), **VideosOnly** (All + Videos), **Mixed** (videos/documents/lessons/archive) — toolbar `counts` from the full dataset; table filtered client-side; no upload API
 - Page **TokensReferencePage** — `packages/ui/src/components/pages/tokens-reference-page/` (DsCatalogLayout + live swatches for shipped tokens; unit + integration + axe + `a11y-gate` story; also on `/ds`)
 - Pages integration CI — required `integration` job (`pnpm integration`); Vitest under `packages/ui/src/components/pages/**` — [`packages/ui/INTEGRATION.md`](./packages/ui/INTEGRATION.md)
+- Consumer contract CI — required `consumer-contract` job (`pnpm consumer-contract`); export map + pack/publish dry-run for `@pack-challenge/ui` — [`packages/ui/CONSUMER_CONTRACT.md`](./packages/ui/CONSUMER_CONTRACT.md)
 
 **Out of scope**
 
@@ -112,6 +113,7 @@ pnpm tokens:check        # validate tokens/** + emit CSS vars
 pnpm storybook           # UI package → http://localhost:6006
 pnpm storybook:build     # static Storybook build for @pack-challenge/ui
 pnpm integration         # pages integration Vitest project (CI job `integration`)
+pnpm consumer-contract   # @pack-challenge/ui export map + publish dry-run
 ```
 
 Example: after `pnpm install`, `pnpm test` should report green smoke tests for web, api, ui, and domain. Open Storybook to see the **Welcome** story; the UI package also serves a `/ds` stub route under `pnpm --filter @pack-challenge/ui dev`.
@@ -138,9 +140,10 @@ GitHub Actions workflow **PR gate** (`.github/workflows/pr-gate.yml`) on `pull_r
 | `a11y` | `pnpm a11y` (axe on stories tagged `a11y-gate`) |
 | `integration` | `pnpm integration` (pages `*.integration.spec.ts`) |
 | `tokens` | `pnpm tokens:check` (`tokens:validate` + `tokens:build`) |
+| `consumer-contract` | `pnpm consumer-contract` (export map + publish dry-run) |
 | `audit` | `pnpm audit` (`pnpm audit --audit-level=high`) |
 
-Audit fails the gate on **high** and **critical** advisories; moderate/low are reported in the job summary but do not fail. The **`tokens`** job fails on invalid/cyclic aliases, forbidden semantic paths (`color.text.*`, `color.action.*`, `color.surface.elevated`, `color.focus`), and `radius.sm` / `md` / `lg`; it emits CSS vars to `packages/tokens/dist/` (gitignored). The **`storybook`** job fails on a broken Storybook build. The **`a11y`** job fails on axe violations for atom-gated stories (`parameters.a11y.test = 'error'` + tag `a11y-gate` — see [`packages/ui/A11Y.md`](./packages/ui/A11Y.md)). The **`integration`** job fails when page integration specs fail (stub under `pages/` proves the wire — see [`packages/ui/INTEGRATION.md`](./packages/ui/INTEGRATION.md)). Mark `lint`, `unit`, `storybook`, `a11y`, `integration`, `tokens`, and `audit` as required on `main` for an honest merge.
+Audit fails the gate on **high** and **critical** advisories; moderate/low are reported in the job summary but do not fail. The **`tokens`** job fails on invalid/cyclic aliases, forbidden semantic paths (`color.text.*`, `color.action.*`, `color.surface.elevated`, `color.focus`), and `radius.sm` / `md` / `lg`; it emits CSS vars to `packages/tokens/dist/` (gitignored). The **`storybook`** job fails on a broken Storybook build. The **`a11y`** job fails on axe violations for atom-gated stories (`parameters.a11y.test = 'error'` + tag `a11y-gate` — see [`packages/ui/A11Y.md`](./packages/ui/A11Y.md)). The **`integration`** job fails when page integration specs fail (stub under `pages/` proves the wire — see [`packages/ui/INTEGRATION.md`](./packages/ui/INTEGRATION.md)). The **`consumer-contract`** job fails when `@pack-challenge/ui` export paths are missing or pack/publish dry-run fails — see [`packages/ui/CONSUMER_CONTRACT.md`](./packages/ui/CONSUMER_CONTRACT.md). Mark `lint`, `unit`, `storybook`, `a11y`, `integration`, `tokens`, `consumer-contract`, and `audit` as required on `main` for an honest merge.
 
 ### Daily vulnerability scan
 
