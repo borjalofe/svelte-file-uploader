@@ -4,8 +4,10 @@ import {
 	Get,
 	HttpCode,
 	HttpStatus,
+	Param,
 	Post,
 	Query,
+	StreamableFile,
 	UploadedFile,
 	UseInterceptors
 } from '@nestjs/common';
@@ -31,6 +33,20 @@ export class ResourcesController {
 		return this.resources.list(query);
 	}
 
+	/**
+	 * GET /resources/:id/file — stream the stored object for a resource id.
+	 * Mediated by id only (no client path). Missing id / object → 404.
+	 */
+	@Get(':id/file')
+	async downloadFile(@Param('id') id: string): Promise<StreamableFile> {
+		const file = await this.resources.openFileById(id);
+		return new StreamableFile(file.stream, {
+			type: file.mimeType,
+			disposition: contentDisposition(file.originalName),
+			length: file.size
+		});
+	}
+
 	@Post()
 	@HttpCode(HttpStatus.CREATED)
 	@UseInterceptors(
@@ -45,4 +61,9 @@ export class ResourcesController {
 	) {
 		return this.resources.createFromMultipart(body, file);
 	}
+}
+
+function contentDisposition(originalName: string): string {
+	const safe = originalName.replace(/["\\]/g, '_');
+	return `attachment; filename="${safe}"`;
 }

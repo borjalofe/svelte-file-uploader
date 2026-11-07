@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { mkdir, writeFile, access } from 'node:fs/promises';
+import { createReadStream } from 'node:fs';
+import { access, mkdir, writeFile } from 'node:fs/promises';
+import type { ReadStream } from 'node:fs';
 import path from 'node:path';
 import type { ResourceFileMimeType } from '@pack-challenge/domain';
 import { buildResourceObjectKey, resolveStoragePath } from './object-key.js';
@@ -8,6 +10,11 @@ export type StoredObject = {
 	/** Relative key persisted as `storagePath` (e.g. `resources/<uuid>.pdf`). */
 	storagePath: string;
 	absolutePath: string;
+};
+
+export type OpenedObject = {
+	absolutePath: string;
+	stream: ReadStream;
 };
 
 @Injectable()
@@ -44,5 +51,22 @@ export class LocalFileStore {
 		} catch {
 			return false;
 		}
+	}
+
+	/**
+	 * Open a stored object for reading. Returns `null` when the key is unsafe
+	 * (traversal / absolute) or the file is missing — fail closed.
+	 */
+	async openReadStream(storagePath: string): Promise<OpenedObject | null> {
+		const absolutePath = resolveStoragePath(this.root, storagePath);
+		if (!absolutePath) {
+			return null;
+		}
+		try {
+			await access(absolutePath);
+		} catch {
+			return null;
+		}
+		return { absolutePath, stream: createReadStream(absolutePath) };
 	}
 }
