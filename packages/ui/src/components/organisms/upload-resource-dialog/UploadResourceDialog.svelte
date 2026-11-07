@@ -39,6 +39,7 @@
 		providerOptions = UPLOAD_PROVIDER_OPTIONS,
 		uploadLabel = 'Upload',
 		triggerLabel = 'Upload',
+		showTrigger = true,
 		disabled = false,
 		onUpload,
 		class: className,
@@ -63,11 +64,13 @@
 </script>
 
 <Dialog bind:open>
-	<DialogTrigger>
-		{#snippet child({ props })}
-			<Button variant="default" type="button" {disabled} {...props}>{triggerLabel}</Button>
-		{/snippet}
-	</DialogTrigger>
+	{#if showTrigger}
+		<DialogTrigger>
+			{#snippet child({ props })}
+				<Button variant="default" type="button" {disabled} {...props}>{triggerLabel}</Button>
+			{/snippet}
+		</DialogTrigger>
+	{/if}
 	<DialogContent class={contentClass} data-slot="upload-resource-dialog">
 		<DialogHeader>
 			<DialogTitle>{dialogTitle}</DialogTitle>

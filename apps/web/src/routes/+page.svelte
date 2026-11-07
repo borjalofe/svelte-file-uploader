@@ -9,16 +9,21 @@
 		ResourcesToolbar,
 		toast,
 		Toaster,
+		UploadResourceDialog,
 		type ResourceTabValue,
-		type ResourcesDataTableRow
+		type ResourcesDataTableRow,
+		type UploadResourcePayload
 	} from '@pack-challenge/ui';
-	import { listResources } from '#lib/api/resources.js';
+	import { createResource, formatApiError, listResources } from '#lib/api/resources.js';
+	import { mapResourceToTableRow } from '#lib/resources/map-resource-row.js';
 
 	let tab = $state<ResourceTabValue>('all');
 	let query = $state('');
 	let rows = $state<ResourcesDataTableRow[]>([]);
 	let loading = $state(false);
+	let uploading = $state(false);
 	let error = $state<string | null>(null);
+	let dialogOpen = $state(false);
 
 	/** Pack filter rule: counts from the full live dataset (current search result set). */
 	const counts = $derived(countResourceTypes(rows));
@@ -41,15 +46,58 @@
 			error = null;
 		} catch (err) {
 			rows = [];
-			error = err instanceof Error ? err.message : 'Failed to load resources';
+			error = formatApiError(err);
 		} finally {
 			loading = false;
 		}
 	}
 
-	function handleUpload() {
-		// POST /resources lands in #76 — keep DS control, toast-only for now.
-		toast.success('Upload wiring lands next — toast only for now.');
+	function openUploadDialog() {
+		dialogOpen = true;
+	}
+
+	async function handleUpload(payload: UploadResourcePayload) {
+		const file = payload.files?.[0];
+		if (!payload.title.trim() || !payload.description.trim()) {
+			toast.error('Title and description are required');
+			return;
+		}
+		if (!payload.category || !payload.language || !payload.provider) {
+			toast.error('Category, language, and provider are required');
+			return;
+		}
+		if (payload.roles.length === 0) {
+			toast.error('Select at least one role');
+			return;
+		}
+		if (!file) {
+			toast.error('File is required');
+			return;
+		}
+
+		uploading = true;
+		try {
+			const created = await createResource({
+				title: payload.title,
+				description: payload.description,
+				category: payload.category,
+				language: payload.language,
+				provider: payload.provider,
+				roles: payload.roles,
+				file
+			});
+			dialogOpen = false;
+			toast.success(`Uploaded “${created.title}”`);
+			// Prefer refresh so search/filter stay consistent with Nest.
+			await refresh(query);
+			if (!rows.some((row) => row.id === created.id)) {
+				rows = [mapResourceToTableRow(created), ...rows];
+			}
+		} catch (err) {
+			toast.error(formatApiError(err));
+		} finally {
+			uploading = false;
+		}
 	}
 </script>
 
@@ -70,7 +118,13 @@
 
 	{#snippet main()}
 		<div class="flex w-full min-w-0 flex-col gap-4" data-slot="resources-page-main">
-			<ResourcesToolbar bind:value={tab} bind:query {counts} onUpload={handleUpload} />
+			<ResourcesToolbar
+				bind:value={tab}
+				bind:query
+				{counts}
+				onUpload={openUploadDialog}
+				disabled={uploading}
+			/>
 
 			{#if error}
 				<p class="text-sm text-destructive" role="alert">{error}</p>
@@ -82,5 +136,12 @@
 		</div>
 	{/snippet}
 </DashboardShell>
+
+<UploadResourceDialog
+	bind:open={dialogOpen}
+	showTrigger={false}
+	disabled={uploading}
+	onUpload={handleUpload}
+/>
 
 <Toaster richColors position="bottom-right" />

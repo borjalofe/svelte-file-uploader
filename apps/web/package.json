@@ -23,7 +23,8 @@
 	"dependencies": {
 		"@pack-challenge/domain": "workspace:*",
 		"@pack-challenge/tokens": "workspace:*",
-		"@pack-challenge/ui": "workspace:*"
+		"@pack-challenge/ui": "workspace:*",
+		"zod": "^4.6.7"
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",

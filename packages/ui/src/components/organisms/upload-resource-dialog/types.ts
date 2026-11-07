@@ -32,6 +32,8 @@ export type UploadResourceDialogProps = {
 	providerOptions?: readonly SelectFieldOption[];
 	uploadLabel?: string;
 	triggerLabel?: string;
+	/** When false, omit the built-in trigger (parent opens via `bind:open`, e.g. toolbar). */
+	showTrigger?: boolean;
 	disabled?: boolean;
 	/** Fired with the current form values (mock — no upload API). */
 	onUpload?: (payload: UploadResourcePayload) => void;
