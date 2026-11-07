@@ -14,7 +14,7 @@ import {
 	type ResourceFileMimeType,
 	type ResourceListQueryInput
 } from '@pack-challenge/domain';
-import { LocalFileStore, type OpenedObject } from '../storage/local-file.store.js';
+import type { FileStore, OpenedObject } from '../storage/file-store.js';
 import { toResourceListItem, type ResourceListDto } from './resource-list.dto.js';
 import type { ResourcesRepository } from './resources.repository.js';
 
@@ -40,7 +40,7 @@ export type MultipartResourceFields = {
 @Injectable()
 export class ResourcesService {
 	constructor(
-		private readonly files: LocalFileStore,
+		private readonly files: FileStore,
 		private readonly resources: ResourcesRepository
 	) {}
 
@@ -146,8 +146,7 @@ export class ResourcesService {
 			});
 		} catch (error) {
 			// Best-effort cleanup if DB insert fails after the object was written.
-			const { unlink } = await import('node:fs/promises');
-			await unlink(stored.absolutePath).catch(() => undefined);
+			await this.files.delete(stored.storagePath);
 			throw error;
 		}
 	}

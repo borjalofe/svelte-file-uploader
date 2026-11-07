@@ -1,24 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { createReadStream } from 'node:fs';
-import { access, mkdir, writeFile } from 'node:fs/promises';
-import type { ReadStream } from 'node:fs';
+import { access, mkdir, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { ResourceFileMimeType } from '@pack-challenge/domain';
+import type { FileStore, OpenedObject, StoredObject } from './file-store.js';
 import { buildResourceObjectKey, resolveStoragePath } from './object-key.js';
 
-export type StoredObject = {
-	/** Relative key persisted as `storagePath` (e.g. `resources/<uuid>.pdf`). */
-	storagePath: string;
-	absolutePath: string;
-};
-
-export type OpenedObject = {
-	absolutePath: string;
-	stream: ReadStream;
-};
-
 @Injectable()
-export class LocalFileStore {
+export class LocalFileStore implements FileStore {
 	constructor(private readonly root: string) {}
 
 	getRoot(): string {
@@ -37,7 +26,7 @@ export class LocalFileStore {
 
 		await mkdir(path.dirname(absolutePath), { recursive: true });
 		await writeFile(absolutePath, bytes, { flag: 'wx' });
-		return { storagePath, absolutePath };
+		return { storagePath };
 	}
 
 	async exists(storagePath: string): Promise<boolean> {
@@ -67,6 +56,19 @@ export class LocalFileStore {
 		} catch {
 			return null;
 		}
-		return { absolutePath, stream: createReadStream(absolutePath) };
+		return { stream: createReadStream(absolutePath) };
+	}
+
+	async delete(storagePath: string): Promise<void> {
+		const absolutePath = resolveStoragePath(this.root, storagePath);
+		if (!absolutePath) {
+			return;
+		}
+		await unlink(absolutePath).catch(() => undefined);
+	}
+
+	/** Test helper: resolve the absolute path for a relative key. */
+	resolveAbsolute(storagePath: string): string | null {
+		return resolveStoragePath(this.root, storagePath);
 	}
 }
