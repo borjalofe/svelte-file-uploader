@@ -1,8 +1,19 @@
-import { eq } from 'drizzle-orm';
+import { count, desc, eq } from 'drizzle-orm';
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js';
-import type { Resource, ResourceCategory, ResourceLanguage, ResourceProvider, ResourceRole } from '@pack-challenge/domain';
+import type {
+	Resource,
+	ResourceCategory,
+	ResourceLanguage,
+	ResourceProvider,
+	ResourceRole
+} from '@pack-challenge/domain';
 import * as schema from '../db/schema.js';
-import type { CreateResourceRow, ResourcesRepository } from './resources.repository.js';
+import type {
+	CreateResourceRow,
+	ListResourcesQuery,
+	ListResourcesResult,
+	ResourcesRepository
+} from './resources.repository.js';
 
 type Db = PostgresJsDatabase<typeof schema>;
 
@@ -40,6 +51,21 @@ export class DrizzleResourcesRepository implements ResourcesRepository {
 			.where(eq(schema.resources.id, id))
 			.limit(1);
 		return row ? mapRow(row) : null;
+	}
+
+	async list(query: ListResourcesQuery): Promise<ListResourcesResult> {
+		const [totalRow] = await this.db.select({ value: count() }).from(schema.resources);
+		const total = Number(totalRow?.value ?? 0);
+		const rows = await this.db
+			.select()
+			.from(schema.resources)
+			.orderBy(desc(schema.resources.createdAt))
+			.limit(query.limit)
+			.offset(query.offset);
+		return {
+			items: rows.map(mapRow),
+			total
+		};
 	}
 }
 

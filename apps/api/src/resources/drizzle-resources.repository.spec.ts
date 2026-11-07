@@ -38,4 +38,12 @@ describe.skipIf(!databaseUrl)('DrizzleResourcesRepository (#69)', () => {
 		expect(found?.file.originalName).toBe('smoke.pdf');
 		expect(found?.title).toBe('Drizzle create smoke');
 	});
+
+	it('lists rows with total for pagination (#70)', async () => {
+		const { items, total } = await repo.list({ limit: 5, offset: 0 });
+		expect(total).toBeGreaterThanOrEqual(1);
+		expect(items.length).toBeGreaterThanOrEqual(1);
+		expect(items.length).toBeLessThanOrEqual(5);
+		expect(items[0]?.id).toBeTruthy();
+	});
 });

@@ -8,10 +8,12 @@ import {
 	RESOURCE_FILE_MIME_TYPES,
 	RESOURCE_FILE_SIZE_MAX,
 	resourceCreateSchema,
+	resourceListQuerySchema,
 	type Resource,
 	type ResourceFileMimeType
 } from '@pack-challenge/domain';
 import { LocalFileStore } from '../storage/local-file.store.js';
+import { toResourceListItem, type ResourceListDto } from './resource-list.dto.js';
 import type { ResourcesRepository } from './resources.repository.js';
 
 export type MultipartResourceFields = {
@@ -87,6 +89,29 @@ export class ResourcesService {
 			await unlink(stored.absolutePath).catch(() => undefined);
 			throw error;
 		}
+	}
+
+	/** List resources with form fields + safe file meta (no storage paths). */
+	async list(rawQuery: Record<string, unknown> = {}): Promise<ResourceListDto> {
+		const parsed = resourceListQuerySchema.safeParse(rawQuery);
+		if (!parsed.success) {
+			throw new BadRequestException({
+				message: 'Invalid list query',
+				issues: parsed.error.issues.map((issue) => ({
+					path: issue.path.join('.'),
+					message: issue.message
+				}))
+			});
+		}
+
+		const { limit, offset } = parsed.data;
+		const { items, total } = await this.resources.list({ limit, offset });
+		return {
+			items: items.map(toResourceListItem),
+			total,
+			limit,
+			offset
+		};
 	}
 }
 

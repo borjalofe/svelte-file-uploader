@@ -5,9 +5,20 @@ export type CreateResourceRow = ResourceCreate & {
 	storagePath: string;
 };
 
+export type ListResourcesQuery = {
+	limit: number;
+	offset: number;
+};
+
+export type ListResourcesResult = {
+	items: Resource[];
+	total: number;
+};
+
 export interface ResourcesRepository {
 	insert(row: CreateResourceRow): Promise<Resource>;
 	findById(id: string): Promise<Resource | null>;
+	list(query: ListResourcesQuery): Promise<ListResourcesResult>;
 }
 
 /** In-memory stand-in for Postgres (CI / unit). Same row shape as `resourceSchema`. */
@@ -28,5 +39,16 @@ export class MemoryResourcesRepository implements ResourcesRepository {
 
 	async findById(id: string): Promise<Resource | null> {
 		return this.rows.get(id) ?? null;
+	}
+
+	async list(query: ListResourcesQuery): Promise<ListResourcesResult> {
+		const items = [...this.rows.values()].sort(
+			(a, b) => b.createdAt.getTime() - a.createdAt.getTime()
+		);
+		const total = items.length;
+		return {
+			items: items.slice(query.offset, query.offset + query.limit),
+			total
+		};
 	}
 }
