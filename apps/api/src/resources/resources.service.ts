@@ -12,10 +12,10 @@ import {
 	resourceListQuerySchema,
 	type Resource,
 	type ResourceFileMimeType,
-	type ResourceList,
 	type ResourceListQueryInput
 } from '@pack-challenge/domain';
 import { LocalFileStore, type OpenedObject } from '../storage/local-file.store.js';
+import { toResourceListItem, type ResourceListDto } from './resource-list.dto.js';
 import type { ResourcesRepository } from './resources.repository.js';
 
 const RESOURCE_ID_RE =
@@ -45,10 +45,11 @@ export class ResourcesService {
 	) {}
 
 	/**
-	 * List/search resources.
+	 * List/search resources (form fields + safe file meta).
 	 * Query param `q` (optional): case-insensitive substring match on **title** and **description**.
+	 * Omits `storagePath` from every item so clients never get FS/object paths.
 	 */
-	async list(rawQuery: ResourceListQueryInput): Promise<ResourceList> {
+	async list(rawQuery: ResourceListQueryInput): Promise<ResourceListDto> {
 		const parsed = resourceListQuerySchema.safeParse(rawQuery);
 		if (!parsed.success) {
 			throw new BadRequestException({
@@ -59,7 +60,11 @@ export class ResourcesService {
 				}))
 			});
 		}
-		return this.resources.list(parsed.data);
+		const result = await this.resources.list(parsed.data);
+		return {
+			...result,
+			items: result.items.map(toResourceListItem)
+		};
 	}
 
 	/**

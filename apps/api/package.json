@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"private": true,
 	"type": "module",
-	"description": "Nest API — Resources multipart create + local file store",
+	"description": "Nest API — Resources create + list",
 	"scripts": {
 		"build": "tsc --noEmit",
 		"check-types": "tsc --noEmit",

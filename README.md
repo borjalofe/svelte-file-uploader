@@ -16,7 +16,7 @@ This milestone only answers that foundation question — not the product yet.
 
 - pnpm workspace + Turborepo task graph
 - `apps/web` (`@pack-challenge/web`) — SvelteKit app stub
-- `apps/api` (`@pack-challenge/api`) — Nest-ready stub + Drizzle `resources` migration (no Nest HTTP yet)
+- `apps/api` (`@pack-challenge/api`) — Nest Resources API (`POST`/`GET /resources` + local file store) + Drizzle migration
 - `packages/ui` (`@pack-challenge/ui`) — library layout, `/ds` stub, Tailwind (`cssVariables: true` placeholder), Storybook welcome, Vitest smoke
 - `packages/domain` (`@pack-challenge/domain`) — shared Zod Resource create/list schemas + constants (Nest + SvelteKit)
 - Living ADRs under [docs/decisions/](./docs/decisions/)
@@ -70,7 +70,7 @@ This milestone only answers that foundation question — not the product yet.
 
 **Out of scope**
 
-- Upload/list product UI wired to live API, Nest HTTP modules, or deploy
+- Upload/list product UI wired to the live API, or deploy
 - Full Compose `api`/`web` images (M12), cloud DB
 - Remaining atoms; remaining `/ds` demo pages; container image scans
 
@@ -96,7 +96,7 @@ flowchart LR
 | Path | Package | Role today |
 | --- | --- | --- |
 | `apps/web` | `@pack-challenge/web` | SvelteKit host |
-| `apps/api` | `@pack-challenge/api` | Bootable API stub + Drizzle `resources` table migration |
+| `apps/api` | `@pack-challenge/api` | Nest Resources create/list/search + local file store + Drizzle migration |
 | `packages/ui` | `@pack-challenge/ui` | Design-system library + Storybook (particles + atoms; molecules FilePickerField, InputField, MultiSelectList, SearchField, SelectField; organisms AppHeader, ResourcesDataTable, ResourcesToolbar, SupportChatFab, UploadResourceDialog; templates DashboardShell, DsCatalogLayout; pages ResourcesCatalogPage, TokensReferencePage) |
 | `packages/domain` | `@pack-challenge/domain` | Shared Zod Resource schemas (create/list + file metadata) |
 | `packages/tokens` | `@pack-challenge/tokens` | Validate `tokens/**` + emit theme CSS |
@@ -135,6 +135,16 @@ Apply the Resources migration (Drizzle, maps domain Zod fields):
 ```bash
 pnpm --filter @pack-challenge/api db:migrate
 ```
+
+Run the Nest API (host; uses `DATABASE_URL` + `FILE_STORAGE_ROOT` from `.env`):
+
+```bash
+pnpm --filter @pack-challenge/api start   # default http://localhost:3000
+# GET /resources — list/search (safe file meta; no storagePath)
+# GET /resources/:id/file — download by id
+# POST /resources — multipart create
+```
+
 
 ## How we test
 
@@ -189,16 +199,17 @@ Semantic space: [`tokens/SEMANTIC_SPACE.md`](./tokens/SEMANTIC_SPACE.md) — `se
 | Compose **`db`/`api`/`web`** + env credentials | Stable names for M10/M12; secrets stay in `.env` | Cloud DB for M0; baking passwords into `compose.yaml`; default `postgres`/`postgres` |
 | Shared Zod in `@pack-challenge/domain` | One Resource contract for Nest + SvelteKit | Duplicated types per app; SvelteKit-only schemas |
 | **Drizzle** migrations in `apps/api` | SQL + TS schema mapped to domain Zod; Nest-ready | Prisma (heavier); TypeORM; hand-only SQL with no schema module |
+| Nest + local FS object keys for uploads | Multipart create validated with shared Zod; paths stay off the public API | Direct public FS URLs; SvelteKit-only upload |
 | Style Dictionary + custom token guards | Emit CSS vars; fail CI on bad aliases / forbidden paths | Schema-only CI (can’t resolve `{aliases}`); hand-maintained CSS vars |
 | Generate-on-build theme (`:root` / `.dark` / `@theme`) | One source of truth; Tailwind utilities from CSS vars | Committing generated CSS; hand-maintained `@theme` |
 
-ADRs: [0001](./docs/decisions/0001-turborepo-pnpm-monorepo.md), [0002](./docs/decisions/0002-compose-postgres-env-contract.md), [0003 — token pipeline](./docs/decisions/0003-token-pipeline.md), [0004 — theme CSS emit](./docs/decisions/0004-theme-css-emit.md), [0005 — Drizzle resources migration](./docs/decisions/0005-drizzle-resources-migration.md). The [Decisions index](./docs/decisions/) lists only ADRs that shipped with code.
+ADRs: [0001](./docs/decisions/0001-turborepo-pnpm-monorepo.md), [0002](./docs/decisions/0002-compose-postgres-env-contract.md), [0003 — token pipeline](./docs/decisions/0003-token-pipeline.md), [0004 — theme CSS emit](./docs/decisions/0004-theme-css-emit.md), [0005 — Drizzle resources migration](./docs/decisions/0005-drizzle-resources-migration.md), [0006 — Nest local file store](./docs/decisions/0006-nest-local-file-store.md). The [Decisions index](./docs/decisions/) lists only ADRs that shipped with code.
 
 Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral` — see `packages/ui/components.json` (`cssVariables: true`) and color/filter notes in [`docs/brand/AUDIT.md`](./docs/brand/AUDIT.md).
 
 ## Trade-offs and limitations
 
-- **Scaffold over product** — Nest HTTP and upload UI are still ahead; domain Zod + `resources` migration are in place without pretending the API serves traffic yet.
+- **API ahead of product UI** — Nest create/list/search and local file store are up; the catalog page is not wired to live API yet.
 - **Library UI as SvelteKit app** — `/ds` and Storybook need a Kit surface; that adds demo-app weight versus a pure component folder.
 - **PR gate ≠ full quality matrix** — lint/unit/storybook/a11y/integration/tokens/audit; product E2E and page composition still later.
 - **Node 22+** — aligns with current toolchain; older LTS is out of scope.
@@ -220,6 +231,7 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 | UI typecheck/build | `pnpm --filter @pack-challenge/ui build` | `svelte-check` clean |
 | Postgres | `docker compose up -d db` | `db` healthcheck **healthy** |
 | Resources migrate | `pnpm --filter @pack-challenge/api db:migrate` | `resources` table + enums apply (idempotent) |
+| API unit | `pnpm --filter @pack-challenge/api test` | Nest create/list/search + storage tests green |
 
 ## Lessons learned
 
@@ -229,6 +241,5 @@ Working hypothesis (not locked): shadcn-svelte `new-york`, `baseColor` `neutral`
 
 ## Next steps
 
-1. Nest POST/GET `/resources` (+ file store) against Compose `db` and shared Zod.
-2. Product upload/list flow once the API serves the catalog page.
-3. CI job for API tests / migrate against ephemeral Postgres.
+1. Product upload/list flow once the catalog page calls the live API.
+2. CI job for API tests / migrate against ephemeral Postgres.
