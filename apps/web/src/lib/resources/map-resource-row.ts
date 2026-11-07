@@ -13,12 +13,17 @@ export function mimeToResourceContentType(mimeType: ResourceFileMimeType): Resou
 	return 'documents';
 }
 
+/** List/create row input — `storagePath` optional (public list omits it). */
+export type ResourceTableSource = Omit<Resource, 'storagePath'> & {
+	storagePath?: string;
+};
+
 /**
  * Map domain `Resource` → table row for UI organisms.
  * `viewCount` / `uploadedBy` are placeholders until product fields exist.
  * `path` uses original filename (not internal `storagePath`).
  */
-export function mapResourceToTableRow(resource: Resource): ResourcesDataTableRow {
+export function mapResourceToTableRow(resource: ResourceTableSource): ResourcesDataTableRow {
 	return {
 		id: resource.id,
 		title: resource.title,
