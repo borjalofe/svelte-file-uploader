@@ -353,3 +353,20 @@ export type {
 	SelectFieldOption,
 	SelectFieldProps
 } from '../components/molecules/select-field/index.js';
+export {
+	RESOURCE_CONTENT_TYPES,
+	RESOURCE_TAB_LABELS,
+	RESOURCE_TAB_VALUES,
+	ResourcesToolbar,
+	isResourceTabEnabled,
+	resolveResourcesToolbarRoot,
+	resolveResourcesToolbarSearch,
+	resourcesToolbarRootBaseClass,
+	resourcesToolbarSearchBaseClass
+} from '../components/organisms/resources-toolbar/index.js';
+export type {
+	ResourceContentType,
+	ResourceTabValue,
+	ResourceTypeCounts,
+	ResourcesToolbarProps
+} from '../components/organisms/resources-toolbar/index.js';
